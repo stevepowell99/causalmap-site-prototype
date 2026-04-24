@@ -687,6 +687,7 @@ def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="")
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="{desc}">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <title>{title} | {site_name}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -708,6 +709,7 @@ def redirect_template(title, redirect):
   <meta charset="utf-8">
   <meta http-equiv="refresh" content="0;url={redirect}">
   <meta name="robots" content="noindex">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="canonical" href="{redirect}">
   <title>{title}</title>
   <script>window.location.replace({redirect!r});</script>
