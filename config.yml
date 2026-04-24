@@ -1,0 +1,18 @@
+site_name: Causal Map
+site_url: https://causalmap.app
+app_url: https://app.causalmap.app
+input_dir: content
+output_dir: dist
+
+colors:
+  accent_primary: "#79bb93"
+  accent_secondary: "#90c3c6"
+  accent_ink: "#1f1f36"
+  accent_teal: "#6dc4c8"
+  accent_pink: "#ff8fb8"
+  body_bg: "#fcfcfc"
+  text: "#222"
+
+analytics:
+  goatcounter: ""
+  umami_id: ""

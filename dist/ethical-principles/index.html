@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Our commitment to ethics in qualitative research and AI.">
+  <title>Ethical Principles | Causal Map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+:root {
+  --cm-ink: #1f1f36;
+  --cm-pink: #ff8fb8;
+  --cm-green: #79bb93;
+  --cm-teal: #90c3c6;
+  --cm-bg: #fcfcfc;
+  --cm-text: #222;
+  --cm-light: #f4f6f8;
+  --cm-border: #e2e6ea;
+  --radius: 8px;
+  --cm-green-light: rgba(121, 187, 147, 0.08);
+  --cm-teal-light: rgba(144, 195, 198, 0.10);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 17px; scroll-behavior: smooth; }
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  color: var(--cm-text);
+  background: var(--cm-bg);
+  line-height: 1.6;
+}
+
+a { transition: color 0.15s; }
+
+.container { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* ---- Section divider ---- */
+.section-divider {
+  height: 2px; border: none; margin: 0;
+  background: linear-gradient(90deg, var(--cm-green), var(--cm-teal));
+  opacity: 0.3;
+}
+
+/* ---- Navbar ---- */
+.navbar {
+  background: var(--cm-ink);
+  color: #fff;
+  position: sticky; top: 0; z-index: 100;
+  padding: 0.6rem 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.nav-inner { display: flex; align-items: center; gap: 1.5rem; }
+.nav-logo {
+  text-decoration: none; margin-right: auto; display: flex; align-items: center;
+}
+.nav-logo-img { height: 56px; width: auto; }
+.nav-links { display: flex; align-items: center; gap: 1.25rem; }
+.nav-links > a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.92rem; transition: color 0.15s; padding: 0.5rem 0; }
+.nav-links a:hover { color: #fff; }
+.nav-cta { margin-left: 0.5rem; }
+
+/* ---- Nav dropdown ---- */
+.nav-dropdown { position: relative; display: flex; align-items: center; }
+.nav-dropdown-trigger { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.92rem; transition: color 0.15s; cursor: pointer; padding: 0.5rem 0; }
+.nav-dropdown-trigger:hover { color: #fff; }
+.nav-dropdown-menu {
+  display: none; position: absolute; top: 100%; left: -0.75rem;
+  background: var(--cm-ink); border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  min-width: 200px; padding: 0.5rem 0; z-index: 200;
+}
+.nav-dropdown:hover .nav-dropdown-menu { display: block; }
+.nav-dropdown-menu a {
+  display: block; padding: 0.5rem 1.25rem;
+  color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.9rem;
+  transition: background 0.12s, color 0.12s; white-space: nowrap;
+}
+.nav-dropdown-menu a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+
+/* ---- Accent stripe ---- */
+.accent-stripe {
+  height: 3px;
+  background: linear-gradient(90deg, var(--cm-green), var(--cm-teal), var(--cm-pink));
+}
+
+/* ---- Buttons ---- */
+.btn-cta {
+  display: inline-block;
+  background: var(--cm-pink);
+  color: #fff;
+  padding: 0.6rem 1.6rem;
+  border-radius: 11px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+  border: none;
+}
+.btn-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,143,184,0.3); }
+.btn-secondary {
+  display: inline-block;
+  background: var(--cm-green);
+  color: #fff;
+  padding: 0.6rem 1.6rem;
+  border-radius: 11px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+  border: none;
+}
+.btn-secondary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(121,187,147,0.3); }
+
+/* ---- Hero ---- */
+.hero {
+  background: linear-gradient(135deg, var(--cm-ink) 0%, #2d2d52 100%);
+  background-image:
+    linear-gradient(135deg, var(--cm-ink) 0%, #2d2d52 100%),
+    linear-gradient(0deg, transparent 24%, rgba(121, 187, 147, 0.03) 25%, rgba(121, 187, 147, 0.03) 26%, transparent 27%, transparent 74%, rgba(121, 187, 147, 0.03) 75%, rgba(121, 187, 147, 0.03) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, rgba(121, 187, 147, 0.03) 25%, rgba(121, 187, 147, 0.03) 26%, transparent 27%, transparent 74%, rgba(121, 187, 147, 0.03) 75%, rgba(121, 187, 147, 0.03) 76%, transparent 77%, transparent);
+  background-size: 100% 100%, 50px 50px, 50px 50px;
+  color: #fff;
+  padding: 5rem 0 4.5rem;
+  text-align: center;
+}
+.hero h1 { font-size: 3.9rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.15; }
+.hero-sub { font-size: 1.15rem; opacity: 0.88; max-width: 600px; margin: 0 auto 2rem; }
+.hero-sub p { margin: 0; }
+
+/* ---- Hero Light ---- */
+.hero-light {
+  background: linear-gradient(135deg, rgba(121,187,147,0.04) 0%, rgba(144,195,198,0.04) 100%);
+  padding: 3.5rem 0 3rem;
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--cm-green), var(--cm-teal)) 1;
+}
+.hero-light h1 { font-size: 2.86rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--cm-ink); }
+.hero-light .hero-sub { font-size: 1.05rem; color: #666; max-width: none; margin: 0; opacity: 1; }
+
+/* ---- Features grid ---- */
+.features { padding: 4rem 0; background: var(--cm-light); }
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+.feature-card {
+  background: #fff;
+  border: 1px solid var(--cm-border);
+  border-top: 3px solid var(--cm-green);
+  border-radius: var(--radius);
+  padding: 2rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.feature-card:nth-child(2) { border-top-color: var(--cm-teal); }
+.feature-card:nth-child(3) { border-top-color: var(--cm-pink); }
+.feature-card:nth-child(4) { border-top-color: var(--cm-green); }
+.feature-card:nth-child(5) { border-top-color: var(--cm-teal); }
+.feature-card:nth-child(6) { border-top-color: var(--cm-pink); }
+.feature-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+.feature-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--cm-ink); font-weight: 600; }
+.feature-card p { font-size: 0.95rem; color: #555; }
+.feature-card a, .step-item a, .two-col a, .hero a, .hero-light-inner a { color: var(--cm-ink); text-decoration: underline; text-decoration-color: var(--cm-teal); text-underline-offset: 2px; }
+.feature-card a:hover, .step-item a:hover, .two-col a:hover, .hero a:hover, .hero-light-inner a:hover { color: var(--cm-teal); }
+
+/* ---- Video ---- */
+.video-section { padding: 3.5rem 0; }
+.video-wrap {
+  position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+  border-radius: var(--radius); box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+.video-wrap iframe {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+}
+
+/* ---- Two-col ---- */
+.two-col { padding: 4rem 0; }
+.two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+.two-col-grid > div {
+  padding: 1.5rem; border-radius: var(--radius);
+  background: var(--cm-light); border-left: 3px solid var(--cm-green);
+}
+.two-col-grid > div:nth-child(2) { border-left-color: var(--cm-teal); }
+.two-col h2 { font-size: 1.35rem; margin-bottom: 0.75rem; color: var(--cm-ink); font-weight: 600; }
+.two-col p, .two-col li { font-size: 0.95rem; }
+.two-col a { color: var(--cm-ink); text-decoration: underline; text-underline-offset: 2px; }
+.two-col a:hover { color: var(--cm-teal); }
+
+/* ---- Steps ---- */
+.steps { padding: 4rem 0; background: var(--cm-light); }
+.steps-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;
+  position: relative;
+}
+.steps-grid::before {
+  content: ""; position: absolute; top: 1.8rem; left: 10%; right: 10%;
+  height: 2px; background: repeating-linear-gradient(90deg, var(--cm-green) 0, var(--cm-green) 8px, transparent 8px, transparent 16px);
+  z-index: 0;
+}
+.step-item { text-align: center; position: relative; z-index: 1; }
+.step-number {
+  font-size: 2.5rem; font-weight: 800; color: var(--cm-green);
+  margin-bottom: 0.5rem;
+  background: var(--cm-light); display: inline-block; padding: 0 0.5rem;
+}
+.step-item h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--cm-ink); font-weight: 600; }
+.step-item p { font-size: 0.9rem; color: #555; }
+
+/* ---- Trust strip ---- */
+.trust-strip {
+  padding: 2.5rem 0;
+  background: linear-gradient(135deg, rgba(121,187,147,0.06) 0%, rgba(144,195,198,0.06) 100%);
+  border-top: 1px solid var(--cm-border); border-bottom: 1px solid var(--cm-border);
+}
+.trust-strip p { font-size: 0.95rem; color: #555; }
+.trust-strip strong { color: var(--cm-ink); }
+
+/* ---- Logos ---- */
+.logos-section { padding: 3rem 0; text-align: center; }
+.logos-section h3 { font-size: 1rem; color: #666; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+.logos-section img { max-width: 100%; }
+
+/* ---- Testimonials ---- */
+.testimonials { padding: 4rem 0; background: var(--cm-light); }
+.testimonials h2 { margin-bottom: 2rem; color: var(--cm-ink); font-weight: 600; }
+.testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+.testimonial-card {
+  background: #fff;
+  border: 1px solid var(--cm-border);
+  border-left: 4px solid var(--cm-teal);
+  border-radius: var(--radius);
+  padding: 2rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.testimonial-card:nth-child(2) { border-left-color: var(--cm-green); }
+.testimonial-card:nth-child(3) { border-left-color: var(--cm-pink); }
+.testimonial-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+.testimonial-card blockquote {
+  font-size: 0.95rem; font-style: italic; color: #444;
+  margin: 0 0 1rem; line-height: 1.65;
+}
+.testimonial-card .testimonial-name { font-weight: 600; color: var(--cm-ink); font-size: 0.9rem; }
+
+/* ---- CTA banner ---- */
+.cta-banner {
+  background: linear-gradient(135deg, var(--cm-ink) 0%, #2d2d52 100%);
+  color: #fff;
+  padding: 2.5rem 0;
+  text-align: center;
+}
+.cta-banner .container { display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+.cta-banner span { font-size: 1.1rem; }
+
+/* ---- Team ---- */
+.team-section { padding: 4rem 0; }
+.team-section h2 { margin-bottom: 2.5rem; color: var(--cm-ink); font-weight: 600; padding-bottom: 0.4rem; border-bottom: 2px solid var(--cm-green); display: inline-block; }
+.team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+.team-card { text-align: left; }
+.team-card img {
+  width: 160px; height: 160px; border-radius: 50%; object-fit: cover;
+  margin-bottom: 1rem; border: 3px solid var(--cm-border);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.team-card:hover img { border-color: var(--cm-green); box-shadow: 0 0 0 4px rgba(121,187,147,0.15); }
+.team-card h3 { font-size: 1.1rem; color: var(--cm-ink); margin-bottom: 0.25rem; }
+.team-card .team-role { font-size: 0.85rem; color: var(--cm-green); font-weight: 600; margin-bottom: 0.5rem; }
+.team-card p { font-size: 0.9rem; color: #555; line-height: 1.55; }
+.team-link { font-size: 0.8rem; color: var(--cm-teal); text-decoration: none; font-weight: 400; }
+.team-link:hover { color: var(--cm-green); }
+
+/* ---- Prose ---- */
+.prose-section { padding: 3.5rem 0; }
+.prose-section h2 {
+  font-size: 1.4rem; margin: 2rem 0 0.75rem; color: var(--cm-ink); font-weight: 600;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--cm-green);
+  display: inline-block;
+}
+.prose-section h3 { font-size: 1.15rem; margin: 1.5rem 0 0.5rem; color: var(--cm-ink); font-weight: 600; }
+.prose-section p { margin-bottom: 1rem; }
+.prose-section ul, .prose-section ol { margin: 0 0 1rem 1.5rem; }
+.prose-section li { margin-bottom: 0.35rem; }
+.prose-section li::marker { color: var(--cm-teal); }
+.prose-section a { color: var(--cm-ink); text-decoration: underline; text-underline-offset: 2px; }
+.prose-section a:hover { color: var(--cm-teal); }
+.prose-section strong { color: var(--cm-ink); font-weight: 600; }
+
+/* Prose callout */
+.prose-section blockquote {
+  border-left: 4px solid var(--cm-teal);
+  background: var(--cm-teal-light);
+  padding: 1rem 1.25rem; margin: 1.5rem 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 0.95rem;
+}
+.prose-section blockquote p { margin-bottom: 0; }
+
+/* Prose tables */
+.prose-section table {
+  width: 100%; border-collapse: collapse; margin: 1.5rem 0;
+  font-size: 0.92rem; border-radius: var(--radius); overflow: hidden;
+}
+.prose-section th, .prose-section td {
+  border: 1px solid var(--cm-border); padding: 0.6rem 0.8rem; text-align: left;
+}
+.prose-section th {
+  background: linear-gradient(135deg, rgba(121,187,147,0.12), rgba(144,195,198,0.12));
+  font-weight: 600; color: var(--cm-ink);
+}
+.prose-section tr:nth-child(even) td { background: #fafbfc; }
+.prose-section td:first-child { font-weight: 500; color: var(--cm-ink); }
+.prose-section td.check { color: var(--cm-green); font-weight: 700; font-size: 1.1rem; text-align: center; }
+
+/* ---- Footer ---- */
+footer {
+  background: var(--cm-ink);
+  color: rgba(255,255,255,0.8);
+  padding: 2.5rem 0;
+  font-size: 0.88rem;
+  margin-top: 3rem;
+  border-top: 3px solid var(--cm-green);
+}
+.footer-inner { text-align: center; }
+.footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.footer-links a { color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.15s; }
+.footer-links a:hover { color: #fff; }
+.footer-social { display: flex; justify-content: center; gap: 1.25rem; margin-bottom: 1rem; }
+.footer-social a { color: var(--cm-pink); text-decoration: none; transition: opacity 0.15s; }
+.footer-social a:hover { opacity: 0.88; }
+.footer-copy { color: rgba(255,255,255,0.5); font-size: 0.8rem; }
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  html { font-size: 16px; }
+  .hero h1 { font-size: 2.4rem; }
+  .hero { padding: 3rem 0 2.5rem; }
+  .hero-light h1 { font-size: 2rem; }
+  .nav-logo-img { height: 44px; }
+  .two-col-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr; }
+  .nav-links { display: none; }
+  .features { padding: 2.5rem 0; }
+  .steps-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="container nav-inner">
+    <a href="../index.html" class="nav-logo"><img class="nav-logo-img" src="../assets/logo-white.png" alt="Causal Map"></a>
+    <div class="nav-links">
+    <a href="../index.html">Home</a>
+    <div class="nav-dropdown">
+      <a href="../product/index.html" class="nav-dropdown-trigger">Product</a>
+      <div class="nav-dropdown-menu"><a href="../product/index.html">Causal Map app</a>
+<a href="../consultancy/index.html">Consultancy</a>
+<a href="../qualiainterviews/index.html">QualiaInterviews</a>
+</div>
+    </div>
+    <a href="../pricing/index.html">Pricing</a>
+    <div class="nav-dropdown">
+      <a href="../about/index.html" class="nav-dropdown-trigger">About</a>
+      <div class="nav-dropdown-menu"><a href="../about/index.html">About us</a>
+<a href="../causal-mapping/index.html">What is causal mapping?</a>
+</div>
+    </div>
+    <a href="../contact/index.html">Contact</a>
+    <a href="../resources/index.html">Resources</a>
+    </div>
+    <a class="btn-cta nav-cta" href="https://app.causalmap.app">Try it free</a>
+  </div>
+</nav>
+<div class="accent-stripe"></div>
+<main>
+<section class="prose-section">
+  <div class="container">
+    <h2>Causal Map Ethical Principles</h2>
+<p>We are committed to supporting rigorous, ethical qualitative research. These principles guide how we design Causal Map, how we support our users, and how we operate our business.</p>
+<h3>1. Global equity</h3>
+<p>We believe causal mapping should be accessible to researchers and evaluators everywhere, regardless of geography or income. We:</p>
+<ul>
+<li>Offer substantial discounts to researchers in the Global South and lower-income countries.</li>
+<li>Provide free access to students and non-profit researchers upon application.</li>
+<li>Make our educational resources freely available in the <a href="https://garden.causalmap.app/">Causal Mapping Guide</a>.</li>
+<li>Support capacity-building in qualitative research through our training and consultancy.</li>
+</ul>
+<h3>2. Modern slavery and human rights</h3>
+<p>We are committed to ethical labour practices and human rights. We:</p>
+<ul>
+<li>Ensure all suppliers meet international labour standards (no forced labour, child labour, or exploitation).</li>
+<li>Conduct regular audits of our supply chain.</li>
+<li>Do not work with organisations or countries under sanctions where prohibited by law.</li>
+<li>Support research on social and economic rights through discounted or free access to Causal Map.</li>
+</ul>
+<h3>3. AI transparency</h3>
+<p>We use AI features to assist users, but never as a replacement for human judgment. We:</p>
+<ul>
+<li>Are transparent about how AI works and where it is used in Causal Map.</li>
+<li>Make all AI features optional — users can code entirely manually if they prefer.</li>
+<li>Always require human review and approval of AI suggestions before they are saved.</li>
+<li>Do not use AI to make decisions for users; it suggests only.</li>
+<li>Regularly audit AI features for bias and errors.</li>
+<li>Comply with the UK AI Bill and GDPR requirements on automated decision-making.</li>
+</ul>
+<h3>4. Evidence provenance</h3>
+<p>We support rigorous evidence standards. We:</p>
+<ul>
+<li>Encourage users to code transparently, documenting coding rules and disagreements.</li>
+<li>Support users in distinguishing between their data, their interpretation, and their analysis.</li>
+<li>Recommend best-practice workflows for qualitative research (including inter-coder agreement checks, code audit trails, and stakeholder validation).</li>
+<li>Provide tools to track and record your coding decisions and methodology.</li>
+<li>Do not claim that Causal Map &ldquo;generates&rdquo; evidence; it helps you analyse and visualise the evidence you collect.</li>
+</ul>
+<h3>5. Right to be wrong</h3>
+<p>Qualitative research is interpretive. Different researchers may code the same data differently. We:</p>
+<ul>
+<li>Support multiple coding schemes and parallel analysis.</li>
+<li>Allow users to compare and visualise disagreement in their data.</li>
+<li>Encourage users to treat disagreement as data, not as error.</li>
+<li>Do not impose a single &ldquo;correct&rdquo; way to code causal narratives.</li>
+<li>Support research on divergent perspectives and contested causality.</li>
+</ul>
+<h3>6. Participant status</h3>
+<p>People who provide data (research participants) deserve respect and protection. We:</p>
+<ul>
+<li>Encourage users to consider the ethical implications of analysing and sharing causal narratives.</li>
+<li>Provide privacy-preserving tools to anonymise and aggregate findings.</li>
+<li>Recommend that users maintain informed consent and data governance agreements with participants.</li>
+<li>Support users in fulfilling their ethical obligations to research participants.</li>
+<li>Do not analyse or extract data without the user&rsquo;s explicit instruction.</li>
+</ul>
+<h3>7. Data protection</h3>
+<p>We protect the personal data and research data entrusted to us. We:</p>
+<ul>
+<li>Encrypt all data at rest and in transit using industry-standard security.</li>
+<li>Do not sell, share, or use your data for any purpose except providing the Service.</li>
+<li>Comply with GDPR, UK Data Protection Act 2018, and other applicable data protection laws.</li>
+<li>Allow you to download, export, or delete your data at any time.</li>
+<li>Minimise personal data collection; we do not require names, institutions, or other PII unless you choose to provide it.</li>
+<li>Conduct regular security audits and penetration tests.</li>
+<li>Have a responsible disclosure policy for security vulnerabilities.</li>
+</ul>
+<hr />
+<h2>Putting these principles into practice</h2>
+<p>These principles are not static. We evolve them based on user feedback, emerging technologies and ethical frameworks, and our own learning. We:</p>
+<ul>
+<li>Review these principles annually and update them as necessary.</li>
+<li>Consult with users, researchers, and ethics experts in updates.</li>
+<li>Are transparent when we fail to meet these principles and commit to improvement.</li>
+<li>Encourage users to hold us accountable.</li>
+</ul>
+<h2>Questions?</h2>
+<p>If you have concerns about our ethical practices or questions about how Causal Map aligns with your research ethics, please contact <a href="mailto:hello@causalmap.app">hello@causalmap.app</a>.</p>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-links">
+      <a href="../terms-and-conditions/index.html">Terms</a>
+      <a href="../privacy-policy/index.html">Privacy</a>
+      <a href="../sla/index.html">SLA</a>
+      <a href="../ethical-principles/index.html">Ethical Principles</a>
+      <a href="https://forms.gle/JrK2AE6NTsGzUvWe8">Newsletter</a>
+    </div>
+    <div class="footer-social">
+      <a href="https://www.linkedin.com/company/causalmap">LinkedIn</a>
+      <a href="mailto:hello@causalmap.app">Email</a>
+      <a href="https://www.youtube.com/watch?v=YskPTmWfADw&list=PLSCKdSxlLlfGfcab5njcT57xzU0hOURc-">YouTube</a>
+      <a href="https://github.com/stevepowell99/">GitHub</a>
+    </div>
+    <p class="footer-copy">This work is licensed under CC BY-NC 4.0</p>
+  </div>
+</footer>
+</body>
+</html>
