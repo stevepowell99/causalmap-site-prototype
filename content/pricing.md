@@ -7,7 +7,7 @@ description: Subscription plans and consultancy services.
 sections:
   - type: hero-light
     headline: Pricing
-    subhead: App subscriptions and consultancy services.
+    subhead: App subscriptions. For project-based support, see our [consultancy page](/consultancy).
   - type: prose
 ---
 
@@ -16,6 +16,8 @@ sections:
 You can access Causal Map for free by signing up in the app. No credit card required. The core functionality is free for everyone: unlimited projects, unlimited coding.
 
 Choose your subscription directly from the Account tab in the app: [app.causalmap.app](https://app.causalmap.app/)
+
+If you need project-based support rather than a software subscription, see our [consultancy page](/consultancy).
 
 **Free:** Everything you need to get started. Unlimited projects and coding. Your projects are public.
 
@@ -64,10 +66,6 @@ Any paid subscription can add AI features for an additional £18/month (£144/ye
 ## Discounts
 
 Individual students and researchers can get 50% off by using the code "QYMZU3MW" at checkout. Organisations in the Global South may also be eligible for a similar discount: [get in touch](mailto:hello@causalmap.app). For bulk purchases (e.g. educational institutions), please [contact us](mailto:hello@causalmap.app).
-
-## Consultancy services
-
-We also work as part of your analytical team, coding your data and delivering visual reports. Projects range from a single day to several weeks. See our [consultancy page](/consultancy) for details, or [get a quote](/contact).
 
 ## More about subscriptions
 

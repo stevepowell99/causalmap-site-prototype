@@ -382,14 +382,14 @@ a { transition: color 0.15s; }
   background: var(--cm-ink);
   color: #fff;
   position: sticky; top: 0; z-index: 100;
-  padding: 0.6rem 0;
+  padding: 0.75rem 0;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
 .nav-inner { display: flex; align-items: center; gap: 1.5rem; }
 .nav-logo {
   text-decoration: none; margin-right: auto; display: flex; align-items: center;
 }
-.nav-logo-img { height: 56px; width: auto; }
+.nav-logo-img { height: 73px; width: auto; }
 .nav-links { display: flex; align-items: center; gap: 1.25rem; }
 .nav-links > a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.92rem; transition: color 0.15s; padding: 0.5rem 0; }
 .nav-links a:hover { color: #fff; }
@@ -669,7 +669,7 @@ footer {
   .hero h1 { font-size: 2.4rem; }
   .hero { padding: 3rem 0 2.5rem; }
   .hero-light h1 { font-size: 2rem; }
-  .nav-logo-img { height: 44px; }
+  .nav-logo-img { height: 57px; }
   .two-col-grid { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
@@ -687,7 +687,8 @@ def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="")
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="{desc}">
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/favicon.png" type="image/png">
   <title>{title} | {site_name}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -709,7 +710,8 @@ def redirect_template(title, redirect):
   <meta charset="utf-8">
   <meta http-equiv="refresh" content="0;url={redirect}">
   <meta name="robots" content="noindex">
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/assets/favicon.ico" sizes="any">
+  <link rel="icon" href="/assets/favicon.png" type="image/png">
   <link rel="canonical" href="{redirect}">
   <title>{title}</title>
   <script>window.location.replace({redirect!r});</script>
