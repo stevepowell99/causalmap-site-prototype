@@ -16,3 +16,4 @@ colors:
 analytics:
   goatcounter: ""
   umami_id: ""
+  umami_script: "https://cloud.umami.is/script.js"

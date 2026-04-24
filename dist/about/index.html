@@ -10,6 +10,7 @@
   <title>About us | Causal Map</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  
   <style>:root {
   --cm-ink: #1f1f36;
   --cm-pink: #ff8fb8;
@@ -47,7 +48,7 @@ a {
 }
 a:hover { color: var(--cm-teal); }
 
-.container { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
+.container { max-width: 1040px; margin: 0 auto; padding: 0 1.5rem; }
 
 .sr-only {
   position: absolute;
@@ -95,15 +96,15 @@ a:hover { color: var(--cm-teal); }
   background: var(--cm-ink);
   color: #fff;
   position: sticky; top: 0; z-index: 100;
-  padding: 0.75rem 0;
+  padding: 1.35rem 0;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
-.nav-inner { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
+.nav-inner { display: flex; align-items: center; gap: 1rem; flex-wrap: nowrap; }
 .nav-logo {
   text-decoration: none; margin-right: auto; display: flex; align-items: center;
 }
 .nav-logo-img { height: 73px; width: auto; }
-.nav-links { display: flex; align-items: center; gap: 1.25rem; }
+.nav-links { display: flex; align-items: center; gap: 1rem; }
 .nav-links > a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.92rem; transition: color 0.15s; padding: 0.5rem 0; }
 .nav-links a:hover { color: #fff; }
 .nav-cta { margin-left: 0.25rem; }
@@ -114,7 +115,13 @@ a:hover { color: var(--cm-teal); }
   gap: 0.6rem;
 }
 .site-search-form {
-  flex: 0 1 18rem;
+  flex: 0 1 15rem;
+  opacity: 0.55;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.site-search-form:hover,
+.site-search-form:focus-within {
+  opacity: 1;
 }
 .search-input {
   width: 100%;
@@ -130,6 +137,22 @@ a:hover { color: var(--cm-teal); }
   outline: 2px solid var(--cm-teal);
   outline-offset: 1px;
 }
+.site-search-form .search-input {
+  border-color: rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.72);
+  padding: 0.56rem 0.85rem;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+.site-search-form .search-input::placeholder {
+  color: rgba(255,255,255,0.74);
+}
+.site-search-form:hover .search-input,
+.site-search-form:focus-within .search-input {
+  border-color: rgba(255,255,255,0.34);
+  background: rgba(255,255,255,0.13);
+  color: #fff;
+}
 .search-submit {
   border: 0;
   border-radius: 999px;
@@ -143,6 +166,28 @@ a:hover { color: var(--cm-teal); }
 }
 .search-submit:hover {
   background: var(--cm-teal);
+}
+.site-search-form .search-submit {
+  width: 2.35rem;
+  min-width: 2.35rem;
+  padding: 0.56rem 0;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.72);
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: background 0.18s ease, color 0.18s ease, opacity 0.18s ease;
+}
+.site-search-form .search-input:not(:placeholder-shown) + .search-submit {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.site-search-form:hover .search-submit,
+.site-search-form:focus-within .search-submit {
+  background: rgba(255,255,255,0.18);
+  color: #fff;
 }
 
 /* ---- Nav dropdown ---- */
@@ -469,13 +514,15 @@ footer {
   .hero { padding: 3rem 0 2.5rem; }
   .hero-light h1 { font-size: 2rem; }
   .nav-logo-img { height: 57px; }
+  .nav-inner { flex-wrap: wrap; }
   .two-col-grid { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
   .site-search-form { order: 3; width: 100%; flex-basis: 100%; }
   .search-page-form,
   .site-search-form { flex-wrap: wrap; }
-  .search-submit { width: 100%; }
+  .search-page-form .search-submit { width: 100%; }
+  .site-search-form .search-submit { width: 2.35rem; }
   .features { padding: 2.5rem 0; }
   .steps-grid { grid-template-columns: 1fr; }
 }
@@ -518,10 +565,10 @@ footer {
         class="search-input"
         type="search"
         name="q"
-        placeholder="Search site"
+        placeholder="Search"
         autocomplete="off"
       >
-      <button type="submit" class="search-submit">Search</button>
+      <button type="submit" class="search-submit" aria-label="Submit search">&#8594;</button>
     </form>
     <a class="btn-cta nav-cta" href="https://app.causalmap.app" target="_blank" rel="noopener noreferrer">Try it free</a>
   </div>
@@ -611,7 +658,8 @@ footer {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("in-view");
-        observer.unobserve(entry.target);
+      } else {
+        entry.target.classList.remove("in-view");
       }
     });
   }, { threshold: 0.2, rootMargin: "0px 0px -12% 0px" });

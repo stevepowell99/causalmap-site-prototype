@@ -223,7 +223,7 @@ def render_search(section, cfg):
           class="search-input"
           type="search"
           name="q"
-          placeholder="Search site"
+          placeholder="Search"
           autocomplete="off"
           data-search-input
         >
@@ -451,6 +451,19 @@ def build_search_script(search_index):
 }})();
 </script>'''
 
+def build_analytics_html(cfg):
+    # Inject Umami only when a site ID is configured.
+    analytics = cfg.get("analytics", {}) or {}
+    umami_id = (analytics.get("umami_id") or "").strip()
+    if not umami_id:
+        return ""
+
+    umami_script = (analytics.get("umami_script") or "https://cloud.umami.is/script.js").strip()
+    return (
+        f'<script defer src="{umami_script}" '
+        f'data-website-id="{umami_id}"></script>'
+    )
+
 def render_sections(page, cfg):
     sections = page.get("sections", [])
     body_html = md(page.get("body", ""))
@@ -502,10 +515,10 @@ def build_nav(pages, cfg):
         class="search-input"
         type="search"
         name="q"
-        placeholder="Search site"
+        placeholder="Search"
         autocomplete="off"
       >
-      <button type="submit" class="search-submit">Search</button>
+      <button type="submit" class="search-submit" aria-label="Submit search">&#8594;</button>
     </form>
 '''
 
@@ -595,7 +608,7 @@ a {
 }
 a:hover { color: var(--cm-teal); }
 
-.container { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
+.container { max-width: 1040px; margin: 0 auto; padding: 0 1.5rem; }
 
 .sr-only {
   position: absolute;
@@ -643,15 +656,15 @@ a:hover { color: var(--cm-teal); }
   background: var(--cm-ink);
   color: #fff;
   position: sticky; top: 0; z-index: 100;
-  padding: 0.75rem 0;
+  padding: 1.35rem 0;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
-.nav-inner { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
+.nav-inner { display: flex; align-items: center; gap: 1rem; flex-wrap: nowrap; }
 .nav-logo {
   text-decoration: none; margin-right: auto; display: flex; align-items: center;
 }
 .nav-logo-img { height: 73px; width: auto; }
-.nav-links { display: flex; align-items: center; gap: 1.25rem; }
+.nav-links { display: flex; align-items: center; gap: 1rem; }
 .nav-links > a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.92rem; transition: color 0.15s; padding: 0.5rem 0; }
 .nav-links a:hover { color: #fff; }
 .nav-cta { margin-left: 0.25rem; }
@@ -662,7 +675,13 @@ a:hover { color: var(--cm-teal); }
   gap: 0.6rem;
 }
 .site-search-form {
-  flex: 0 1 18rem;
+  flex: 0 1 15rem;
+  opacity: 0.55;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.site-search-form:hover,
+.site-search-form:focus-within {
+  opacity: 1;
 }
 .search-input {
   width: 100%;
@@ -678,6 +697,22 @@ a:hover { color: var(--cm-teal); }
   outline: 2px solid var(--cm-teal);
   outline-offset: 1px;
 }
+.site-search-form .search-input {
+  border-color: rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.72);
+  padding: 0.56rem 0.85rem;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+.site-search-form .search-input::placeholder {
+  color: rgba(255,255,255,0.74);
+}
+.site-search-form:hover .search-input,
+.site-search-form:focus-within .search-input {
+  border-color: rgba(255,255,255,0.34);
+  background: rgba(255,255,255,0.13);
+  color: #fff;
+}
 .search-submit {
   border: 0;
   border-radius: 999px;
@@ -691,6 +726,28 @@ a:hover { color: var(--cm-teal); }
 }
 .search-submit:hover {
   background: var(--cm-teal);
+}
+.site-search-form .search-submit {
+  width: 2.35rem;
+  min-width: 2.35rem;
+  padding: 0.56rem 0;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.72);
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: background 0.18s ease, color 0.18s ease, opacity 0.18s ease;
+}
+.site-search-form .search-input:not(:placeholder-shown) + .search-submit {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.site-search-form:hover .search-submit,
+.site-search-form:focus-within .search-submit {
+  background: rgba(255,255,255,0.18);
+  color: #fff;
 }
 
 /* ---- Nav dropdown ---- */
@@ -1017,13 +1074,15 @@ footer {
   .hero { padding: 3rem 0 2.5rem; }
   .hero-light h1 { font-size: 2rem; }
   .nav-logo-img { height: 57px; }
+  .nav-inner { flex-wrap: wrap; }
   .two-col-grid { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
   .site-search-form { order: 3; width: 100%; flex-basis: 100%; }
   .search-page-form,
   .site-search-form { flex-wrap: wrap; }
-  .search-submit { width: 100%; }
+  .search-page-form .search-submit { width: 100%; }
+  .site-search-form .search-submit { width: 2.35rem; }
   .features { padding: 2.5rem 0; }
   .steps-grid { grid-template-columns: 1fr; }
 }
@@ -1040,6 +1099,7 @@ def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="",
     site_name = cfg.get("site_name", "Causal Map")
     desc = meta_desc or "Causal mapping software for qualitative research and evaluation"
     search_script = build_search_script(search_index) if search_index is not None else ""
+    analytics_html = build_analytics_html(cfg)
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1052,6 +1112,7 @@ def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="",
   <title>{title} | {site_name}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  {analytics_html}
   <style>{build_css(cfg)}</style>
 </head>
 <body>
@@ -1076,7 +1137,8 @@ def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="",
     entries.forEach((entry) => {{
       if (entry.isIntersecting) {{
         entry.target.classList.add("in-view");
-        observer.unobserve(entry.target);
+      }} else {{
+        entry.target.classList.remove("in-view");
       }}
     }});
   }}, {{ threshold: 0.2, rootMargin: "0px 0px -12% 0px" }});

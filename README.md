@@ -82,6 +82,10 @@ The build script supports these section types:
 
 Brand colours are defined in `config.yml` and exposed in the generated CSS as the `:root` variables `--cm-ink`, `--cm-pink`, `--cm-green`, `--cm-teal`, `--cm-bg`, and `--cm-text`.
 
+## Analytics
+
+Umami is configured in `config.yml` under `analytics`. Set `umami_id` to your Umami website ID to inject the tracking script sitewide. If you are using a self-hosted Umami instance, change `umami_script`; otherwise leave the default cloud URL.
+
 ## Building
 
 ```bash
