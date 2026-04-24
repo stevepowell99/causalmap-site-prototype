@@ -5,7 +5,7 @@ sections:
   - type: prose
 ---
 
-You can access Causal Map for free by signing up in the app. No credit card required.
+You can access Causal Map for <span class="hl hl-green">free</span> by signing up in the app. No credit card required.
 
 The core functionality is free for everyone: unlimited projects, unlimited coding.
 
@@ -21,7 +21,7 @@ Choose your subscription directly from the Account tab in the app: [app.causalma
 
 ## AI add-on
 
-Any paid subscription can add AI features for an additional £18/month (£144/year). Free users get a fixed monthly allowance of AI credits at no cost.
+Any paid subscription can add <span class="hl hl-yellow">AI features</span> for an additional £18/month (£144/year). Free users get a fixed monthly allowance of AI credits at no cost.
 
 With the AI add-on you get:
 
@@ -65,7 +65,7 @@ If you expect to use Causal Map for more than five months in a year, the annual 
 
 ### 50% discount for individuals
 
-Individual students and researchers can get 50% off by using the code "QYMZU3MW" at checkout.
+Individual students and researchers can get <span class="hl hl-pink">50% off</span> by using the code "QYMZU3MW" at checkout.
 
 Organisations in the Global South may also be eligible for a similar discount: [get in touch](mailto:hello@causalmap.app).
 

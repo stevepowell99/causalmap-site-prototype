@@ -8,7 +8,7 @@ sections:
 
 ## Causal Map Ethical Principles
 
-We are committed to supporting rigorous, ethical qualitative research. These principles guide how we design Causal Map, how we support our users, and how we operate our business.
+We are committed to supporting <span class="hl hl-yellow">rigorous, ethical qualitative research</span>. These principles guide how we design Causal Map, how we support our users, and how we operate our business.
 
 ### 1. Global equity
 
@@ -30,7 +30,7 @@ We are committed to ethical labour practices and human rights. We:
 
 ### 3. AI transparency
 
-We use AI features to assist users, but never as a replacement for human judgment. We:
+We use AI features to assist users, but never as a replacement for <span class="hl hl-pink">human judgment</span>. We:
 
 - Are transparent about how AI works and where it is used in Causal Map.
 - Make all AI features optional — users can code entirely manually if they prefer.
@@ -71,7 +71,7 @@ People who provide data (research participants) deserve respect and protection. 
 
 ### 7. Data protection
 
-We protect the personal data and research data entrusted to us. We:
+We protect the <span class="hl hl-green">personal data and research data</span> entrusted to us. We:
 
 - Encrypt all data at rest and in transit using industry-standard security.
 - Do not sell, share, or use your data for any purpose except providing the Service.

@@ -12,7 +12,7 @@ description: About Causal Map Ltd and the team.
 sections:
   - type: hero-light
     headline: About us
-    subhead: Making connections visible.
+    subhead: <span class="hl hl-yellow">Making connections.</span>
   - type: prose
   - type: team
     heading: The team
@@ -56,6 +56,6 @@ sections:
       
 ---
 
-Causal Map Ltd is a social research software company based in Bath, UK. We built Causal Map to make causal analysis accessible to everyone: evaluators, researchers, and non-specialists who work with qualitative data.
+Causal Map Ltd is a social research software company based in Bath, UK. We built Causal Map to make <span class="hl hl-green">causal analysis accessible</span> to everyone: evaluators, researchers, and non-specialists who work with qualitative data.
 
-Steve Powell has been working with Fiona Remnant and James Copestake from Bath Social and Development Research Ltd since 2019 to bring Causal Map to life. In summer 2020 they set up Causal Map Ltd to further develop and promote the app.
+Steve Powell has been working with Fiona Remnant and James Copestake from Bath Social and Development Research Ltd since 2019 to <span class="hl hl-pink">bring Causal Map to life</span>. In summer 2020 they set up Causal Map Ltd to further develop and promote the app.

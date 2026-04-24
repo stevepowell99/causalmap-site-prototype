@@ -17,7 +17,7 @@ sections:
     subhead: >
       Evaluators, researchers, and consultants use Causal Map to understand
       what people say causes what in interviews, reports, and surveys, then
-      turn those findings into clear, evidence-based answers.
+      turn those findings into <span class="hl hl-yellow">clear, evidence-based answers</span>.
   - type: steps
     items:
       - title: Upload
@@ -35,9 +35,9 @@ sections:
       - title: Hands-on coding
         text: A clean interface for close reading. You read your sources and highlight [causal claims](/causal-mapping) as you go. Manual coding works well for up to around 30 interviews and gives you the closest engagement with your data. Ideal for students and researchers.
       - title: Optional AI coding
-        text: For larger datasets (hundreds of documents), AI extracts causal connections at scale while you review and edit. AI handles the routine extraction; you make the analytical judgements. Human oversight throughout. [Learn more](https://garden.causalmap.app/simple-ai/).
+        text: For larger datasets (hundreds of documents), <span class="hl hl-green">AI extracts causal connections at scale</span> while you review and edit. AI handles the routine extraction; you make the analytical judgements. Human oversight throughout. [Learn more](https://garden.causalmap.app/simple-ai/).
       - title: Questions you can answer
-        text: Does the programme work the way it is supposed to? Which factors matter most? Do different groups describe different pathways? What is unexpected? The [Guide](https://garden.causalmap.app/questions-introduction/) documents over twenty question types with worked examples.
+        text: Does the programme work the way it is supposed to? Which factors matter most? Do different groups describe different pathways? What is unexpected? The [Guide](https://garden.causalmap.app/questions-introduction/) documents <span class="hl hl-pink">over twenty question types</span> with worked examples.
   - type: video
     url: https://vimeo.com/689223728
   - type: two-col

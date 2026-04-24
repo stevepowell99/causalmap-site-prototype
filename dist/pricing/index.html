@@ -14,6 +14,7 @@
   --cm-pink: #ff8fb8;
   --cm-green: #00ffaf;
   --cm-teal: #6dc4c8;
+  --cm-yellow: #f7ed73;
   --cm-bg: #fcfcfc;
   --cm-text: #222;
   --cm-light: #f4f6f8;
@@ -21,6 +22,8 @@
   --radius: 8px;
   --cm-green-light: rgba(0, 255, 175, 0.08);
   --cm-teal-light: rgba(109, 196, 200, 0.1);
+  --cm-yellow-light: rgba(247, 237, 115, 0.75);
+  --cm-pink-light: rgba(255, 143, 184, 0.45);
 }
 
 
@@ -34,9 +37,38 @@ body {
   line-height: 1.6;
 }
 
-a { transition: color 0.15s; }
+a {
+  color: var(--cm-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--cm-teal);
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+a:hover { color: var(--cm-teal); }
 
 .container { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* ---- Inline highlights ---- */
+.hl {
+  padding: 0 0.15em;
+  border-radius: 0.2em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.hl-yellow { background: linear-gradient(transparent 38%, var(--cm-yellow-light) 38%, var(--cm-yellow-light) 88%, transparent 88%); }
+.hl-pink { background: linear-gradient(transparent 38%, var(--cm-pink-light) 38%, var(--cm-pink-light) 88%, transparent 88%); }
+.hl-green { background: linear-gradient(transparent 38%, var(--cm-green-light) 38%, var(--cm-green-light) 88%, transparent 88%); }
+
+/* ---- Heading reveal ---- */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.scroll-reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* ---- Section divider ---- */
 .section-divider {
@@ -162,9 +194,6 @@ a { transition: color 0.15s; }
 .feature-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
 .feature-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--cm-ink); font-weight: 600; }
 .feature-card p { font-size: 0.95rem; color: #555; }
-.feature-card a, .step-item a, .two-col a, .hero a, .hero-light-inner a { color: var(--cm-ink); text-decoration: underline; text-decoration-color: var(--cm-teal); text-underline-offset: 2px; }
-.feature-card a:hover, .step-item a:hover, .two-col a:hover, .hero a:hover, .hero-light-inner a:hover { color: var(--cm-teal); }
-
 /* ---- Video ---- */
 .video-section { padding: 3.5rem 0; }
 .video-wrap {
@@ -185,9 +214,6 @@ a { transition: color 0.15s; }
 .two-col-grid > div:nth-child(2) { border-left-color: var(--cm-teal); }
 .two-col h2 { font-size: 1.35rem; margin-bottom: 0.75rem; color: var(--cm-ink); font-weight: 600; }
 .two-col p, .two-col li { font-size: 0.95rem; }
-.two-col a { color: var(--cm-ink); text-decoration: underline; text-underline-offset: 2px; }
-.two-col a:hover { color: var(--cm-teal); }
-
 /* ---- Steps ---- */
 .steps { padding: 4rem 0; background: var(--cm-light); }
 .steps-grid {
@@ -265,7 +291,7 @@ a { transition: color 0.15s; }
 }
 .team-card:hover img { border-color: var(--cm-green); box-shadow: 0 0 0 4px rgba(121,187,147,0.15); }
 .team-card h3 { font-size: 1.1rem; color: var(--cm-ink); margin-bottom: 0.25rem; }
-.team-card .team-role { font-size: 0.85rem; color: var(--cm-green); font-weight: 600; margin-bottom: 0.5rem; }
+.team-card .team-role { font-size: 0.85rem; color: var(--cm-teal); font-weight: 600; margin-bottom: 0.5rem; }
 .team-card p { font-size: 0.9rem; color: #555; line-height: 1.55; }
 .team-link { font-size: 0.8rem; color: var(--cm-teal); text-decoration: none; font-weight: 400; }
 .team-link:hover { color: var(--cm-green); }
@@ -283,8 +309,6 @@ a { transition: color 0.15s; }
 .prose-section ul, .prose-section ol { margin: 0 0 1rem 1.5rem; }
 .prose-section li { margin-bottom: 0.35rem; }
 .prose-section li::marker { color: var(--cm-teal); }
-.prose-section a { color: var(--cm-ink); text-decoration: underline; text-underline-offset: 2px; }
-.prose-section a:hover { color: var(--cm-teal); }
 .prose-section strong { color: var(--cm-ink); font-weight: 600; }
 
 /* Prose callout */
@@ -311,7 +335,13 @@ a { transition: color 0.15s; }
 }
 .prose-section tr:nth-child(even) td { background: #fafbfc; }
 .prose-section td:first-child { font-weight: 500; color: var(--cm-ink); }
-.prose-section td.check { color: var(--cm-green); font-weight: 700; font-size: 1.1rem; text-align: center; }
+.prose-section td.check {
+  color: #0f6b4e;
+  font-weight: 800;
+  font-size: 1.2rem;
+  text-align: center;
+  text-shadow: 0 0 0.01px currentColor;
+}
 
 /* ---- Footer ---- */
 footer {
@@ -343,6 +373,13 @@ footer {
   .nav-links { display: none; }
   .features { padding: 2.5rem 0; }
   .steps-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 </style>
 </head>
@@ -377,16 +414,15 @@ footer {
 <section class="hero-light">
   <div class="container">
     <h1>Pricing</h1>
-    <div class="hero-sub"><p>App subscriptions. For project-based support, see our <a href="../consultancy/index.html">consultancy page</a>.</p></div>
+    <div class="hero-sub"><p><span class="hl hl-yellow">App subscriptions</span>. For project-based support, see our <a href="../consultancy/index.html">consultancy page</a>.</p></div>
   </div>
 </section>
 <hr class="section-divider">
 <section class="prose-section">
   <div class="container">
     <h2>App subscriptions</h2>
-<p>You can access Causal Map for free by signing up in the app. No credit card required. The core functionality is free for everyone: unlimited projects, unlimited coding.</p>
+<p>You can access Causal Map for <span class="hl hl-green">free</span> by signing up in the app. No credit card required. The core functionality is free for everyone: unlimited projects, unlimited coding.</p>
 <p>Choose your subscription directly from the Account tab in the app: <a href="https://app.causalmap.app/">app.causalmap.app</a></p>
-<p>If you need project-based support rather than a software subscription, see our <a href="../consultancy/index.html">consultancy page</a>.</p>
 <p><strong>Free:</strong> Everything you need to get started. Unlimited projects and coding. Your projects are public.</p>
 <p><strong>Private</strong> (from £18/month): Keep your projects private. Email support.</p>
 <p><strong>Pro</strong> (from £38/month): Everything in Private, plus <a href="https://garden.causalmap.app/versioning/">versioning</a>, <a href="https://garden.causalmap.app/bookmarks-reports/">bookmarks and reports</a>, and a dedicated <a href="https://garden.causalmap.app/pivot-panel/">statistics panel</a>.</p>
@@ -547,8 +583,10 @@ footer {
 </tbody>
 </table>
 <p>If you expect to use Causal Map for more than five months in a year, the annual subscription is better value.</p>
-<h2>AI add-on</h2>
-<p>Any paid subscription can add AI features for an additional £18/month (£144/year). Free users get a fixed monthly allowance of AI credits at no cost. With the AI add-on you get: <a href="https://garden.causalmap.app/simple-ai/">Simple AI Coding</a>, <a href="https://garden.causalmap.app/answers-panel/">AI Answers</a>, <a href="https://garden.causalmap.app/howto-vignettes/">Vignettes</a>, <a href="https://garden.causalmap.app/filter-link-tab/#soft-recode-plus">Soft Recode Plus</a>, and <a href="https://garden.causalmap.app/filter-link-tab/#hierarchical-cluster-filter">Auto Recode</a>.</p>
+<h2>AI add-ons</h2>
+<p>Free users get a fixed monthly allowance of AI credits at no cost. 
+Any paid subscription can upgrade for <span class="hl hl-pink">substantial additional credits</span> for all the AI features. 
+With the AI add-ons you get: <a href="https://garden.causalmap.app/simple-ai/">Simple AI Coding</a>, <a href="https://garden.causalmap.app/answers-panel/">AI Answers</a>, <a href="https://garden.causalmap.app/howto-vignettes/">Vignettes</a> and <a href="https://garden.causalmap.app/filter-link-tab/#soft-recode-plus">Soft Recode</a>.</p>
 <h2>Discounts</h2>
 <p>Individual students and researchers can get 50% off by using the code &ldquo;QYMZU3MW&rdquo; at checkout. Organisations in the Global South may also be eligible for a similar discount: <a href="mailto:hello@causalmap.app">get in touch</a>. For bulk purchases (e.g. educational institutions), please <a href="mailto:hello@causalmap.app">contact us</a>.</p>
 <h2>More about subscriptions</h2>
@@ -576,5 +614,29 @@ footer {
     <p class="footer-copy">This work is licensed under CC BY-NC 4.0</p>
   </div>
 </footer>
+<script>
+(function () {
+  const headings = document.querySelectorAll("main h1, main h2, main h3");
+  if (!headings.length) return;
+
+  headings.forEach((heading) => heading.classList.add("scroll-reveal"));
+
+  if (!("IntersectionObserver" in window)) {
+    headings.forEach((heading) => heading.classList.add("in-view"));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in-view");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.2, rootMargin: "0px 0px -12% 0px" });
+
+  headings.forEach((heading) => observer.observe(heading));
+})();
+</script>
 </body>
 </html>

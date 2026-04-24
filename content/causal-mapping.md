@@ -9,13 +9,13 @@ sections:
   - type: prose
 ---
 
-People who run programmes, whether in international development, public health, education, or social policy, need to know whether those programmes work, and why. Researchers and consultants studying complex problems need to understand what people say causes what. That is where causal mapping comes in.
+People who run programmes, whether in international development, public health, education, or social policy, need to know whether those programmes work, and why. Researchers and consultants studying complex problems need to understand <span class="hl hl-yellow">what people say causes what</span>. That is where causal mapping comes in.
 
 ## Who uses it, and for what?
 
 Causal Map is used by four main groups, often overlapping:
 
-**Evaluators** need to check whether a programme produced the changes it was supposed to. Funders and programme managers set out a "[theory of change](https://garden.causalmap.app/theory-of-change/)": if we do X, it should lead to Y, which should lead to Z. Causal mapping lets you [test that theory](https://garden.causalmap.app/testing-theory-of-change/) against what participants, staff, and beneficiaries actually say happened.
+**Evaluators** need to check whether a programme produced the changes it was supposed to. Funders and programme managers set out a "[theory of change](https://garden.causalmap.app/theory-of-change/)": if we do X, it should lead to Y, which should lead to Z. Causal mapping lets you <span class="hl hl-green">[test that theory](https://garden.causalmap.app/testing-theory-of-change/)</span> against what participants, staff, and beneficiaries actually say happened.
 
 **Researchers** in social science, public health, and development want to structure qualitative findings around causal claims, not just themes. Causal mapping captures what people say leads to what, so you can [compare accounts](https://garden.causalmap.app/comparing-groups/), [trace pathways](https://garden.causalmap.app/path-tracing/), and identify what matters most.
 
@@ -29,7 +29,7 @@ In qualitative research, "coding" means reading through your sources (interviews
 
 ## What can you do with the results?
 
-Once you have coded your data, you can ask questions that ordinary thematic analysis cannot reach. For example: which factors do people mention most as [drivers or outcomes](https://garden.causalmap.app/main-outcomes/)? Do [different groups](https://garden.causalmap.app/comparing-groups/) (men and women, staff and beneficiaries, different regions) describe different pathways? Does the evidence support your [theory of change](https://garden.causalmap.app/testing-theory-of-change/), and where does it break down? What is [unexpected](https://garden.causalmap.app/unexpected-factors/)? Are there [feedback loops](https://garden.causalmap.app/feedback-loops/) or leverage points in the system?
+Once you have coded your data, you can ask questions that <span class="hl hl-pink">ordinary thematic analysis cannot reach</span>. For example: which factors do people mention most as [drivers or outcomes](https://garden.causalmap.app/main-outcomes/)? Do [different groups](https://garden.causalmap.app/comparing-groups/) (men and women, staff and beneficiaries, different regions) describe different pathways? Does the evidence support your [theory of change](https://garden.causalmap.app/testing-theory-of-change/), and where does it break down? What is [unexpected](https://garden.causalmap.app/unexpected-factors/)? Are there [feedback loops](https://garden.causalmap.app/feedback-loops/) or leverage points in the system?
 
 The [Causal Mapping Guide](https://garden.causalmap.app/) documents over twenty specific question types with worked examples, from frequency counts and group comparisons to path tracing and systems analysis.
 

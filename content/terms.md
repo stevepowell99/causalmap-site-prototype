@@ -12,7 +12,7 @@ sections:
 
 ### 1. Service description
 
-Causal Map Ltd ("Company", "we", "us") provides a cloud-based software service for qualitative data analysis and causal mapping ("Service"). The Service is accessed via web browser and includes tools for coding causal narratives, analysing data, and creating visualisations.
+Causal Map Ltd ("Company", "we", "us") provides a <span class="hl hl-yellow">cloud-based software service</span> for qualitative data analysis and causal mapping ("Service"). The Service is accessed via web browser and includes tools for coding causal narratives, analysing data, and creating visualisations.
 
 ### 2. Account and subscriptions
 
@@ -35,14 +35,14 @@ You agree not to:
 
 ### 4. Your data
 
-- You own all data you upload to the Service.
+- <span class="hl hl-green">You own all data you upload</span> to the Service.
 - We use your data only to provide the Service, improve our product, and comply with legal obligations.
 - We do not sell, share, or use your data for marketing without your consent.
 - You are responsible for ensuring that you have the right to upload and use your data, including obtaining necessary consent from research participants.
 
 ### 5. AI features
 
-Some features use artificial intelligence (AI) to suggest codes, analyse patterns, or generate summaries. AI suggestions are not guaranteed to be accurate. You are responsible for reviewing, editing, and validating all AI suggestions. We do not accept liability for errors or omissions in AI-generated content.
+Some features use artificial intelligence (AI) to suggest codes, analyse patterns, or generate summaries. <span class="hl hl-pink">AI suggestions are not guaranteed to be accurate.</span> You are responsible for reviewing, editing, and validating all AI suggestions. We do not accept liability for errors or omissions in AI-generated content.
 
 ### 6. Limitation of liability
 

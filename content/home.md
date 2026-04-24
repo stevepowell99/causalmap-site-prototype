@@ -16,11 +16,11 @@ sections:
   - type: features
     columns:
       - title: Test whether programmes work
-        text: You have a theory of how your programme is supposed to create change. Causal Map lets you check that theory against what stakeholders actually say, and see where the evidence is strong or missing. [What is causal mapping?](/causal-mapping)
+        text: You have a theory of how your programme is supposed to create change. Causal Map lets you check that <span class="hl hl-green">theory against what stakeholders actually say</span>, and see where the evidence is strong or missing. [What is causal mapping?](/causal-mapping)
       - title: Find out what drives what
         text: Read through your interviews and mark the causal connections people describe ("training improved my confidence"). Then filter, compare groups, and see which factors come up most as [drivers or outcomes](https://garden.causalmap.app/main-outcomes/).
       - title: Present the evidence
-        text: Generate interactive maps and visual reports that show exactly how you arrived at each finding. Every claim links back to the source text. See [case studies](/resources).
+        text: Generate interactive maps and <span class="hl hl-pink">visual reports</span> that show exactly how you arrived at each finding. Every claim links back to the source text. See [case studies](/resources).
   - type: video
     url: https://vimeo.com/689223728
   - type: two-col
@@ -47,13 +47,13 @@ sections:
   - type: testimonials
     heading: What our users say
     items:
-      - name: Christoph Jaschek
+      - name: Christoph (Researcher)
         quote: >
           I chose Causal Map because of its appealing visualisation
           of the maps and the variety of tools that make a comprehensive
           analysis possible. I also highly appreciated the personal and
           user-oriented support from Steve and his team.
-      - name: Michelle James
+      - name: Michelle (Researcher)
         quote: >
           I found the Causal Map app particularly helpful in combining
           a diverse range of data sources into one place, and the simple

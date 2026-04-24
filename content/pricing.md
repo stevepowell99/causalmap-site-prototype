@@ -7,17 +7,16 @@ description: Subscription plans and consultancy services.
 sections:
   - type: hero-light
     headline: Pricing
-    subhead: App subscriptions. For project-based support, see our [consultancy page](/consultancy).
+    subhead: <span class="hl hl-yellow">App subscriptions</span>. For project-based support, see our [consultancy page](/consultancy).
   - type: prose
 ---
 
 ## App subscriptions
 
-You can access Causal Map for free by signing up in the app. No credit card required. The core functionality is free for everyone: unlimited projects, unlimited coding.
+You can access Causal Map for <span class="hl hl-green">free</span> by signing up in the app. No credit card required. The core functionality is free for everyone: unlimited projects, unlimited coding.
 
 Choose your subscription directly from the Account tab in the app: [app.causalmap.app](https://app.causalmap.app/)
 
-If you need project-based support rather than a software subscription, see our [consultancy page](/consultancy).
 
 **Free:** Everything you need to get started. Unlimited projects and coding. Your projects are public.
 
@@ -59,9 +58,11 @@ Prices are per user, plus UK VAT (20%) where applicable.
 
 If you expect to use Causal Map for more than five months in a year, the annual subscription is better value.
 
-## AI add-on
+## AI add-ons
 
-Any paid subscription can add AI features for an additional £18/month (£144/year). Free users get a fixed monthly allowance of AI credits at no cost. With the AI add-on you get: [Simple AI Coding](https://garden.causalmap.app/simple-ai/), [AI Answers](https://garden.causalmap.app/answers-panel/), [Vignettes](https://garden.causalmap.app/howto-vignettes/), [Soft Recode Plus](https://garden.causalmap.app/filter-link-tab/#soft-recode-plus), and [Auto Recode](https://garden.causalmap.app/filter-link-tab/#hierarchical-cluster-filter).
+Free users get a fixed monthly allowance of AI credits at no cost. 
+Any paid subscription can upgrade for <span class="hl hl-pink">substantial additional credits</span> for all the AI features. 
+With the AI add-ons you get: [Simple AI Coding](https://garden.causalmap.app/simple-ai/), [AI Answers](https://garden.causalmap.app/answers-panel/), [Vignettes](https://garden.causalmap.app/howto-vignettes/) and [Soft Recode](https://garden.causalmap.app/filter-link-tab/#soft-recode-plus).
 
 ## Discounts
 

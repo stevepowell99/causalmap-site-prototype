@@ -337,6 +337,7 @@ def build_css(cfg):
     cm_pink = colors.get("accent_pink", "#ff8fb8")
     cm_green = colors.get("accent_primary", "#00ffaf")
     cm_teal = colors.get("accent_secondary", "#6dc4c8")
+    cm_yellow = colors.get("highlight_yellow", "#f7ed73")
     cm_bg = colors.get("body_bg", "#fcfcfc")
     cm_text = colors.get("text", "#222")
     return f''':root {{
@@ -344,6 +345,7 @@ def build_css(cfg):
   --cm-pink: {cm_pink};
   --cm-green: {cm_green};
   --cm-teal: {cm_teal};
+  --cm-yellow: {cm_yellow};
   --cm-bg: {cm_bg};
   --cm-text: {cm_text};
   --cm-light: #f4f6f8;
@@ -351,6 +353,8 @@ def build_css(cfg):
   --radius: 8px;
   --cm-green-light: {rgba(cm_green, 0.08)};
   --cm-teal-light: {rgba(cm_teal, 0.10)};
+  --cm-yellow-light: {rgba(cm_yellow, 0.75)};
+  --cm-pink-light: {rgba(cm_pink, 0.45)};
 }}
 
 {CSS_BODY}'''
@@ -366,9 +370,38 @@ body {
   line-height: 1.6;
 }
 
-a { transition: color 0.15s; }
+a {
+  color: var(--cm-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--cm-teal);
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+a:hover { color: var(--cm-teal); }
 
 .container { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* ---- Inline highlights ---- */
+.hl {
+  padding: 0 0.15em;
+  border-radius: 0.2em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.hl-yellow { background: linear-gradient(transparent 38%, var(--cm-yellow-light) 38%, var(--cm-yellow-light) 88%, transparent 88%); }
+.hl-pink { background: linear-gradient(transparent 38%, var(--cm-pink-light) 38%, var(--cm-pink-light) 88%, transparent 88%); }
+.hl-green { background: linear-gradient(transparent 38%, var(--cm-green-light) 38%, var(--cm-green-light) 88%, transparent 88%); }
+
+/* ---- Heading reveal ---- */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.scroll-reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* ---- Section divider ---- */
 .section-divider {
@@ -494,9 +527,6 @@ a { transition: color 0.15s; }
 .feature-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
 .feature-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--cm-ink); font-weight: 600; }
 .feature-card p { font-size: 0.95rem; color: #555; }
-.feature-card a, .step-item a, .two-col a, .hero a, .hero-light-inner a { color: var(--cm-ink); text-decoration: underline; text-decoration-color: var(--cm-teal); text-underline-offset: 2px; }
-.feature-card a:hover, .step-item a:hover, .two-col a:hover, .hero a:hover, .hero-light-inner a:hover { color: var(--cm-teal); }
-
 /* ---- Video ---- */
 .video-section { padding: 3.5rem 0; }
 .video-wrap {
@@ -517,9 +547,6 @@ a { transition: color 0.15s; }
 .two-col-grid > div:nth-child(2) { border-left-color: var(--cm-teal); }
 .two-col h2 { font-size: 1.35rem; margin-bottom: 0.75rem; color: var(--cm-ink); font-weight: 600; }
 .two-col p, .two-col li { font-size: 0.95rem; }
-.two-col a { color: var(--cm-ink); text-decoration: underline; text-underline-offset: 2px; }
-.two-col a:hover { color: var(--cm-teal); }
-
 /* ---- Steps ---- */
 .steps { padding: 4rem 0; background: var(--cm-light); }
 .steps-grid {
@@ -597,7 +624,7 @@ a { transition: color 0.15s; }
 }
 .team-card:hover img { border-color: var(--cm-green); box-shadow: 0 0 0 4px rgba(121,187,147,0.15); }
 .team-card h3 { font-size: 1.1rem; color: var(--cm-ink); margin-bottom: 0.25rem; }
-.team-card .team-role { font-size: 0.85rem; color: var(--cm-green); font-weight: 600; margin-bottom: 0.5rem; }
+.team-card .team-role { font-size: 0.85rem; color: var(--cm-teal); font-weight: 600; margin-bottom: 0.5rem; }
 .team-card p { font-size: 0.9rem; color: #555; line-height: 1.55; }
 .team-link { font-size: 0.8rem; color: var(--cm-teal); text-decoration: none; font-weight: 400; }
 .team-link:hover { color: var(--cm-green); }
@@ -615,8 +642,6 @@ a { transition: color 0.15s; }
 .prose-section ul, .prose-section ol { margin: 0 0 1rem 1.5rem; }
 .prose-section li { margin-bottom: 0.35rem; }
 .prose-section li::marker { color: var(--cm-teal); }
-.prose-section a { color: var(--cm-ink); text-decoration: underline; text-underline-offset: 2px; }
-.prose-section a:hover { color: var(--cm-teal); }
 .prose-section strong { color: var(--cm-ink); font-weight: 600; }
 
 /* Prose callout */
@@ -643,7 +668,13 @@ a { transition: color 0.15s; }
 }
 .prose-section tr:nth-child(even) td { background: #fafbfc; }
 .prose-section td:first-child { font-weight: 500; color: var(--cm-ink); }
-.prose-section td.check { color: var(--cm-green); font-weight: 700; font-size: 1.1rem; text-align: center; }
+.prose-section td.check {
+  color: #0f6b4e;
+  font-weight: 800;
+  font-size: 1.2rem;
+  text-align: center;
+  text-shadow: 0 0 0.01px currentColor;
+}
 
 /* ---- Footer ---- */
 footer {
@@ -676,6 +707,13 @@ footer {
   .features { padding: 2.5rem 0; }
   .steps-grid { grid-template-columns: 1fr; }
 }
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
 '''
 
 def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc=""):
@@ -700,6 +738,30 @@ def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="")
 {content_html}
 </main>
 {footer_html}
+<script>
+(function () {{
+  const headings = document.querySelectorAll("main h1, main h2, main h3");
+  if (!headings.length) return;
+
+  headings.forEach((heading) => heading.classList.add("scroll-reveal"));
+
+  if (!("IntersectionObserver" in window)) {{
+    headings.forEach((heading) => heading.classList.add("in-view"));
+    return;
+  }}
+
+  const observer = new IntersectionObserver((entries) => {{
+    entries.forEach((entry) => {{
+      if (entry.isIntersecting) {{
+        entry.target.classList.add("in-view");
+        observer.unobserve(entry.target);
+      }}
+    }});
+  }}, {{ threshold: 0.2, rootMargin: "0px 0px -12% 0px" }});
+
+  headings.forEach((heading) => observer.observe(heading));
+}})();
+</script>
 </body>
 </html>'''
 

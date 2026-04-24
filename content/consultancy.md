@@ -5,14 +5,14 @@ description: Embed our causal mapping expertise in your evaluation or research p
 sections:
   - type: hero-light
     headline: Consultancy
-    subhead: Embed our [causal mapping](/causal-mapping) expertise in your project.
+    subhead: Embed our <span class="hl hl-yellow">[causal mapping](/causal-mapping) expertise</span> in your project.
 ---
 
 ## How we work
 
-We join your analytical team. You bring the research questions and the data; we bring the [causal mapping](/causal-mapping) method and the tools. We work with you from scoping through to interpretation, not just deliver a report and walk away.
+We join your <span class="hl hl-green">analytical team</span>. You bring the research questions and the data; we bring the [causal mapping](/causal-mapping) method and the tools. We work with you from scoping through to interpretation, not just deliver a report and walk away.
 
-For large datasets (hundreds of interviews or documents), we use Causal Map's AI coding to extract causal links at scale, with human review throughout. For smaller projects, we code manually. Either way, you get a visual report showing what your stakeholders say causes what, where they agree, and where they differ.
+For large datasets (hundreds of interviews or documents), we use Causal Map's AI coding to extract causal links at scale, with human review throughout. For smaller projects, we code manually. Either way, you get a <span class="hl hl-pink">visual report</span> showing what your stakeholders say causes what, where they agree, and where they differ.
 
 ## What we offer
 

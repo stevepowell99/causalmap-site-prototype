@@ -12,7 +12,7 @@ sections:
 
 ### 1. Availability guarantee
 
-We aim to maintain 99.5% uptime for the Causal Map Service. Uptime is measured excluding scheduled maintenance and events beyond our control (e.g. ISP outages, DDoS attacks).
+We aim to maintain <span class="hl hl-green">99.5% uptime</span> for the Causal Map Service. Uptime is measured excluding scheduled maintenance and events beyond our control (e.g. ISP outages, DDoS attacks).
 
 ### 2. Scheduled maintenance
 
@@ -24,7 +24,7 @@ We perform maintenance during off-peak hours (typically 00:00-06:00 UTC, weekday
 - Email support: response within 48 hours on business days
 
 **Pro and Team plans:**
-- Priority email support: response within 24 hours on business days
+- Priority email support: <span class="hl hl-yellow">response within 24 hours</span> on business days
 - Dedicated support contact for Team plans
 - Phone support available for Team plan customers
 
@@ -36,7 +36,7 @@ We perform maintenance during off-peak hours (typically 00:00-06:00 UTC, weekday
 
 ### 5. Data backup
 
-- Your data is backed up daily and retained for 30 days.
+- Your data is <span class="hl hl-pink">backed up daily</span> and retained for 30 days.
 - You can restore your data via your account or contact support.
 
 ### 6. Security

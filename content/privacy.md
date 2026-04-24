@@ -22,10 +22,10 @@ Please email [hello@causalmap.app](mailto:hello@causalmap.app) and we will send 
 
 ## Summary
 
-- **Your data belongs to you.** We do not sell or share your data with third parties.
-- **We use industry-standard security** including encryption at rest and in transit.
+- **<span class="hl hl-green">Your data belongs to you.</span>** We do not sell or share your data with third parties.
+- **We use <span class="hl hl-yellow">industry-standard security</span>** including encryption at rest and in transit.
 - **You can export or delete your data at any time** from your account.
-- **AI compliance:** We are compliant with UK AI Bill and GDPR requirements on automated decision-making. AI features are optional and always subject to human review.
+- **AI compliance:** We are compliant with UK AI Bill and GDPR requirements on automated decision-making. <span class="hl hl-pink">AI features are optional</span> and always subject to human review.
 - **Research participants:** If your data contains research participant information, you must obtain consent before uploading. We provide privacy-by-default settings for sensitive data.
 
 ## Questions?

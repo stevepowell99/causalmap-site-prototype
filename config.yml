@@ -9,6 +9,7 @@ colors:
   accent_secondary: "#6dc4c8"
   accent_ink: "#1f1f36"
   accent_pink: "#ff8fb8"
+  highlight_yellow: "#f7ed73"
   body_bg: "#fcfcfc"
   text: "#222"
 
