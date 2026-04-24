@@ -5,10 +5,9 @@ input_dir: content
 output_dir: dist
 
 colors:
-  accent_primary: "#79bb93"
-  accent_secondary: "#90c3c6"
+  accent_primary: "#00ffaf"
+  accent_secondary: "#6dc4c8"
   accent_ink: "#1f1f36"
-  accent_teal: "#6dc4c8"
   accent_pink: "#ff8fb8"
   body_bg: "#fcfcfc"
   text: "#222"

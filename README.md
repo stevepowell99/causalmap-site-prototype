@@ -78,12 +78,7 @@ The build script supports these section types:
 
 ## Brand colours
 
-Defined in `config.yml` and as CSS variables in `build.py`:
-
-- `--cm-ink`: #1f1f36 (dark blue, text and backgrounds)
-- `--cm-pink`: #ff8fb8
-- `--cm-green`: #79bb93
-- `--cm-teal`: #90c3c6
+Brand colours are defined in `config.yml` and exposed in the generated CSS as the `:root` variables `--cm-ink`, `--cm-pink`, `--cm-green`, `--cm-teal`, `--cm-bg`, and `--cm-text`.
 
 ## Building
 

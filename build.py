@@ -323,21 +323,39 @@ def build_footer(cfg):
   </div>
 </footer>'''
 
-CSS = '''
-:root {
-  --cm-ink: #1f1f36;
-  --cm-pink: #ff8fb8;
-  --cm-green: #79bb93;
-  --cm-teal: #90c3c6;
-  --cm-bg: #fcfcfc;
-  --cm-text: #222;
+def hex_to_rgb(hex_color):
+    hex_color = hex_color.strip().lstrip("#")
+    return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+
+def rgba(hex_color, alpha):
+    r, g, b = hex_to_rgb(hex_color)
+    return f"rgba({r}, {g}, {b}, {alpha})"
+
+def build_css(cfg):
+    colors = cfg.get("colors", {})
+    cm_ink = colors.get("accent_ink", "#1f1f36")
+    cm_pink = colors.get("accent_pink", "#ff8fb8")
+    cm_green = colors.get("accent_primary", "#00ffaf")
+    cm_teal = colors.get("accent_secondary", "#6dc4c8")
+    cm_bg = colors.get("body_bg", "#fcfcfc")
+    cm_text = colors.get("text", "#222")
+    return f''':root {{
+  --cm-ink: {cm_ink};
+  --cm-pink: {cm_pink};
+  --cm-green: {cm_green};
+  --cm-teal: {cm_teal};
+  --cm-bg: {cm_bg};
+  --cm-text: {cm_text};
   --cm-light: #f4f6f8;
   --cm-border: #e2e6ea;
   --radius: 8px;
-  --cm-green-light: rgba(121, 187, 147, 0.08);
-  --cm-teal-light: rgba(144, 195, 198, 0.10);
-}
+  --cm-green-light: {rgba(cm_green, 0.08)};
+  --cm-teal-light: {rgba(cm_teal, 0.10)};
+}}
 
+{CSS_BODY}'''
+
+CSS_BODY = '''
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html { font-size: 17px; scroll-behavior: smooth; }
@@ -672,7 +690,7 @@ def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="")
   <title>{title} | {site_name}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>{CSS}</style>
+  <style>{build_css(cfg)}</style>
 </head>
 <body>
 {nav_html}
@@ -682,6 +700,31 @@ def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="")
 {footer_html}
 </body>
 </html>'''
+
+def redirect_template(title, redirect):
+    return f'''<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="refresh" content="0;url={redirect}">
+  <meta name="robots" content="noindex">
+  <link rel="canonical" href="{redirect}">
+  <title>{title}</title>
+  <script>window.location.replace({redirect!r});</script>
+</head>
+<body>
+  <p>Redirecting to <a href="{redirect}">{redirect}</a>...</p>
+</body>
+</html>'''
+
+def redirect_rules_for(path, redirect):
+    src = path.rstrip("/") or "/"
+    if src == "/":
+        return []
+    return [
+        f"{src} {redirect} 301",
+        f"{src}/ {redirect} 301",
+    ]
 
 def build():
     cfg = load_config()
@@ -700,6 +743,7 @@ def build():
 
     nav_html = build_nav(pages, cfg)
     footer_html = build_footer(cfg)
+    redirect_rules = []
 
     for page in pages:
         title = page.get("title", "Untitled")
@@ -707,7 +751,8 @@ def build():
         path = page.get("path", "/" + page["_file"].replace(".md", ""))
         redirect = page.get("redirect")
         if redirect:
-            html = f'<!DOCTYPE html><html><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url={redirect}"><title>{title}</title></head><body><p>Redirecting to <a href="{redirect}">{redirect}</a>...</p></body></html>'
+            html = redirect_template(title, redirect)
+            redirect_rules.extend(redirect_rules_for(path, redirect))
         else:
             content_html = render_sections(page, cfg)
             html = page_template(title, nav_html, content_html, footer_html, cfg, meta_desc)
@@ -727,6 +772,11 @@ def build():
     if assets_src.exists():
         shutil.copytree(assets_src, output_dir / "assets", dirs_exist_ok=True)
         print("  assets/ copied")
+
+    if redirect_rules:
+        redirects_path = output_dir / "_redirects"
+        redirects_path.write_text("\n".join(redirect_rules) + "\n", encoding="utf-8")
+        print("  _redirects written")
 
     print(f"\nBuilt {len(pages)} pages to {output_dir.relative_to(SCRIPT_DIR)}/")
 
