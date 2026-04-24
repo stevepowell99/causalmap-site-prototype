@@ -23,6 +23,7 @@ causalmap-site-prototype/
     about.md        About us + team, with dropdown nav to causal-mapping
     resources.md    Links to Guide, case studies, bibliography, videos
     contact.md      Contact form / details
+    search.md       Search page (client-side search over built page content)
     qualiainterviews.md  Redirect stub to qualiainterviews.com
     ethical-principles.md, privacy-policy.md, sla.md, terms-and-conditions.md  Legal pages
     assets/         Logo files (logo-white.png, logo-dark.png) and team photos
@@ -73,6 +74,7 @@ The build script supports these section types:
 - **testimonials**: quote cards
 - **team**: team member cards with photos
 - **cta-banner**: call-to-action strip
+- **search**: client-side search page with indexed site content
 - **prose**: renders the markdown body below the front matter
 - **logos**: logo images
 
@@ -96,7 +98,7 @@ Output goes to `dist/`. Open `dist/index.html` in a browser to preview.
 
 ## Navigation
 
-Top-level nav items are defined by `nav_order` in front matter. Dropdown menus use `nav_children`. The nav bar shows the logo (from `content/assets/logo-white.png`) and top-level items, with CSS-only hover dropdowns.
+Top-level nav items are defined by `nav_order` in front matter. Dropdown menus use `nav_children`. The nav bar shows the logo (from `content/assets/logo-white.png`), top-level items, and a sitewide search form that submits to `/search`.
 
 ## Links and cross-references
 

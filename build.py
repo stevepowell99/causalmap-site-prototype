@@ -8,6 +8,8 @@ import os
 import sys
 import re
 import shutil
+import json
+import html as html_lib
 import yaml
 import markdown
 from pathlib import Path
@@ -206,6 +208,33 @@ def render_team(section, cfg):
   </div>
 </section>'''
 
+def render_search(section, cfg):
+    heading = section.get("heading", "Search the site")
+    intro = md(section.get("intro", "Find pages, methods, pricing, case studies, and policies across the site."))
+    return f'''<section class="search-section">
+  <div class="container">
+    <div id="site-search-root" class="search-shell">
+      <h1>{heading}</h1>
+      <div class="search-intro">{intro}</div>
+      <form class="search-page-form" action="/search" method="get" data-search-form>
+        <label class="sr-only" for="search-page-input">Search the site</label>
+        <input
+          id="search-page-input"
+          class="search-input"
+          type="search"
+          name="q"
+          placeholder="Search site"
+          autocomplete="off"
+          data-search-input
+        >
+        <button type="submit" class="search-submit">Search</button>
+      </form>
+      <p class="search-status" data-search-status>Search page titles and content.</p>
+      <div class="search-results" data-search-results></div>
+    </div>
+  </div>
+</section>'''
+
 SECTION_RENDERERS = {
     "hero": render_hero,
     "hero-light": render_hero_light,
@@ -218,10 +247,11 @@ SECTION_RENDERERS = {
     "testimonials": render_testimonials,
     "cta-banner": render_cta_banner,
     "team": render_team,
+    "search": render_search,
 }
 
 def make_links_relative(html, page_path):
-    """Convert absolute internal links to relative paths for file:// preview."""
+    """Convert absolute internal URLs to relative paths for file:// preview."""
     import re
     page_depth = page_path.strip("/").count("/") + (0 if page_path == "/" else 1)
     prefix = "../" * page_depth if page_depth > 0 else "./"
@@ -246,7 +276,7 @@ def make_links_relative(html, page_path):
             return f'{attr}="{rel}{fragment}"'
         return m.group(0)
 
-    return re.sub(r'(href|src)="(/[^"]*)"', lambda m: replace_href(m), html)
+    return re.sub(r'(href|src|action)="(/[^"]*)"', lambda m: replace_href(m), html)
 
 def add_external_link_attrs(html):
     """Open external site links in a new tab."""
@@ -260,6 +290,166 @@ def add_external_link_attrs(html):
         return tag[:-1] + ' target="_blank" rel="noopener noreferrer">'
 
     return re.sub(r'<a\b[^>]*href="([^"]+)"[^>]*>', replace_anchor, html)
+
+def normalize_whitespace(text):
+    return re.sub(r"\s+", " ", text).strip()
+
+def html_to_plain_text(html):
+    text = re.sub(r"<(script|style)\b[^>]*>.*?</\1>", " ", html, flags=re.IGNORECASE | re.DOTALL)
+    text = re.sub(r"<[^>]+>", " ", text)
+    return normalize_whitespace(html_lib.unescape(text))
+
+def relative_site_path(target_path, from_path):
+    from_depth = from_path.strip("/").count("/") + (0 if from_path == "/" else 1)
+    prefix = "../" * from_depth if from_depth > 0 else "./"
+    stripped = target_path.lstrip("/")
+    if stripped == "":
+        return prefix.rstrip("/") + "/index.html"
+    if "." in stripped.split("/")[-1]:
+        return prefix + stripped
+    return prefix + stripped + "/index.html"
+
+def build_search_index(pages):
+    docs = []
+    for page in pages:
+        if page.get("redirect"):
+            continue
+        path = page["_path"]
+        if path == "/search":
+            continue
+        docs.append({
+            "title": page.get("title", "Untitled"),
+            "path": path,
+            "href": relative_site_path(path, "/search"),
+            "description": normalize_whitespace(page.get("description", "")),
+            "content": html_to_plain_text(page.get("_content_html", "")),
+        })
+    return docs
+
+def build_search_script(search_index):
+    search_json = json.dumps(search_index, ensure_ascii=False).replace("<", "\\u003c").replace("</", "<\\/")
+    return f'''<script>
+(function () {{
+  const root = document.getElementById("site-search-root");
+  if (!root) return;
+
+  const searchIndex = {search_json};
+  const form = root.querySelector("[data-search-form]");
+  const input = root.querySelector("[data-search-input]");
+  const status = root.querySelector("[data-search-status]");
+  const results = root.querySelector("[data-search-results]");
+  const params = new URLSearchParams(window.location.search);
+  const initialQuery = (params.get("q") || "").trim();
+
+  function tokenize(text) {{
+    return [...new Set((text.toLowerCase().match(/[a-z0-9]+/g) || []))];
+  }}
+
+  function scoreDoc(doc, terms) {{
+    const title = doc.title.toLowerCase();
+    const description = doc.description.toLowerCase();
+    const content = doc.content.toLowerCase();
+    let score = 0;
+
+    for (const term of terms) {{
+      if (title.includes(term)) score += 12;
+      if (description.includes(term)) score += 6;
+      if (content.includes(term)) score += 2;
+    }}
+
+    return score;
+  }}
+
+  function buildSnippet(doc, terms) {{
+    const source = doc.content || doc.description;
+    if (!source) return "";
+
+    const lower = source.toLowerCase();
+    let start = 0;
+    for (const term of terms) {{
+      const index = lower.indexOf(term);
+      if (index !== -1) {{
+        start = Math.max(0, index - 80);
+        break;
+      }}
+    }}
+
+    const end = Math.min(source.length, start + 190);
+    const snippet = source.slice(start, end).trim();
+    const prefix = start > 0 ? "..." : "";
+    const suffix = end < source.length ? "..." : "";
+    return prefix + snippet + suffix;
+  }}
+
+  function renderResults(query) {{
+    results.replaceChildren();
+    const terms = tokenize(query);
+
+    if (!terms.length) {{
+      status.textContent = "Search page titles and content.";
+      return;
+    }}
+
+    const matches = searchIndex
+      .map((doc) => ({{ doc, score: scoreDoc(doc, terms) }}))
+      .filter((item) => item.score > 0)
+      .sort((a, b) => b.score - a.score || a.doc.title.localeCompare(b.doc.title))
+      .slice(0, 20);
+
+    status.textContent = matches.length
+      ? `${{matches.length}} result${{matches.length === 1 ? "" : "s"}} for "${{query}}"`
+      : `No results for "${{query}}"`;
+
+    for (const match of matches) {{
+      const card = document.createElement("article");
+      card.className = "search-result-card";
+
+      const heading = document.createElement("h2");
+      const link = document.createElement("a");
+      link.href = match.doc.href;
+      link.textContent = match.doc.title;
+      heading.appendChild(link);
+      card.appendChild(heading);
+
+      if (match.doc.description) {{
+        const description = document.createElement("p");
+        description.className = "search-result-desc";
+        description.textContent = match.doc.description;
+        card.appendChild(description);
+      }}
+
+      const snippetText = buildSnippet(match.doc, terms);
+      if (snippetText) {{
+        const snippet = document.createElement("p");
+        snippet.className = "search-result-snippet";
+        snippet.textContent = snippetText;
+        card.appendChild(snippet);
+      }}
+
+      results.appendChild(card);
+    }}
+  }}
+
+  function submitSearch(event) {{
+    event.preventDefault();
+    const query = input.value.trim();
+    const nextUrl = new URL(window.location.href);
+
+    if (query) {{
+      nextUrl.searchParams.set("q", query);
+    }} else {{
+      nextUrl.searchParams.delete("q");
+    }}
+
+    window.history.replaceState({{}}, "", nextUrl);
+    renderResults(query);
+  }}
+
+  form.addEventListener("submit", submitSearch);
+  input.value = initialQuery;
+  if (initialQuery) renderResults(initialQuery);
+}})();
+</script>'''
 
 def render_sections(page, cfg):
     sections = page.get("sections", [])
@@ -305,13 +495,26 @@ def build_nav(pages, cfg):
 
     app_url = cfg.get("app_url", "https://app.causalmap.app")
     logo = build_logo_img()
+    search_form = '''    <form class="site-search-form" action="/search" method="get" role="search">
+      <label class="sr-only" for="nav-search-input">Search the site</label>
+      <input
+        id="nav-search-input"
+        class="search-input"
+        type="search"
+        name="q"
+        placeholder="Search site"
+        autocomplete="off"
+      >
+      <button type="submit" class="search-submit">Search</button>
+    </form>
+'''
 
     return f'''<nav class="navbar">
   <div class="container nav-inner">
     <a href="/" class="nav-logo">{logo}</a>
     <div class="nav-links">
 {links}    </div>
-    <a class="btn-cta nav-cta" href="{app_url}">Try it free</a>
+{search_form}    <a class="btn-cta nav-cta" href="{app_url}">Try it free</a>
   </div>
 </nav>
 <div class="accent-stripe"></div>'''
@@ -394,6 +597,18 @@ a:hover { color: var(--cm-teal); }
 
 .container { max-width: 960px; margin: 0 auto; padding: 0 1.5rem; }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* ---- Inline highlights ---- */
 .hl {
   padding: 0 0.15em;
@@ -431,7 +646,7 @@ a:hover { color: var(--cm-teal); }
   padding: 0.75rem 0;
   box-shadow: 0 1px 3px rgba(0,0,0,0.08);
 }
-.nav-inner { display: flex; align-items: center; gap: 1.5rem; }
+.nav-inner { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
 .nav-logo {
   text-decoration: none; margin-right: auto; display: flex; align-items: center;
 }
@@ -439,7 +654,44 @@ a:hover { color: var(--cm-teal); }
 .nav-links { display: flex; align-items: center; gap: 1.25rem; }
 .nav-links > a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.92rem; transition: color 0.15s; padding: 0.5rem 0; }
 .nav-links a:hover { color: #fff; }
-.nav-cta { margin-left: 0.5rem; }
+.nav-cta { margin-left: 0.25rem; }
+.site-search-form,
+.search-page-form {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.site-search-form {
+  flex: 0 1 18rem;
+}
+.search-input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--cm-border);
+  border-radius: 999px;
+  padding: 0.7rem 0.95rem;
+  font: inherit;
+  color: var(--cm-ink);
+  background: #fff;
+}
+.search-input:focus {
+  outline: 2px solid var(--cm-teal);
+  outline-offset: 1px;
+}
+.search-submit {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  background: var(--cm-green);
+  color: var(--cm-ink);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.search-submit:hover {
+  background: var(--cm-teal);
+}
 
 /* ---- Nav dropdown ---- */
 .nav-dropdown { position: relative; display: flex; align-items: center; }
@@ -642,6 +894,57 @@ a:hover { color: var(--cm-teal); }
 .team-link { font-size: 0.8rem; color: var(--cm-teal); text-decoration: none; font-weight: 400; }
 .team-link:hover { color: var(--cm-green); }
 
+/* ---- Search ---- */
+.search-section { padding: 3.5rem 0; }
+.search-shell {
+  max-width: 760px;
+}
+.search-shell h1 {
+  font-size: 2.3rem;
+  line-height: 1.15;
+  color: var(--cm-ink);
+  margin-bottom: 0.75rem;
+}
+.search-intro {
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+.search-intro p { margin-bottom: 0; }
+.search-page-form {
+  margin-bottom: 1rem;
+}
+.search-status {
+  color: #555;
+  margin-bottom: 1.25rem;
+}
+.search-results {
+  display: grid;
+  gap: 1rem;
+}
+.search-result-card {
+  background: #fff;
+  border: 1px solid var(--cm-border);
+  border-left: 4px solid var(--cm-green);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.25rem;
+}
+.search-result-card h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.35rem;
+}
+.search-result-card h2 a {
+  text-decoration: none;
+}
+.search-result-desc {
+  color: var(--cm-ink);
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+.search-result-snippet {
+  color: #555;
+  margin-bottom: 0;
+}
+
 /* ---- Prose ---- */
 .prose-section { padding: 3.5rem 0; }
 .prose-section h2 {
@@ -717,6 +1020,10 @@ footer {
   .two-col-grid { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
+  .site-search-form { order: 3; width: 100%; flex-basis: 100%; }
+  .search-page-form,
+  .site-search-form { flex-wrap: wrap; }
+  .search-submit { width: 100%; }
   .features { padding: 2.5rem 0; }
   .steps-grid { grid-template-columns: 1fr; }
 }
@@ -729,9 +1036,10 @@ footer {
 }
 '''
 
-def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc=""):
+def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="", search_index=None):
     site_name = cfg.get("site_name", "Causal Map")
     desc = meta_desc or "Causal mapping software for qualitative research and evaluation"
+    search_script = build_search_script(search_index) if search_index is not None else ""
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -776,6 +1084,7 @@ def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="")
   headings.forEach((heading) => observer.observe(heading));
 }})();
 </script>
+{search_script}
 </body>
 </html>'''
 
@@ -820,8 +1129,12 @@ def build():
     for mdfile in sorted(input_dir.glob("*.md")):
         page = parse_page(mdfile)
         page["_file"] = mdfile.name
+        page["_path"] = page.get("path", "/" + mdfile.stem)
+        if not page.get("redirect"):
+            page["_content_html"] = render_sections(page, cfg)
         pages.append(page)
 
+    search_index = build_search_index(pages)
     nav_html = build_nav(pages, cfg)
     footer_html = build_footer(cfg)
     redirect_rules = []
@@ -829,14 +1142,22 @@ def build():
     for page in pages:
         title = page.get("title", "Untitled")
         meta_desc = page.get("description", "")
-        path = page.get("path", "/" + page["_file"].replace(".md", ""))
+        path = page["_path"]
         redirect = page.get("redirect")
         if redirect:
             html = redirect_template(title, redirect)
             redirect_rules.extend(redirect_rules_for(path, redirect))
         else:
-            content_html = render_sections(page, cfg)
-            html = page_template(title, nav_html, content_html, footer_html, cfg, meta_desc)
+            content_html = page["_content_html"]
+            html = page_template(
+                title,
+                nav_html,
+                content_html,
+                footer_html,
+                cfg,
+                meta_desc,
+                search_index if path == "/search" else None,
+            )
             html = make_links_relative(html, path)
         html = add_external_link_attrs(html)
         if path == "/":

@@ -1,0 +1,10 @@
+---
+description: Always read and maintain the project README
+alwaysApply: true
+---
+
+# README Discipline
+
+- Read `README.md` before making substantive changes.
+- Update `README.md` when your changes affect setup, structure, behavior, workflows, dependencies, or important project conventions.
+- Keep README updates concise and factual; remove outdated guidance rather than leaving duplicates behind.
