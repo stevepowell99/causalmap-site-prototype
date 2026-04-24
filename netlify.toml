@@ -1,0 +1,5 @@
+[build]
+  # Install Python deps, then generate the static site.
+  command = "pip install -r requirements.txt && python build.py"
+  # Netlify should serve the generated site only.
+  publish = "dist"

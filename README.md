@@ -4,7 +4,7 @@ Static site prototype for **causalmap.app**, replacing the previous Notion + bul
 
 ## How it works
 
-A Python script (`build.py`) reads markdown files from `content/`, renders them to HTML, and writes the output to `causalmap-site/`. Each markdown file uses YAML front matter to define the page path, navigation order, and layout sections. The prose body (below the second `---`) is rendered as standard markdown.
+A Python script (`build.py`) reads markdown files from `content/`, renders them to HTML, and writes the output to `dist/`. Each markdown file uses YAML front matter to define the page path, navigation order, and layout sections. The prose body (below the second `---`) is rendered as standard markdown.
 
 There is no external static site generator. Everything is in `build.py`: section renderers, CSS, navigation builder, and the build loop.
 
@@ -26,7 +26,7 @@ causalmap-site-prototype/
     qualiainterviews.md  Redirect stub to qualiainterviews.com
     ethical-principles.md, privacy-policy.md, sla.md, terms-and-conditions.md  Legal pages
     assets/         Logo files (logo-white.png, logo-dark.png) and team photos
-  causalmap-site/ Generated HTML site (output)
+  dist/           Generated HTML site (output)
 ```
 
 ## Content format
@@ -97,7 +97,7 @@ Requires Python 3 with `pyyaml` and `markdown`:
 pip install pyyaml markdown
 ```
 
-Output goes to `causalmap-site/`. Open `causalmap-site/index.html` in a browser to preview.
+Output goes to `dist/`. Open `dist/index.html` in a browser to preview.
 
 ## Navigation
 
@@ -122,4 +122,4 @@ Several pages link to specific Garden pages (garden.causalmap.app) using short-U
 
 ## Deployment
 
-For Netlify, track the parent repo, not just `causalmap-site/`. Set the publish directory to `causalmap-site/`. That keeps the source files (`content/`, `build.py`, `config.yml`) versioned properly while Netlify serves only the generated site.
+For Netlify, track the parent repo, not just `dist/`. Set the publish directory to `dist/`. That keeps the source files (`content/`, `build.py`, `config.yml`) versioned properly while Netlify serves only the generated site.
