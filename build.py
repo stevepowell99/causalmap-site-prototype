@@ -248,6 +248,19 @@ def make_links_relative(html, page_path):
 
     return re.sub(r'(href|src)="(/[^"]*)"', lambda m: replace_href(m), html)
 
+def add_external_link_attrs(html):
+    """Open external site links in a new tab."""
+    def replace_anchor(match):
+        tag = match.group(0)
+        href = match.group(1)
+        if not (href.startswith("http://") or href.startswith("https://") or href.startswith("//")):
+            return tag
+        if 'target=' in tag:
+            return tag
+        return tag[:-1] + ' target="_blank" rel="noopener noreferrer">'
+
+    return re.sub(r'<a\b[^>]*href="([^"]+)"[^>]*>', replace_anchor, html)
+
 def render_sections(page, cfg):
     sections = page.get("sections", [])
     body_html = md(page.get("body", ""))
@@ -725,6 +738,7 @@ def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="")
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="{desc}">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon.ico" sizes="any">
   <link rel="icon" href="/assets/favicon.png" type="image/png">
   <title>{title} | {site_name}</title>
@@ -772,6 +786,7 @@ def redirect_template(title, redirect):
   <meta charset="utf-8">
   <meta http-equiv="refresh" content="0;url={redirect}">
   <meta name="robots" content="noindex">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon.ico" sizes="any">
   <link rel="icon" href="/assets/favicon.png" type="image/png">
   <link rel="canonical" href="{redirect}">
@@ -823,6 +838,7 @@ def build():
             content_html = render_sections(page, cfg)
             html = page_template(title, nav_html, content_html, footer_html, cfg, meta_desc)
             html = make_links_relative(html, path)
+        html = add_external_link_attrs(html)
         if path == "/":
             out_file = output_dir / "index.html"
         else:
