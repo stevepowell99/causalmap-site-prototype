@@ -88,6 +88,8 @@ Umami is configured in `config.yml` under `analytics`. Set `umami_id` to your Um
 
 ## Building
 
+One-off build:
+
 ```bash
 python build.py
 ```
@@ -99,6 +101,19 @@ pip install pyyaml markdown
 ```
 
 Output goes to `dist/`. Open `dist/index.html` in a browser to preview.
+
+## Live preview on Windows
+
+For a non-technical editor on Windows, the simplest option is to double-click `Start Preview.bat`.
+
+That will:
+
+- install `pyyaml`, `markdown`, and `livereload` if needed
+- run `preview.py`
+- open a local preview at `http://127.0.0.1:5500`
+- rebuild automatically when files in `content/`, `build.py`, or `config.yml` change
+
+Keep the black terminal window open while editing. Closing it stops the preview server.
 
 ## Navigation
 

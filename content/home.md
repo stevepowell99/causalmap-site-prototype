@@ -6,7 +6,7 @@ nav_label: Home
 description: Causal mapping software for qualitative research and evaluation. Code what causes what from interviews and documents, then visualise and analyse the results.
 sections:
   - type: hero
-    headline: Your stories, visualised
+    headline: Making sense of stories at scale
     subhead: >
       Evaluators, researchers, NGOs, and universities use Causal Map
       to find out what works, why, and for whom, straight from what

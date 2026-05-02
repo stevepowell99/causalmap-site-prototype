@@ -10,19 +10,19 @@ sections:
     subhead: Case studies, publications, and learning materials.
 ---
 
-## <span class="hl hl-yellow">The Guide</span>
+## [<span class="hl hl-yellow">The Guide</span>](https://garden.causalmap.app/)
 
 The [Causal Mapping Guide](https://garden.causalmap.app/) is our <span class="hl hl-green">main documentation site</span>: tutorials, how-to articles, and research on [causal mapping](/causal-mapping). Includes over twenty [question types](https://garden.causalmap.app/questions-introduction/) you can answer with your data.
 
-## Case studies
+## [Case studies](https://garden.causalmap.app/case-studies)
 
 Read about how organisations have used Causal Map in their work: [Case studies](https://garden.causalmap.app/case-studies).
 
-## Bibliography
+## [Bibliography](https://garden.causalmap.app/bibliography)
 
 Academic papers, reports, and publications related to causal mapping: [Bibliography](https://garden.causalmap.app/bibliography).
 
-## Videos
+## [Videos](https://youtube.com/playlist?list=PLSCKdSxlLlfGfcab5njcT57xzU0hOURc-&si=jX6S7fu43kBzHnRc)
 
 Watch tutorials and walkthroughs on our <span class="hl hl-pink">[YouTube channel](https://youtube.com/playlist?list=PLSCKdSxlLlfGfcab5njcT57xzU0hOURc-&si=jX6S7fu43kBzHnRc)</span>.
 

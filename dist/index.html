@@ -450,6 +450,13 @@ a:hover { color: var(--cm-teal); }
   border-bottom: 2px solid var(--cm-green);
   display: inline-block;
 }
+.prose-section h2 a,
+.prose-section h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+.prose-section h2 a:hover,
+.prose-section h3 a:hover { color: var(--cm-teal); }
 .prose-section h3 { font-size: 1.15rem; margin: 1.5rem 0 0.5rem; color: var(--cm-ink); font-weight: 600; }
 .prose-section p { margin-bottom: 1rem; }
 .prose-section ul, .prose-section ol { margin: 0 0 1rem 1.5rem; }
@@ -577,7 +584,7 @@ footer {
 <main>
 <section class="hero">
   <div class="container">
-    <h1>Your stories, visualised</h1>
+    <h1>Making sense of stories at scale</h1>
     <div class="hero-sub"><p>Evaluators, researchers, NGOs, and universities use Causal Map to find out what works, why, and for whom, straight from what people tell them in interviews, reports, and surveys.</p></div>
     <a class="btn-cta" href="https://app.causalmap.app/" target="_blank" rel="noopener noreferrer">Try it free</a>
   </div>
