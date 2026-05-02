@@ -1,2 +1,12 @@
 # Ignore Windows folder metadata files
 desktop.ini
+
+# Generated site output
+dist/
+
+# Python generated files
+__pycache__/
+*.py[cod]
+
+# Cursor/chat pasted reference images
+.images/

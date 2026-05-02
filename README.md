@@ -27,7 +27,7 @@ causalmap-site-prototype/
     qualiainterviews.md  Redirect stub to qualiainterviews.com
     ethical-principles.md, privacy-policy.md, sla.md, terms-and-conditions.md  Legal pages
     assets/         Logo files (logo-white.png, logo-dark.png) and team photos
-  dist/           Generated HTML site (output)
+  dist/           Generated HTML site (local output, not tracked)
 ```
 
 ## Content format
@@ -100,7 +100,7 @@ Requires Python 3 with `pyyaml` and `markdown`:
 pip install pyyaml markdown
 ```
 
-Output goes to `dist/`. Open `dist/index.html` in a browser to preview.
+Output goes to `dist/`. Open `dist/index.html` in a browser to preview. `dist/` is generated output and is not tracked in git.
 
 ## Live preview on Windows
 
@@ -125,6 +125,8 @@ Internal links in markdown content use absolute paths (`/pricing`, `/causal-mapp
 
 Several pages link to specific Garden pages (garden.causalmap.app) using short-URL anchors defined by `((anchor))` tags in the Garden's markdown filenames (e.g. `((main-outcomes))`, `((comparing-groups))`).
 
+Legacy URLs are kept as redirect stubs in `content/` using `redirect` in front matter. For example, `content/consultancy-more-detail.md` builds `dist/resources/cm-posts/consultancy-more-detail/index.html` and adds `_redirects` rules so old links redirect to `/consultancy`.
+
 ## Design decisions
 
 - All content containers are 960px max-width for consistent alignment.
@@ -138,4 +140,4 @@ Several pages link to specific Garden pages (garden.causalmap.app) using short-U
 
 ## Deployment
 
-For Netlify, track the parent repo, not just `dist/`. Set the publish directory to `dist/`. That keeps the source files (`content/`, `build.py`, `config.yml`) versioned properly while Netlify serves only the generated site.
+For Netlify, track the parent repo, not `dist/`. Netlify runs `python build.py` and publishes `dist/`, so the source files (`content/`, `build.py`, `config.yml`, `requirements.txt`, `netlify.toml`) stay versioned while generated output stays out of git.
