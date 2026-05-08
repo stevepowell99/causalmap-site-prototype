@@ -922,7 +922,6 @@ a:hover { color: var(--cm-teal); }
   font-size: 0.78rem;
   font-weight: 800;
   letter-spacing: 0.04em;
-  text-transform: uppercase;
   background: var(--cm-light);
   color: var(--cm-ink);
   border: 1px solid var(--cm-border);
@@ -1164,6 +1163,10 @@ a:hover { color: var(--cm-teal); }
 .prose-section h3 { font-size: 1.15rem; margin: 1.5rem 0 0.5rem; color: var(--cm-ink); font-weight: 600; }
 .prose-section p { margin-bottom: 1rem; }
 .prose-section ul, .prose-section ol { margin: 0 0 1rem 1.5rem; }
+.prose-section ol.ukes-programme-list > li { margin-bottom: 1.15rem; }
+.prose-section ol.ukes-programme-list > li:last-child { margin-bottom: 0; }
+.prose-section ol.ukes-programme-list p { margin-bottom: 0.5rem; }
+.prose-section ol.ukes-programme-list p:last-child { margin-bottom: 0; }
 .prose-section li { margin-bottom: 0.35rem; }
 .prose-section li::marker { color: var(--cm-teal); }
 .prose-section strong { color: var(--cm-ink); font-weight: 600; }
