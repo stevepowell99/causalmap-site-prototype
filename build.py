@@ -51,12 +51,70 @@ def render_hero(section, cfg):
 def render_hero_light(section, cfg):
     headline = section.get("headline", "")
     subhead = md(section.get("subhead", ""))
-    return f'''<section class="hero-light">
+    pillars = section.get("pillars")
+    pills_block = ""
+    if pillars:
+        pills_inner = render_stand_pillar_articles(pillars, cfg)
+        pills_block = f'''
+  <div class="hero-light-pills">
+    <div class="stand-pills-grid">
+{pills_inner}    </div>
+  </div>'''
+    mod = " hero-light--with-pills" if pillars else ""
+    return f'''<section class="hero-light{mod}">
   <div class="container">
     <h1>{headline}</h1>
     {f'<div class="hero-sub">{subhead}</div>' if subhead else ''}
+    {pills_block}
   </div>
 </section>'''
+
+
+def render_stand_pillar_articles(pillars, cfg):
+    """Rounded stand cards (UKES etc.): badge title, optional intro/bullets, links. Used inside hero-light only."""
+    app_url = cfg.get("app_url", "https://app.causalmap.app")
+    parts = []
+    for i, p in enumerate(pillars):
+        heading = html_lib.escape(p.get("heading", ""))
+        page_url = (p.get("page_url") or "").strip()
+        page_label = html_lib.escape(p.get("page_label", "Learn more"))
+        secondary_url = (p.get("secondary_url") or "").strip()
+        sec_label_raw = p.get("secondary_label", "")
+        if i == 0 and sec_label_raw and not secondary_url:
+            secondary_url = app_url.rstrip("/") + "/"
+        items = p.get("items") or []
+        intro = p.get("intro", "")
+        extra_links = p.get("links") or []
+
+        bullets = ""
+        for it in items:
+            bullets += f'<li><span class="stand-pill-check" aria-hidden="true">&#10003;</span> {html_lib.escape(it)}</li>'
+        list_html = f'<ul class="stand-pill-list">{bullets}</ul>' if bullets else ""
+        intro_html = f'<div class="stand-pill-intro">{md(intro)}</div>' if intro else ""
+
+        action_bits = []
+        if page_url:
+            action_bits.append(f'<a class="stand-pill-action" href="{page_url}">{page_label}</a>')
+        if secondary_url and sec_label_raw:
+            action_bits.append(
+                f'<a class="stand-pill-action" href="{secondary_url}">{html_lib.escape(sec_label_raw)}</a>'
+            )
+        for L in extra_links:
+            u = (L.get("url") or "").strip()
+            lab = html_lib.escape(L.get("label", u))
+            if u:
+                action_bits.append(f'<a class="stand-pill-action" href="{u}">{lab}</a>')
+        actions_html = f'<div class="stand-pill-actions">{"".join(action_bits)}</div>' if action_bits else ""
+
+        parts.append(
+            f'''<article class="stand-pill">
+      <p class="stand-pill-badge-wrap"><span class="stand-pill-badge">{heading}</span></p>
+      {intro_html}
+      {list_html}
+      {actions_html}
+    </article>\n'''
+        )
+    return "".join(parts)
 
 def render_features(section, cfg):
     cols = section.get("columns", [])
@@ -827,8 +885,94 @@ a:hover { color: var(--cm-teal); }
   border-bottom: 2px solid transparent;
   border-image: linear-gradient(90deg, var(--cm-green), var(--cm-teal)) 1;
 }
+.hero-light--with-pills {
+  background: #fff;
+  border-image: none;
+  border-bottom: 1px solid var(--cm-border);
+  padding-bottom: 3.25rem;
+}
 .hero-light h1 { font-size: 2.86rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--cm-ink); }
 .hero-light .hero-sub { font-size: 1.05rem; color: #666; max-width: none; margin: 0; opacity: 1; }
+.hero-light .hero-sub p { margin: 0 0 0.5rem; }
+.hero-light .hero-sub p:last-child { margin-bottom: 0; }
+
+/* Stand follow-up pills (inside hero-light, white cards) */
+.hero-light-pills { margin-top: 2.25rem; }
+.stand-pills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  align-items: stretch;
+}
+.stand-pill {
+  background: #fff;
+  border: 1px solid var(--cm-border);
+  border-radius: 28px;
+  padding: 1.5rem 1.35rem 1.4rem;
+  box-shadow: 0 6px 24px rgba(31, 31, 54, 0.07);
+}
+.stand-pill-badge-wrap {
+  margin: 0 0 1rem;
+  line-height: 1.3;
+}
+.stand-pill-badge {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.4rem 1rem 0.42rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--cm-light);
+  color: var(--cm-ink);
+  border: 1px solid var(--cm-border);
+}
+.stand-pill-intro { font-size: 0.95rem; color: #444; line-height: 1.55; margin-bottom: 0.85rem; }
+.stand-pill-intro p { margin: 0 0 0.5rem; }
+.stand-pill-intro p:last-child { margin-bottom: 0; }
+.stand-pill-intro a { color: var(--cm-ink); }
+.stand-pill-list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  font-size: 0.92rem;
+  color: #444;
+}
+.stand-pill-list li {
+  display: flex;
+  gap: 0.45rem;
+  align-items: flex-start;
+  margin-bottom: 0.45rem;
+}
+.stand-pill-check {
+  color: var(--cm-teal);
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.stand-pill-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-top: 0.25rem;
+}
+.stand-pill-action {
+  display: block;
+  text-align: center;
+  padding: 0.55rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 999px;
+  border: 2px solid var(--cm-teal);
+  color: var(--cm-ink);
+  background: #fff;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.stand-pill-action:hover {
+  background: var(--cm-teal-light);
+  color: var(--cm-ink);
+  border-color: var(--cm-teal);
+}
 
 /* ---- Features grid ---- */
 .features { padding: 4rem 0; background: var(--cm-light); }
@@ -1092,6 +1236,7 @@ footer {
   .site-search-form .search-submit { width: 2.35rem; }
   .features { padding: 2.5rem 0; }
   .steps-grid { grid-template-columns: 1fr; }
+  .stand-pills-grid { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
   .scroll-reveal {
@@ -1195,9 +1340,10 @@ def build():
     output_dir.mkdir(parents=True, exist_ok=True)
 
     pages = []
-    for mdfile in sorted(input_dir.glob("*.md")):
+    md_files = sorted(p for p in input_dir.rglob("*.md") if "assets" not in p.parts)
+    for mdfile in md_files:
         page = parse_page(mdfile)
-        page["_file"] = mdfile.name
+        page["_file"] = str(mdfile.relative_to(input_dir)).replace("\\", "/")
         page["_path"] = page.get("path", "/" + mdfile.stem)
         if not page.get("redirect"):
             page["_content_html"] = render_sections(page, cfg)

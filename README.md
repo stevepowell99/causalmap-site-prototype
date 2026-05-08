@@ -4,7 +4,7 @@ Static site prototype for **causalmap.app**, replacing the previous Notion + bul
 
 ## How it works
 
-A Python script (`build.py`) reads markdown files from `content/`, renders them to HTML, and writes the output to `dist/`. Each markdown file uses YAML front matter to define the page path, navigation order, and layout sections. The prose body (below the second `---`) is rendered as standard markdown.
+A Python script (`build.py`) reads markdown files from `content/` (including nested folders such as `content/events/`, excluding `content/assets/`), renders them to HTML, and writes the output to `dist/`. Each markdown file uses YAML front matter to define the page path, navigation order, and layout sections. The prose body (below the second `---`) is rendered as standard markdown.
 
 There is no external static site generator. Everything is in `build.py`: section renderers, CSS, navigation builder, and the build loop.
 
@@ -26,6 +26,7 @@ causalmap-site-prototype/
     search.md       Search page (client-side search over built page content)
     qualiainterviews.md  Redirect stub to qualiainterviews.com
     ethical-principles.md, privacy-policy.md, sla.md, terms-and-conditions.md  Legal pages
+    events/         Event landing pages (omit `nav_order` for direct-link-only URLs)
     assets/         Logo files (logo-white.png, logo-dark.png) and team photos
   dist/           Generated HTML site (local output, not tracked)
 ```
@@ -65,7 +66,7 @@ Markdown body goes here (only rendered if a `prose` section is listed).
 The build script supports these section types:
 
 - **hero**: dark background, large headline, subhead, CTA button
-- **hero-light**: light background variant
+- **hero-light**: light background; optional **`pillars`** renders rounded stand cards (white) below the subhead—each pillar: `heading`, optional `intro` (markdown) / `items` (bullets), `page_url` / `page_label`, optional `secondary_label` (first pillar defaults URL to `app_url` in `config.yml`), and/or `links` (label + url). Header chips and link pills share one visual style sitewide.
 - **features**: grid of cards (2 or 3 columns)
 - **steps**: numbered workflow steps
 - **video**: Vimeo or YouTube embed
