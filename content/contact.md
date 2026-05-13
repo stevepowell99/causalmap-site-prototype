@@ -26,8 +26,6 @@ You can book a call directly with Steve to discuss your project, ask questions, 
 
 ## Other ways to connect
 
-**WhatsApp support group** — Join our community of Causal Map users for peer support and tips.
-
 **Documentation** — Browse the [Causal Mapping Guide](https://garden.causalmap.app/) for tutorials, how-to articles, and concepts.
 
 **LinkedIn** — Follow <span class="hl hl-pink">[@causalmap](https://www.linkedin.com/company/causalmap/)</span> for updates, case studies, and research news.

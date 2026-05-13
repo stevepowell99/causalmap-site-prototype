@@ -89,7 +89,9 @@ Umami is configured in `config.yml` under `analytics`. Set `umami_id` to your Um
 
 ## Building
 
-One-off build:
+On Windows, double-click `Build.bat` for a one-off build (auto-installs `pyyaml` and `markdown` if needed).
+
+From a shell:
 
 ```bash
 python build.py

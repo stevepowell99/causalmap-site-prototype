@@ -583,7 +583,10 @@ def build_nav(pages, cfg):
     return f'''<nav class="navbar">
   <div class="container nav-inner">
     <a href="/" class="nav-logo">{logo}</a>
-    <div class="nav-links">
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="nav-links">
 {links}    </div>
 {search_form}    <a class="btn-cta nav-cta" href="{app_url}">Try it free</a>
   </div>
@@ -726,6 +729,20 @@ a:hover { color: var(--cm-teal); }
 .nav-links > a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.92rem; transition: color 0.15s; padding: 0.5rem 0; }
 .nav-links a:hover { color: #fff; }
 .nav-cta { margin-left: 0.25rem; }
+/* Hamburger toggle (hidden on desktop) */
+.nav-toggle {
+  display: none;
+  background: transparent; border: 0; cursor: pointer;
+  width: 2.5rem; height: 2.5rem; padding: 0;
+  flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+}
+.nav-toggle span {
+  display: block; width: 1.5rem; height: 2px; background: #fff; border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 .site-search-form,
 .search-page-form {
   display: flex;
@@ -1231,8 +1248,23 @@ footer {
   .nav-inner { flex-wrap: wrap; }
   .two-col-grid { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: 1fr; }
-  .nav-links { display: none; }
-  .site-search-form { order: 3; width: 100%; flex-basis: 100%; }
+  .nav-toggle { display: flex; order: 2; margin-left: auto; }
+  .nav-cta { order: 3; }
+  .nav-links {
+    display: none; order: 4; width: 100%; flex-basis: 100%;
+    flex-direction: column; align-items: stretch; gap: 0;
+    padding: 0.5rem 0 0.25rem;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links > a,
+  .nav-dropdown-trigger { padding: 0.75rem 0.25rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .nav-dropdown { display: block; }
+  .nav-dropdown-menu {
+    display: block; position: static; box-shadow: none; padding: 0 0 0.25rem 1rem;
+    background: transparent; border-radius: 0; min-width: 0;
+  }
+  .nav-dropdown-menu a { padding: 0.45rem 0.25rem; }
+  .site-search-form { order: 5; width: 100%; flex-basis: 100%; }
   .search-page-form,
   .site-search-form { flex-wrap: wrap; }
   .search-page-form .search-submit { width: 100%; }
@@ -1277,6 +1309,16 @@ def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="",
 </main>
 {footer_html}
 <script>
+(function () {{
+  const toggle = document.querySelector(".nav-toggle");
+  const links = document.getElementById("nav-links");
+  if (toggle && links) {{
+    toggle.addEventListener("click", () => {{
+      const open = links.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    }});
+  }}
+}})();
 (function () {{
   const headings = document.querySelectorAll("main h1, main h2, main h3");
   if (!headings.length) return;
