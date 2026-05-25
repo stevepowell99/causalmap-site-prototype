@@ -374,10 +374,20 @@ SECTION_RENDERERS = {
     "search": render_search,
 }
 
+def output_depth(page_path):
+    """Directory depth of the generated page for file:// relative links."""
+    stripped = page_path.strip("/")
+    if not stripped:
+        return 0
+    if "." in stripped.split("/")[-1]:
+        parent = stripped.rsplit("/", 1)[0] if "/" in stripped else ""
+        return parent.count("/") + 1 if parent else 0
+    return stripped.count("/") + 1
+
 def make_links_relative(html, page_path):
     """Convert absolute internal URLs to relative paths for file:// preview."""
     import re
-    page_depth = page_path.strip("/").count("/") + (0 if page_path == "/" else 1)
+    page_depth = output_depth(page_path)
     prefix = "../" * page_depth if page_depth > 0 else "./"
 
     def replace_href(m):
@@ -424,7 +434,7 @@ def html_to_plain_text(html):
     return normalize_whitespace(html_lib.unescape(text))
 
 def relative_site_path(target_path, from_path):
-    from_depth = from_path.strip("/").count("/") + (0 if from_path == "/" else 1)
+    from_depth = output_depth(from_path)
     prefix = "../" * from_depth if from_depth > 0 else "./"
     stripped = target_path.lstrip("/")
     if stripped == "":
@@ -1676,6 +1686,9 @@ def build():
         html = add_external_link_attrs(html)
         if path == "/":
             out_file = output_dir / "index.html"
+        elif "." in path.strip("/").split("/")[-1]:
+            out_file = output_dir / path.strip("/")
+            out_file.parent.mkdir(parents=True, exist_ok=True)
         else:
             out_dir = output_dir / path.strip("/")
             out_dir.mkdir(parents=True, exist_ok=True)

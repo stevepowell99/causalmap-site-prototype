@@ -24,6 +24,7 @@ causalmap-site-prototype/
     resources.md    Links to Guide, case studies, bibliography, videos
     contact.md      Contact form / details
     search.md       Search page (client-side search over built page content)
+    404.md          Netlify custom 404 page (path: /404.html)
     qualiainterviews.md  Redirect stub to qualiainterviews.com
     ethical-principles.md, privacy-policy.md, sla.md, terms-and-conditions.md  Legal pages
     events/         Event landing pages (omit `nav_order` for direct-link-only URLs)
@@ -60,6 +61,8 @@ sections:
 
 Markdown body goes here (only rendered if a `prose` section is listed).
 ```
+
+Use extension-style paths such as `path: /404.html` for special root files that must be emitted directly into `dist/` rather than as `dist/<path>/index.html`.
 
 ## Section types
 
@@ -145,3 +148,5 @@ Legacy URLs are kept as redirect stubs in `content/` using `redirect` in front m
 ## Deployment
 
 For Netlify, track the parent repo, not `dist/`. Netlify runs `python build.py` and publishes `dist/`, so the source files (`content/`, `build.py`, `config.yml`, `requirements.txt`, `netlify.toml`) stay versioned while generated output stays out of git.
+
+Netlify serves `dist/404.html` automatically for missing paths; this is generated from `content/404.md`.
