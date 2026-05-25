@@ -56,7 +56,7 @@ Prices are per user, plus UK VAT (20%) where applicable.
 | Annual | £0 | £144 | £304 | £624 |
 | Annual with AI | £0 | £288 | £608 | £1,248 |
 
-If you expect to use Causal Map for more than five months in a year, the annual subscription is better value.
+If you expect to use Causal Map for more than eight months in a year, the annual subscription is better value.
 
 ## AI add-ons
 
