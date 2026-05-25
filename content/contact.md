@@ -30,6 +30,8 @@ You can book a call directly with Steve to discuss your project, ask questions, 
 
 **LinkedIn** — Follow <span class="hl hl-pink">[@causalmap](https://www.linkedin.com/company/causalmap/)</span> for updates, case studies, and research news.
 
+**YouTube** — [Subscribe to our YouTube channel](https://www.youtube.com/watch?v=YskPTmWfADw&list=PLSCKdSxlLlfGfcab5njcT57xzU0hOURc-) for tutorials and walkthroughs.
+
 ---
 
 We usually reply to enquiries within 24 hours.

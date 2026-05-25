@@ -1,6 +1,7 @@
 site_name: Causal Map
 site_url: https://causalmap.app
 app_url: https://app.causalmap.app
+help_url: https://garden.causalmap.app
 input_dir: content
 output_dir: dist
 

@@ -27,4 +27,4 @@ if __name__ == "__main__":
     server.watch(str(ROOT / "config.yml"), rebuild)
 
     # Serve the generated site locally with live reload in the browser.
-    server.serve(root=str(DIST_DIR), host="127.0.0.1", port=5500, open_url_delay=1)
+    server.serve(root=str(DIST_DIR), host="127.0.0.1", port=5550, open_url_delay=1)

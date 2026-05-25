@@ -67,7 +67,8 @@ The build script supports these section types:
 
 - **hero**: dark background, large headline, subhead, CTA button
 - **hero-light**: light background; optional **`pillars`** renders rounded stand cards (white) below the subhead—each pillar: `heading`, optional `intro` (markdown) / `items` (bullets), `page_url` / `page_label`, optional `secondary_label` (first pillar defaults URL to `app_url` in `config.yml`), and/or `links` (label + url). Header chips and link pills share one visual style sitewide.
-- **features**: grid of cards (2 or 3 columns)
+- **features**: grid of cards with optional `heading`, Font Awesome `icon`, `help_anchor` (links to Garden docs), and `hl hl-* hl-reveal` spans in text for cycling highlights
+- **callout**: icon + title + text strip (same highlight cycling as features)
 - **steps**: numbered workflow steps
 - **video**: Vimeo or YouTube embed
 - **two-col**: two-column layout with title and markdown body per column

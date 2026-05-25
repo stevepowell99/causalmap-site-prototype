@@ -34,23 +34,46 @@ def parse_page(filepath):
 def md(text):
     return markdown.markdown(text, extensions=["extra", "tables", "smarty"])
 
+_MD_LINK = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
+
+def inline_html(text):
+    """Frontmatter subheads often include raw <span class=\"hl\"> markup."""
+    text = (text or "").strip()
+    if not text:
+        return ""
+    if "<" in text and ">" in text:
+        def _link(m):
+            label, url = m.group(1), m.group(2)
+            return (
+                f'<a href="{html_lib.escape(url, quote=True)}">'
+                f"{html_lib.escape(label)}</a>"
+            )
+        return _MD_LINK.sub(_link, text)
+    return md(text)
+
+def render_fa_icon(icon, class_name):
+    icon = html_lib.escape((icon or "").strip(), quote=True)
+    if not icon:
+        return ""
+    return f'<span class="{class_name}" aria-hidden="true"><i class="{icon}"></i></span>'
+
 def render_hero(section, cfg):
     headline = section.get("headline", "")
-    subhead = md(section.get("subhead", ""))
+    subhead = inline_html(section.get("subhead", ""))
     cta_text = section.get("cta_text", "")
     cta_url = section.get("cta_url", "#")
     cta_html = f'<a class="btn-cta" href="{cta_url}">{cta_text}</a>' if cta_text else ""
     return f'''<section class="hero">
   <div class="container">
     <h1>{headline}</h1>
-    <div class="hero-sub">{subhead}</div>
+    <div class="hero-sub" data-hl-cycle>{subhead}</div>
     {cta_html}
   </div>
 </section>'''
 
 def render_hero_light(section, cfg):
     headline = section.get("headline", "")
-    subhead = md(section.get("subhead", ""))
+    subhead = inline_html(section.get("subhead", ""))
     pillars = section.get("pillars")
     pills_block = ""
     if pillars:
@@ -64,7 +87,7 @@ def render_hero_light(section, cfg):
     return f'''<section class="hero-light{mod}">
   <div class="container">
     <h1>{headline}</h1>
-    {f'<div class="hero-sub">{subhead}</div>' if subhead else ''}
+    {f'<div class="hero-sub" data-hl-cycle>{subhead}</div>' if subhead else ''}
     {pills_block}
   </div>
 </section>'''
@@ -116,17 +139,59 @@ def render_stand_pillar_articles(pillars, cfg):
         )
     return "".join(parts)
 
+def feature_doc_url(col, cfg):
+    """Link to Causal Map Guide page (garden.causalmap.app/anchor/)."""
+    if col.get("doc_url"):
+        return col["doc_url"]
+    anchor = (col.get("help_anchor") or "").strip().lstrip("#")
+    if not anchor:
+        return ""
+    base = (cfg.get("help_url") or "https://garden.causalmap.app").rstrip("/")
+    return f"{base}/{anchor}/"
+
 def render_features(section, cfg):
     cols = section.get("columns", [])
     cards = ""
     for col in cols:
+        icon_html = render_fa_icon(col.get("icon"), "feature-icon")
+        title = col.get("title", "")
+        doc_url = feature_doc_url(col, cfg)
+        title_html = f"<h3>{title}</h3>"
+        link_html = ""
+        if doc_url:
+            link_html = (
+                f'<a class="feature-card-link" href="{doc_url}" '
+                f'target="_blank" rel="noopener noreferrer" '
+                f'aria-label="{html_lib.escape(title)} — documentation"></a>'
+            )
         cards += f'''<div class="feature-card">
-      <h3>{col.get("title","")}</h3>
-      {md(col.get("text",""))}
+      {link_html}
+      {icon_html}
+      {title_html}
+      {inline_html(col.get("text", ""))}
     </div>\n'''
+    heading = section.get("heading", "")
+    h = f'<h2 class="features-heading">{heading}</h2>' if heading else ""
     return f'''<section class="features">
   <div class="container">
-    <div class="features-grid">{cards}</div>
+    {h}
+    <div class="features-grid" data-hl-cycle>{cards}</div>
+  </div>
+</section>'''
+
+def render_callout(section, cfg):
+    icon_html = render_fa_icon(section.get("icon"), "callout-icon")
+    title = section.get("title", "")
+    text = inline_html(section.get("text", ""))
+    return f'''<section class="callout-section">
+  <div class="container">
+    <div class="callout-card">
+      {icon_html}
+      <div data-hl-cycle>
+        <h2>{title}</h2>
+        {text}
+      </div>
+    </div>
   </div>
 </section>'''
 
@@ -297,6 +362,7 @@ SECTION_RENDERERS = {
     "hero": render_hero,
     "hero-light": render_hero_light,
     "features": render_features,
+    "callout": render_callout,
     "video": render_video,
     "two-col": render_two_col,
     "steps": render_steps,
@@ -683,16 +749,28 @@ a:hover { color: var(--cm-teal); }
   border: 0;
 }
 
-/* ---- Inline highlights ---- */
+/* ---- Inline highlights (inset shadow = reliable marker on inline spans) ---- */
 .hl {
-  padding: 0 0.15em;
-  border-radius: 0.2em;
+  padding: 0 0.1em;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
 }
-.hl-yellow { background: linear-gradient(transparent 38%, var(--cm-yellow-light) 38%, var(--cm-yellow-light) 88%, transparent 88%); }
-.hl-pink { background: linear-gradient(transparent 38%, var(--cm-pink-light) 38%, var(--cm-pink-light) 88%, transparent 88%); }
-.hl-green { background: linear-gradient(transparent 38%, var(--cm-green-light) 38%, var(--cm-green-light) 88%, transparent 88%); }
+/* Static markers only (no hl-reveal); cycling phrases use rules below */
+.hl-yellow:not(.hl-reveal) { box-shadow: inset 0 -0.42em 0 0 var(--cm-yellow-light); }
+.hl-pink:not(.hl-reveal) { box-shadow: inset 0 -0.42em 0 0 var(--cm-pink-light); }
+.hl-green:not(.hl-reveal) { box-shadow: inset 0 -0.42em 0 0 var(--cm-green-light); }
+/* Cycling marker: box-shadow fade (3s in, hold, 3s out via JS) */
+.hl.hl-reveal { transition: box-shadow 3s ease; }
+.hl.hl-reveal.hl-yellow { box-shadow: inset 0 -0.42em 0 0 rgba(240, 215, 107, 0); }
+.hl.hl-reveal.hl-pink { box-shadow: inset 0 -0.42em 0 0 rgba(255, 190, 200, 0); }
+.hl.hl-reveal.hl-green { box-shadow: inset 0 -0.42em 0 0 rgba(43, 169, 156, 0); }
+.hl.hl-reveal.hl-active.hl-yellow { box-shadow: inset 0 -0.42em 0 0 rgba(240, 215, 107, 0.85); }
+.hl.hl-reveal.hl-active.hl-pink { box-shadow: inset 0 -0.42em 0 0 rgba(255, 190, 200, 0.8); }
+.hl.hl-reveal.hl-active.hl-green { box-shadow: inset 0 -0.42em 0 0 rgba(43, 169, 156, 0.45); }
+.hero .hl.hl-reveal.hl-active.hl-yellow { box-shadow: inset 0 -0.42em 0 0 rgba(240, 215, 107, 0.9); }
+.hero .hl.hl-reveal.hl-active.hl-pink { box-shadow: inset 0 -0.42em 0 0 rgba(255, 190, 200, 0.85); }
+.hero .hl.hl-reveal.hl-active.hl-green { box-shadow: inset 0 -0.42em 0 0 rgba(140, 230, 215, 0.9); }
+.callout-card .hl.hl-reveal.hl-active.hl-green { box-shadow: inset 0 -0.42em 0 0 rgba(43, 169, 156, 0.5); }
 
 /* ---- Heading reveal ---- */
 .scroll-reveal {
@@ -992,8 +1070,19 @@ a:hover { color: var(--cm-teal); }
 
 /* ---- Features grid ---- */
 .features { padding: 4rem 0; background: var(--cm-light); }
+.features + .features { padding-top: 2rem; }
+.features-heading {
+  margin: 0 0 2rem;
+  color: var(--cm-ink);
+  font-weight: 600;
+  font-size: 1.65rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--cm-green);
+  display: inline-block;
+}
 .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
 .feature-card {
+  position: relative;
   background: #fff;
   border: 1px solid var(--cm-border);
   border-top: 3px solid var(--cm-green);
@@ -1001,14 +1090,73 @@ a:hover { color: var(--cm-teal); }
   padding: 2rem;
   transition: transform 0.15s, box-shadow 0.15s;
 }
+.feature-card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+.feature-card-link:focus-visible {
+  outline: 2px solid var(--cm-teal);
+  outline-offset: 2px;
+}
+.feature-card:has(.feature-card-link) { cursor: pointer; }
+.feature-card:has(.feature-card-link) p a { position: relative; z-index: 2; }
 .feature-card:nth-child(2) { border-top-color: var(--cm-teal); }
 .feature-card:nth-child(3) { border-top-color: var(--cm-pink); }
 .feature-card:nth-child(4) { border-top-color: var(--cm-green); }
 .feature-card:nth-child(5) { border-top-color: var(--cm-teal); }
 .feature-card:nth-child(6) { border-top-color: var(--cm-pink); }
 .feature-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+.feature-icon {
+  display: inline-flex;
+  width: 3rem;
+  height: 3rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.1rem;
+  border-radius: 999px;
+  background: var(--cm-ink);
+  color: #fff;
+  font-size: 1.25rem;
+  box-shadow: 0 0 0 8px var(--cm-teal-light);
+}
 .feature-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--cm-ink); font-weight: 600; }
+.feature-card:has(.feature-card-link):hover h3 { color: var(--cm-teal); }
 .feature-card p { font-size: 0.95rem; color: #555; }
+
+/* ---- Callout ---- */
+.callout-section { padding: 2.25rem 0; background: var(--cm-light); }
+.callout-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 1.35rem 1.55rem;
+  border: 1px solid rgba(43,169,156,0.25);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 8px 28px rgba(31, 31, 54, 0.07);
+}
+.callout-icon {
+  display: inline-flex;
+  width: 3.4rem;
+  height: 3.4rem;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--cm-teal-light);
+  color: var(--cm-ink);
+  font-size: 1.4rem;
+}
+.callout-card h2 {
+  margin-bottom: 0.25rem;
+  color: var(--cm-ink);
+  font-size: 1.2rem;
+}
+.callout-card p { margin: 0; color: #555; }
 /* ---- Video ---- */
 .video-section { padding: 3.5rem 0; }
 .video-wrap {
@@ -1279,6 +1427,10 @@ footer {
     transform: none;
     transition: none;
   }
+  .hl.hl-reveal { transition: none; }
+  .hl.hl-reveal.hl-active.hl-yellow { box-shadow: inset 0 -0.42em 0 0 rgba(240, 215, 107, 0.85); }
+  .hl.hl-reveal.hl-active.hl-pink { box-shadow: inset 0 -0.42em 0 0 rgba(255, 190, 200, 0.8); }
+  .hl.hl-reveal.hl-active.hl-green { box-shadow: inset 0 -0.42em 0 0 rgba(43, 169, 156, 0.45); }
 }
 '''
 
@@ -1299,6 +1451,7 @@ def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="",
   <title>{title} | {site_name}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   {analytics_html}
   <style>{build_css(cfg)}</style>
 </head>
@@ -1342,6 +1495,107 @@ def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="",
 
   headings.forEach((heading) => observer.observe(heading));
 }})();
+function cycleHighlightGroup(root) {{
+  const holdMs = 2500;
+  const fadeMs = 3000;
+  let timer = null;
+  let inView = false;
+  const cards = root.querySelectorAll(".feature-card");
+  const cardData = cards.length
+    ? Array.from(cards)
+        .map((card) => ({{ phrases: Array.from(card.querySelectorAll(".hl-reveal")) }}))
+        .filter((c) => c.phrases.length)
+    : [];
+  const phrases = cardData.length
+    ? cardData.flatMap((c) => c.phrases)
+    : Array.from(root.querySelectorAll(".hl-reveal"));
+  if (!phrases.length) return;
+
+  function shuffle(arr) {{
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {{
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }}
+    return a;
+  }}
+  function clearPhrases() {{
+    phrases.forEach((p) => p.classList.remove("hl-active"));
+  }}
+  function activeCount(total) {{
+    const jitter = Math.random() < 0.5 ? 0 : (Math.random() < 0.5 ? -1 : 1);
+    return Math.max(1, Math.round(total / 3 + jitter));
+  }}
+  function nextDelay() {{
+    return holdMs + fadeMs * 2 + Math.floor(Math.random() * 3000);
+  }}
+  function pick() {{
+    if (cardData.length === 1 && phrases.length === 1) {{
+      phrases[0].classList.add("hl-active");
+      return;
+    }}
+    clearPhrases();
+    void root.offsetHeight;
+    if (cardData.length) {{
+      const n = activeCount(cardData.length);
+      shuffle(cardData).slice(0, n).forEach((c) => {{
+        const ps = c.phrases;
+        ps[Math.floor(Math.random() * ps.length)].classList.add("hl-active");
+      }});
+    }} else if (phrases.length === 1) {{
+      phrases[0].classList.add("hl-active");
+    }} else {{
+      shuffle(phrases).slice(0, activeCount(phrases.length)).forEach((p) => p.classList.add("hl-active"));
+    }}
+  }}
+  function stop() {{
+    if (timer) clearTimeout(timer);
+    timer = null;
+  }}
+  function schedule() {{
+    stop();
+    timer = setTimeout(function tick() {{
+      pick();
+      timer = setTimeout(tick, nextDelay());
+    }}, nextDelay());
+  }}
+  function bump() {{
+    stop();
+    pick();
+    schedule();
+  }}
+  function onLeave() {{
+    stop();
+    clearPhrases();
+  }}
+
+  if (!("IntersectionObserver" in window)) {{
+    bump();
+    return;
+  }}
+  const observer = new IntersectionObserver((entries) => {{
+    entries.forEach((entry) => {{
+      if (entry.isIntersecting) {{
+        if (!inView) {{
+          inView = true;
+          bump();
+        }}
+      }} else if (inView) {{
+        inView = false;
+        onLeave();
+      }}
+    }});
+  }}, {{ threshold: 0.2, rootMargin: "0px 0px -12% 0px" }});
+  observer.observe(root);
+}}
+function cycleHighlights() {{
+  document.querySelectorAll("[data-hl-cycle]").forEach(cycleHighlightGroup);
+}}
+if (document.readyState === "loading") {{
+  document.addEventListener("DOMContentLoaded", cycleHighlights);
+}} else {{
+  cycleHighlights();
+}}
 </script>
 {search_script}
 </body>
