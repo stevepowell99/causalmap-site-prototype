@@ -21,7 +21,7 @@ Related policies: [Information Security Policy](/information-security), [AI Comp
 - **<span class="hl hl-green">Your data belongs to you.</span>** We do not sell or share your data with third parties.
 - **We use <span class="hl hl-yellow">industry-standard security</span>**, including encryption at rest and in transit. See the [Information Security Policy](/information-security) for detail.
 - **You can export or delete your data at any time** from your account.
-- **AI compliance:** We comply with UK AI Bill and GDPR requirements on automated decision-making. <span class="hl hl-pink">AI features are optional</span> and always subject to human review. See [AI Compliance](/ai-compliance).
+- **AI compliance:** We comply with UK AI Bill and GDPR requirements on automated decision-making. <span class="hl hl-pink">AI features are optional</span> and always subject to human review. **Full GDPR protection of AI processing depends on the client selecting an EU or UK region.** See [AI Compliance](/ai-compliance).
 - **Research participants:** If your data contains research participant information, you must obtain consent before uploading. We provide privacy-by-default settings for sensitive data.
 
 ### Data controller

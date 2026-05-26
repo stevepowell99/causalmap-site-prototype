@@ -18,13 +18,23 @@ Causal Map is an online-only service: there is nothing to download or install.
 
 Causal Map 4 does not have AI enabled by default. AI is enabled only for users who sign up to specific AI plans.
 
-- Data is processed using a variety of LLM APIs. As of November 2025, exclusively Google Vertex APIs.
-- Each model use is recorded internally.
-- For Google Vertex AI:
-    - <span class="hl hl-green">Data is not used to train models.</span>
-    - <span class="hl hl-yellow">Zero long-term retention: a maximum of 24 hours in-memory cache</span> of data.
-    - Data stays in the user's chosen region: europe-west1, europe-west2 or Virginia (us-east5).
-    - For users who select a European region, data storage and processing are GDPR compliant.
+**Primary AI provider: Google Vertex AI** (Gemini models).
+
+- **Regions for AI processing:** europe-west1 (Belgium), europe-west2 (UK) or us-east5 (Virginia), chosen per workspace.
+- <span class="hl hl-green">Data is not used to train models.</span>
+- <span class="hl hl-yellow">Zero long-term retention: a maximum of 24 hours in-memory cache</span>, and prompt logging for abuse monitoring can be turned off under invoiced billing.
+
+**AI coding service path.** AI requests are routed through a Google Cloud Function (`process_chunk`, project `cm-translation-426218`, region us-central1 / Iowa). The function does not store user data; it forwards prompts to the chosen AI provider and writes only audit logs to a `ai_logs` table in Supabase.
+
+**Optional alternative providers** (selected per plan or model):
+
+- **Dashscope (Alibaba Qwen)** — Qwen Flash, Plus or Max, served from Singapore or the US. Alibaba does not retain data; processing is in-memory only.
+- **OpenAI (GPT-5)** — used only when explicitly selected. OpenAI's own retention policy applies.
+
+Each model use is recorded internally for audit purposes.
+
+> **GDPR and data residency.** Full GDPR compliance for AI processing depends on the client selecting an EU or UK region (europe-west1 or europe-west2). If a US region or a non-EU alternative provider (OpenAI in the US, Dashscope) is used, AI processing leaves the UK or EU and falls outside the territorial protections of UK GDPR, though contractual safeguards still apply. Choose your region with this in mind.
+
 - Clients are asked not to upload data containing personally identifying information. Where this is hard to guarantee, see the offline anonymisation tool described in the [Privacy Policy](/privacy-policy).
 - Causal Map Ltd adheres to established qualitative research protocols to limit the AI's freedom in making evaluative judgments, aiming for transparency and accuracy in the AI's interpretation of causal claims.
 - Ethical considerations include attention to the types of data processed and ensuring the AI's analysis reflects respondent views without systematic bias or undue influence.

@@ -71,10 +71,30 @@ Access to data classified as Confidential or Restricted is limited to authorised
 
 #### Data storage and security
 
-- Causal Map is a serverless application using Supabase as a backend, with data stored in the UK.
-- Data is encrypted at rest and in transit, using TLS via HTTPS for transmission between users and the app.
+- Causal Map is a serverless application. The Postgres database, authentication, storage, realtime and Edge Functions are provided by Supabase, with the database pooler hosted in AWS eu-west-2 (London).
+- Static web assets are hosted on Netlify (`app.causalmap.app`).
+- The PDF processor service runs on Railway and does not store uploaded PDFs; files are extracted to text and discarded.
+- Cloudflare CDN serves a PDF.js worker; no user data is stored at Cloudflare.
+- Data is encrypted at rest and at the database layer, and in transit via TLS over HTTPS.
 - Row-Level Security policies are enforced at Supabase.
 - Daily backups of the database are made automatically.
+
+#### Sub-processors that may handle personal data
+
+| Service | Purpose | Location | Retention |
+|---|---|---|---|
+| Supabase | Auth, Postgres, Storage, Realtime, Edge Functions | AWS eu-west-2 (London) | Held until user deletes |
+| Google Vertex AI | AI inference (Gemini) | europe-west1, europe-west2 or us-east5 | None; up to 24 h in-memory |
+| Google Cloud Functions | AI routing (`process_chunk`) | us-central1 (Iowa) | None; audit logs only |
+| Dashscope (Alibaba) | Optional AI inference (Qwen) | Singapore or US | None (in-memory) |
+| OpenAI | Optional AI inference (GPT-5) | OpenAI infrastructure | OpenAI policy |
+| Railway | PDF text extraction | Railway infrastructure | None; files discarded |
+| Netlify | Static webapp hosting | Netlify infrastructure | Static assets only |
+| Loops.so | Email marketing and welcome flow | Loops infrastructure | Loops policy |
+| Lemon Squeezy | Subscriptions, checkout, customer portal | Lemon Squeezy infrastructure | Lemon Squeezy policy |
+| Slack | Admin support notifications via webhook | Slack infrastructure | Slack policy |
+
+For AI processing details, including the choice of EU, UK or US regions and what that means for GDPR, see [AI Compliance](/ai-compliance).
 
 #### Data protection measures
 
