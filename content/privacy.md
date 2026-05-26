@@ -14,7 +14,7 @@ Causal Map Ltd is committed to protecting the privacy of our users. This policy 
 
 Causal Map is an online-only service: there is nothing to download or install.
 
-Related policies: [Information Security Policy](/information-security), [AI Compliance](/ai-compliance), [Service Level Agreement](/sla), [Terms and Conditions](/terms-and-conditions), [Ethical Principles](/ethical-principles).
+Related policies: [Information Security Policy](/information-security), [AI Compliance](/ai-compliance), [Terms and Conditions](/terms-and-conditions) (including the [SLA](/terms-and-conditions#sla)), [Ethical Principles](/ethical-principles).
 
 ### Summary
 
@@ -51,6 +51,23 @@ As data controllers, clients must ensure:
 **1. Lawful, fair and transparent processing.** All data processing must meet at least one condition: subject consent, contract performance, legal obligation, vital interests protection, public interest, or legitimate interests.
 
 **2. Purpose limitation.** Data is processed only for specified research purposes. Further processing for research or statistical purposes is permitted if compatible.
+
+<h3 id="sub-processors">Sub-processors</h3>
+
+We use the following sub-processors to operate Causal Map. They may handle personal data on our behalf, under contract. Technical security controls are described in the [Information Security Policy](/information-security); AI region choices and their GDPR implications are described in [AI Compliance](/ai-compliance).
+
+| Service | Purpose | Location | Retention |
+|---|---|---|---|
+| Supabase | Auth, Postgres, Storage, Realtime, Edge Functions | AWS eu-west-2 (London) | Held until user deletes |
+| Google Vertex AI | AI inference (Gemini) | europe-west1, europe-west2 or us-east5 | None; up to 24 h in-memory |
+| Google Cloud Functions | AI routing (`process_chunk`) | us-central1 (Iowa) | None; audit logs only |
+| Dashscope (Alibaba) | Optional AI inference (Qwen) | Singapore or US | None (in-memory) |
+| OpenAI | Optional AI inference (GPT-5) | OpenAI infrastructure | OpenAI policy |
+| Railway | PDF text extraction | Railway infrastructure | None; files discarded |
+| Netlify | Static webapp hosting | Netlify infrastructure | Static assets only |
+| Loops.so | Email marketing and welcome flow | Loops infrastructure | Loops policy |
+| Lemon Squeezy | Subscriptions, checkout, customer portal | Lemon Squeezy infrastructure | Lemon Squeezy policy |
+| Slack | Admin support notifications via webhook | Slack infrastructure | Slack policy |
 
 ### Data retention and deletion
 

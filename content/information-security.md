@@ -79,22 +79,7 @@ Access to data classified as Confidential or Restricted is limited to authorised
 - Row-Level Security policies are enforced at Supabase.
 - Daily backups of the database are made automatically.
 
-#### Sub-processors that may handle personal data
-
-| Service | Purpose | Location | Retention |
-|---|---|---|---|
-| Supabase | Auth, Postgres, Storage, Realtime, Edge Functions | AWS eu-west-2 (London) | Held until user deletes |
-| Google Vertex AI | AI inference (Gemini) | europe-west1, europe-west2 or us-east5 | None; up to 24 h in-memory |
-| Google Cloud Functions | AI routing (`process_chunk`) | us-central1 (Iowa) | None; audit logs only |
-| Dashscope (Alibaba) | Optional AI inference (Qwen) | Singapore or US | None (in-memory) |
-| OpenAI | Optional AI inference (GPT-5) | OpenAI infrastructure | OpenAI policy |
-| Railway | PDF text extraction | Railway infrastructure | None; files discarded |
-| Netlify | Static webapp hosting | Netlify infrastructure | Static assets only |
-| Loops.so | Email marketing and welcome flow | Loops infrastructure | Loops policy |
-| Lemon Squeezy | Subscriptions, checkout, customer portal | Lemon Squeezy infrastructure | Lemon Squeezy policy |
-| Slack | Admin support notifications via webhook | Slack infrastructure | Slack policy |
-
-For AI processing details, including the choice of EU, UK or US regions and what that means for GDPR, see [AI Compliance](/ai-compliance).
+For the list of sub-processors that handle personal data, see [Sub-processors](/privacy-policy#sub-processors) on the Privacy Policy page. For AI processing details, including the choice of EU, UK or US regions and what that means for GDPR, see [AI Compliance](/ai-compliance).
 
 #### Data protection measures
 
@@ -152,8 +137,7 @@ We reserve the right to change this policy at any given time, in which case we w
 
 - [Privacy Policy](/privacy-policy)
 - [AI Compliance](/ai-compliance)
-- [Service Level Agreement](/sla)
-- [Terms and Conditions](/terms-and-conditions)
+- [Terms and Conditions](/terms-and-conditions) (including the [SLA](/terms-and-conditions#sla))
 
 ### Contact
 

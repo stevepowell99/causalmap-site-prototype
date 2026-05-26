@@ -677,7 +677,6 @@ def build_footer(cfg):
       <a href="/privacy-policy">Privacy</a>
       <a href="/information-security">Information Security</a>
       <a href="/ai-compliance">AI Compliance</a>
-      <a href="/sla">SLA</a>
       <a href="/ethical-principles">Ethical Principles</a>
       <a href="https://forms.gle/JrK2AE6NTsGzUvWe8">Newsletter</a>
     </div>
@@ -1459,27 +1458,88 @@ footer {
 }
 .print-link a:hover { background: var(--cm-teal); color: #fff !important; }
 
+/* ---- Print-only banner (shown only when printing) ---- */
+.print-banner { display: none; }
+
 /* ---- Print stylesheet ---- */
 @media print {
-  @page { margin: 18mm 16mm; }
-  html, body { background: #fff !important; color: #000 !important; }
-  body { font-family: Georgia, "Times New Roman", serif; font-size: 11pt; line-height: 1.45; }
-  nav, .site-nav, .nav-inner, .nav-toggle, .site-search-form,
-  footer, .footer-inner, .footer-links, .footer-social, .footer-copy,
-  .accent-stripe, .print-link, .no-print { display: none !important; }
-  .container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
-  section, .prose-section, .hero, .hero-light { padding: 0 !important; margin: 0 0 0.5rem !important; background: #fff !important; color: #000 !important; }
-  .prose-section h2 { font-size: 18pt; border: 0 !important; padding: 0.4rem 0 0.2rem !important; margin: 0.8rem 0 0.4rem !important; }
-  .prose-section h3 { font-size: 13pt; margin-top: 0.6rem; }
-  .prose-section h4 { font-size: 11pt; margin-top: 0.4rem; }
-  h2, h3, h4 { page-break-after: avoid; }
-  p, li, ul, ol, blockquote, table { page-break-inside: avoid; }
-  .hl, .hl-pink, .hl-yellow, .hl-green, .hl-teal {
-    background: transparent !important; box-shadow: none !important; color: #000 !important; font-weight: 600;
+  @page {
+    margin: 20mm 18mm 22mm;
+    @bottom-center { content: counter(page) " / " counter(pages); font-family: Georgia, serif; font-size: 9pt; color: #555; }
+    @bottom-left { content: "causalmap.app"; font-family: Georgia, serif; font-size: 9pt; color: #555; }
   }
-  a, a:link, a:visited { color: #000 !important; text-decoration: underline; }
-  a[href^="http"]:not([href*="causalmap.app"])::after { content: " (" attr(href) ")"; font-size: 0.85em; color: #444; }
-  a[href^="mailto:"]::after { content: ""; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { background: #fff !important; color: #000 !important; }
+  body { font-family: Georgia, "Times New Roman", serif !important; font-size: 10.5pt !important; line-height: 1.5 !important; }
+
+  /* Hide all site chrome */
+  nav, .site-nav, .nav-inner, .nav-toggle, .site-search-form, .nav-logo, .nav-cta,
+  footer, .footer-inner, .footer-links, .footer-social, .footer-copy,
+  .accent-stripe, .print-link, .no-print,
+  .scroll-reveal, button.nav-toggle { display: none !important; }
+
+  /* Reveal the print banner */
+  .print-banner {
+    display: block !important;
+    border-bottom: 1.5pt solid #000;
+    padding-bottom: 6pt;
+    margin-bottom: 14pt;
+  }
+  .print-banner .brand { font-weight: 700; font-size: 13pt; color: #000; letter-spacing: 0.2pt; }
+  .print-banner .url { float: right; font-size: 9.5pt; color: #555; }
+
+  /* Layout reset */
+  main { display: block !important; }
+  .container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; width: 100% !important; }
+  section, .prose-section, .hero, .hero-light {
+    padding: 0 !important; margin: 0 0 0.5rem !important;
+    background: #fff !important; color: #000 !important; box-shadow: none !important;
+  }
+
+  /* Headings */
+  .prose-section h1, .prose-section h2 {
+    font-family: Georgia, serif !important;
+    font-size: 18pt !important;
+    font-weight: 700 !important;
+    border: 0 !important;
+    color: #000 !important;
+    padding: 0 0 4pt !important;
+    margin: 0 0 8pt !important;
+  }
+  .prose-section h2:not(:first-of-type) { margin-top: 18pt !important; padding-top: 4pt !important; border-top: 0.5pt solid #888 !important; }
+  .prose-section h3 { font-size: 12.5pt !important; font-weight: 700 !important; margin: 10pt 0 4pt !important; color: #000 !important; }
+  .prose-section h4 { font-size: 11pt !important; font-weight: 700 !important; font-style: italic; margin: 8pt 0 3pt !important; color: #000 !important; }
+  h1, h2, h3, h4 { page-break-after: avoid !important; break-after: avoid !important; }
+  h2 + p, h2 + ul, h3 + p, h3 + ul, h4 + p, h4 + ul { page-break-before: avoid !important; }
+
+  /* Body text */
+  p { margin: 0 0 6pt !important; orphans: 3; widows: 3; }
+  ul, ol { margin: 0 0 8pt 18pt !important; padding: 0 !important; }
+  li { margin-bottom: 2pt !important; page-break-inside: avoid !important; }
+  blockquote {
+    border-left: 2pt solid #000 !important; background: transparent !important;
+    padding: 2pt 0 2pt 10pt !important; margin: 8pt 0 !important;
+    font-style: italic; color: #000 !important;
+  }
+  blockquote p { margin: 0 !important; }
+
+  /* Tables */
+  table { width: 100% !important; border-collapse: collapse !important; margin: 8pt 0 !important; font-size: 9.5pt !important; page-break-inside: auto !important; }
+  th, td { border: 0.5pt solid #888 !important; padding: 4pt 6pt !important; text-align: left !important; vertical-align: top !important; background: #fff !important; color: #000 !important; }
+  th { background: #eee !important; font-weight: 700 !important; }
+  tr { page-break-inside: avoid !important; }
+
+  /* Highlights become bold plain text */
+  .hl, span[class*="hl-"] {
+    background: transparent !important; box-shadow: none !important;
+    color: #000 !important; font-weight: 700 !important; padding: 0 !important;
+  }
+
+  /* Links */
+  a, a:link, a:visited { color: #000 !important; text-decoration: underline !important; }
+  a[href^="http"]:not([href*="causalmap.app"])::after,
+  a[href^="https://www.notion"]::after { content: " (" attr(href) ")"; font-size: 0.82em; color: #555; word-break: break-all; }
+  a[href^="mailto:"]::after, a[href^="#"]::after, a[href^="/"]::after, a[href^="../"]::after { content: "" !important; }
 }
 '''
 
@@ -1507,6 +1567,7 @@ def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="",
 <body>
 {nav_html}
 <main>
+<div class="print-banner"><span class="brand">Causal Map</span><span class="url">causalmap.app</span></div>
 {content_html}
 </main>
 {footer_html}
