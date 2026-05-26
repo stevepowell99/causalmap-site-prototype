@@ -1,13 +1,20 @@
 @echo off
 cd /d "%~dp0"
 
-REM Install required Python packages if needed.
-py -c "import yaml, markdown" 1>nul 2>nul
+REM Ensure Python 3 is available before installing packages.
+call "%~dp0Ensure Python.bat"
 if errorlevel 1 (
-    py -m pip install pyyaml markdown
+    pause
+    exit /b 1
+)
+
+REM Install required Python packages if needed.
+"%PYTHON_EXE%" %PYTHON_ARGS% -c "import yaml, markdown" 1>nul 2>nul
+if errorlevel 1 (
+    "%PYTHON_EXE%" %PYTHON_ARGS% -m pip install pyyaml markdown
 )
 
 REM One-off build into dist/.
-py build.py
+"%PYTHON_EXE%" %PYTHON_ARGS% build.py
 
 pause

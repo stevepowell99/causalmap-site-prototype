@@ -8,6 +8,8 @@ sections:
 
 ## Causal Map Ethical Principles
 
+<p class="print-link"><a href="#" onclick="window.print(); return false;">Print or save as PDF</a></p>
+
 We are committed to supporting <span class="hl hl-yellow">rigorous, ethical qualitative research</span>. These principles guide how we design Causal Map, how we support our users, and how we operate our business.
 
 ### 1. Global equity

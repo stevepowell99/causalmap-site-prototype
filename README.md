@@ -93,7 +93,7 @@ Umami is configured in `config.yml` under `analytics`. Set `umami_id` to your Um
 
 ## Building
 
-On Windows, double-click `Build.bat` for a one-off build (auto-installs `pyyaml` and `markdown` if needed).
+On Windows, double-click `Build.bat` for a one-off build (auto-installs Python 3 with `winget` if needed, then `pyyaml` and `markdown`).
 
 From a shell:
 
@@ -115,6 +115,7 @@ For a non-technical editor on Windows, the simplest option is to double-click `S
 
 That will:
 
+- install Python 3 with `winget` if needed
 - install `pyyaml`, `markdown`, and `livereload` if needed
 - run `preview.py`
 - open a local preview at `http://127.0.0.1:5500`

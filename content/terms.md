@@ -8,6 +8,8 @@ sections:
 
 ## Causal Map Subscription Agreement
 
+<p class="print-link"><a href="#" onclick="window.print(); return false;">Print or save as PDF</a></p>
+
 **Effective date: 1 January 2024**
 
 ### 1. Service description
