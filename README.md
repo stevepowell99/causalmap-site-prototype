@@ -46,6 +46,8 @@ nav_children:         # optional dropdown menu
   - label: Sub-item
     path: /sub-path
 description: Meta description for SEO.
+date: 2025-05-21      # optional; used to sort and label tag listings
+tags: [academic-presentations]   # optional; adds the page to each tag's index
 sections:
   - type: hero
     headline: Main heading
@@ -82,6 +84,15 @@ The build script supports these section types:
 - **search**: client-side search page with indexed site content
 - **prose**: renders the markdown body below the front matter
 - **logos**: logo images
+
+## Tags and event pages
+
+Any page can carry a `tags` list in its front matter (and an optional `date`). The build:
+
+- adds a row of tag chips at the foot of each tagged page, linking to that tag's index;
+- generates one listing page per tag at `/events/tags/<tag-slug>/`, showing every page with that tag, newest `date` first, with its date label and description.
+
+Tag pages are generated, not authored: there is no markdown file for them. They are excluded from the top nav and reachable through the chips or a direct link. The event write-ups in `content/events/` (conference talks, workshops, webinars) use this with `tags: [academic-presentations]`. Their images live in `content/assets/events/`.
 
 ## Brand colours
 

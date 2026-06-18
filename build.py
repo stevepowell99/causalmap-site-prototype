@@ -443,6 +443,67 @@ def relative_site_path(target_path, from_path):
         return prefix + stripped
     return prefix + stripped + "/index.html"
 
+TAG_INDEX_BASE = "/events/tags"
+_TAG_MONTHS = ["January", "February", "March", "April", "May", "June",
+               "July", "August", "September", "October", "November", "December"]
+
+def slugify_tag(tag):
+    return re.sub(r"[^a-z0-9]+", "-", str(tag).strip().lower()).strip("-")
+
+def tag_display(tag):
+    t = str(tag).replace("-", " ").strip()
+    return (t[:1].upper() + t[1:]) if t else t
+
+def page_tags(page):
+    tags = page.get("tags") or []
+    if isinstance(tags, str):
+        tags = [t.strip() for t in tags.split(",")]
+    return [str(t).strip() for t in tags if str(t).strip()]
+
+def event_date_label(value):
+    """'2025-05-21' -> 'May 2025'; '2022' -> '2022'."""
+    if not value:
+        return ""
+    parts = str(value).split("-")
+    year = parts[0]
+    if len(parts) >= 2 and parts[1].isdigit():
+        idx = int(parts[1])
+        if 1 <= idx <= 12:
+            return f"{_TAG_MONTHS[idx - 1]} {year}"
+    return year
+
+def render_tag_chips(tags):
+    chips = "".join(
+        f'<a class="tag-chip" href="{TAG_INDEX_BASE}/{slugify_tag(t)}">{html_lib.escape(tag_display(t))}</a>'
+        for t in tags
+    )
+    return (f'<section class="tag-chips-section"><div class="container">'
+            f'<div class="tag-chips">{chips}</div></div></section>')
+
+def render_tag_index(tag, member_pages):
+    """A listing page for one tag, reusing the search-result card styling."""
+    intro = "Talks, workshops, posters and webinars where we have presented Causal Map and causal mapping."
+    cards = ""
+    for p in member_pages:
+        label = event_date_label(p.get("date"))
+        desc = normalize_whitespace(p.get("description", ""))
+        cards += (
+            '<article class="search-result-card">'
+            f'<h2><a href="{p["_path"]}">{html_lib.escape(p.get("title", "Untitled"))}</a></h2>'
+            + (f'<p class="search-result-desc">{html_lib.escape(label)}</p>' if label else "")
+            + (f'<p class="search-result-snippet">{html_lib.escape(desc)}</p>' if desc else "")
+            + "</article>"
+        )
+    return (
+        '<section class="hero-light"><div class="container">'
+        f'<h1>{html_lib.escape(tag_display(tag))}</h1>'
+        f'<div class="hero-sub">{md(intro)}</div>'
+        "</div></section>"
+        '<section class="search-section"><div class="container">'
+        f'<div class="search-results">{cards}</div>'
+        "</div></section>"
+    )
+
 def build_search_index(pages):
     docs = []
     for page in pages:
@@ -1379,6 +1440,21 @@ a:hover { color: var(--cm-teal); }
   text-shadow: 0 0 0.01px currentColor;
 }
 
+/* ---- Event post images ---- */
+.prose-section img { max-width: 100%; height: auto; border-radius: var(--radius); margin: 1.25rem 0; display: block; }
+.prose-section .img-row { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.25rem 0; }
+.prose-section .img-row img { flex: 1 1 240px; min-width: 0; margin: 0; object-fit: cover; }
+
+/* ---- Tags ---- */
+.tag-chips-section { padding: 0 0 3rem; }
+.tag-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.tag-chip {
+  display: inline-block; padding: 0.3rem 0.85rem; border-radius: 999px;
+  font-size: 0.8rem; font-weight: 600; text-decoration: none;
+  background: var(--cm-light); color: var(--cm-ink); border: 1px solid var(--cm-border);
+}
+.tag-chip:hover { background: var(--cm-teal-light); color: var(--cm-ink); }
+
 /* ---- Footer ---- */
 footer {
   background: var(--cm-ink);
@@ -1757,6 +1833,29 @@ def build():
         if not page.get("redirect"):
             page["_content_html"] = render_sections(page, cfg)
         pages.append(page)
+
+    # Tag chips on tagged pages + collect tag membership for index pages
+    tag_members = {}
+    for page in pages:
+        if page.get("redirect"):
+            continue
+        tags = page_tags(page)
+        if not tags:
+            continue
+        for t in tags:
+            tag_members.setdefault(slugify_tag(t), {"label": t, "pages": []})["pages"].append(page)
+        page["_content_html"] += render_tag_chips(tags)
+
+    # Synthetic tag index pages, e.g. /events/tags/academic-presentations
+    for slug, info in sorted(tag_members.items()):
+        members = sorted(info["pages"], key=lambda p: str(p.get("date") or ""), reverse=True)
+        pages.append({
+            "title": tag_display(info["label"]),
+            "path": f"{TAG_INDEX_BASE}/{slug}",
+            "_path": f"{TAG_INDEX_BASE}/{slug}",
+            "description": f"Causal Map talks, workshops and webinars tagged {tag_display(info['label']).lower()}.",
+            "_content_html": render_tag_index(info["label"], members),
+        })
 
     search_index = build_search_index(pages)
     nav_html = build_nav(pages, cfg)

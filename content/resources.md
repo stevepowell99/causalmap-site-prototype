@@ -22,6 +22,10 @@ Read about how organisations have used Causal Map in their work: [Case studies](
 
 Academic papers, reports, and publications related to causal mapping: [Bibliography](https://garden.causalmap.app/bibliography).
 
+## [Academic presentations](/events/tags/academic-presentations)
+
+Talks, workshops, posters and webinars where we have presented Causal Map and causal mapping: [Academic presentations](/events/tags/academic-presentations).
+
 ## [Videos](https://youtube.com/playlist?list=PLSCKdSxlLlfGfcab5njcT57xzU0hOURc-&si=jX6S7fu43kBzHnRc)
 
 Watch tutorials and walkthroughs on our <span class="hl hl-pink">[YouTube channel](https://youtube.com/playlist?list=PLSCKdSxlLlfGfcab5njcT57xzU0hOURc-&si=jX6S7fu43kBzHnRc)</span>.
