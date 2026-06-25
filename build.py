@@ -425,6 +425,33 @@ def add_external_link_attrs(html):
 
     return re.sub(r'<a\b[^>]*href="([^"]+)"[^>]*>', replace_anchor, html)
 
+def tag_app_links(html, cfg):
+    """Append UTM params to links pointing to the app host, so corporate-site signups are
+    attributed. Configured once via `app_utm` in config.yml; links already carrying utm_source
+    are left untouched."""
+    import re
+    from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
+
+    utm = {k: v for k, v in (cfg.get("app_utm") or {}).items() if v}
+    if not utm:
+        return html
+    app_host = urlsplit(cfg.get("app_url", "https://app.causalmap.app")).netloc.lower()
+    if not app_host:
+        return html
+
+    def add_utm(href):
+        parts = urlsplit(href)
+        if parts.netloc.lower() != app_host:
+            return href
+        query = dict(parse_qsl(parts.query, keep_blank_values=True))
+        if "utm_source" in query:
+            return href
+        query.update(utm)
+        path = parts.path or "/"
+        return urlunsplit((parts.scheme, parts.netloc, path, urlencode(query), parts.fragment))
+
+    return re.sub(r'(href|src|action)="(https?://[^"]+)"', lambda m: f'{m.group(1)}="{add_utm(m.group(2))}"', html)
+
 def normalize_whitespace(text):
     return re.sub(r"\s+", " ", text).strip()
 
@@ -1883,6 +1910,7 @@ def build():
             )
             html = make_links_relative(html, path)
         html = add_external_link_attrs(html)
+        html = tag_app_links(html, cfg)
         if path == "/":
             out_file = output_dir / "index.html"
         elif "." in path.strip("/").split("/")[-1]:

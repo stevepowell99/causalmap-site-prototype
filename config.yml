@@ -5,6 +5,13 @@ help_url: https://garden.causalmap.app
 input_dir: content
 output_dir: dist
 
+# UTM params appended to every link to app_url at build time (acquisition attribution).
+# Set utm_source empty to disable. Links that already carry utm_source are left untouched.
+app_utm:
+  utm_source: causalmap-site
+  utm_medium: referral
+  utm_campaign: corporate-site
+
 colors:
   accent_primary: "#00ffaf"
   accent_secondary: "#6dc4c8"
