@@ -92,7 +92,7 @@ For the list of sub-processors that handle personal data, see [Sub-processors](/
 Authentication is handled by Supabase.
 
 - Users can authenticate with email and password, or through a Google account.
-- Two-factor authentication is available on request.
+- Two-factor authentication is available.
 - Strong passwords and regular password resets are recommended.
 
 #### Role-based access
@@ -103,11 +103,11 @@ There are two levels of access: Admin and User.
 
 - Granted to three accounts at Supabase, controlled only by the domain admin.
 - Admins can see metadata and significant events for all users.
-- Admins can view and, if necessary, delete client data, but will not do so without the client's explicit permission.
+- Using the AI, admins cannot view, edit or delete clients' private data. They can do so programmatically but will not do that without the client's explicit permission.
 
 **User access:**
 
-- Users on the corresponding plan can assign and revoke view, copy or edit rights for other users.
+- Users on the corresponding plan can assign and revoke view, copy or edit rights for other users on projects to which they have the appropriate permissions.
 - Users can view, copy or edit files to which they have the appropriate permission.
 - Users can create new files over which they then have edit permission.
 
@@ -115,7 +115,7 @@ There are two levels of access: Admin and User.
 
 - Log on and log off are monitored via Supabase Auth.
 - Highly significant events such as new user registration and file creation are logged in a system SQL database and emailed to the Data Protection Officer.
-- Significant events such as log on and file load are recorded in a system SQL database.
+- Significant events such as log on, file load etc. are recorded in a system SQL database.
 
 ### 5. Reporting requirements
 
