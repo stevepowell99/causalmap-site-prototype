@@ -779,6 +779,7 @@ def build_footer(cfg):
       <a href="https://www.youtube.com/watch?v=YskPTmWfADw&list=PLSCKdSxlLlfGfcab5njcT57xzU0hOURc-">YouTube</a>
       <a href="https://github.com/stevepowell99/">GitHub</a>
     </div>
+    <p class="footer-legal">Causal Map Ltd, registered in England and Wales, company no. 12926630. Registered office: 39 Apsley Road, Bath BA1 3LP, United Kingdom. VAT no. GB 399950030.</p>
     <p class="footer-copy">This work is licensed under CC BY-NC 4.0</p>
   </div>
 </footer>'''
@@ -1035,7 +1036,7 @@ a:hover { color: var(--cm-teal); }
 .btn-cta {
   display: inline-block;
   background: var(--cm-pink);
-  color: #fff;
+  color: var(--cm-ink);
   padding: 0.6rem 1.6rem;
   border-radius: 11px;
   text-decoration: none;
@@ -1049,7 +1050,7 @@ a:hover { color: var(--cm-teal); }
 .btn-secondary {
   display: inline-block;
   background: var(--cm-green);
-  color: #fff;
+  color: var(--cm-ink);
   padding: 0.6rem 1.6rem;
   border-radius: 11px;
   text-decoration: none;
@@ -1504,6 +1505,7 @@ footer {
 .footer-social { display: flex; justify-content: center; gap: 1.25rem; margin-bottom: 1rem; }
 .footer-social a { color: var(--cm-pink); text-decoration: none; transition: opacity 0.15s; }
 .footer-social a:hover { opacity: 0.88; }
+.footer-legal { color: rgba(255,255,255,0.55); font-size: 0.78rem; max-width: 640px; margin: 0 auto 0.5rem; line-height: 1.5; }
 .footer-copy { color: rgba(255,255,255,0.5); font-size: 0.8rem; }
 
 /* ---- Responsive ---- */
