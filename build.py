@@ -151,12 +151,16 @@ def feature_doc_url(col, cfg):
 
 def render_features(section, cfg):
     cols = section.get("columns", [])
+    heading = section.get("heading", "")
+    # Card titles sit one level below a section heading when present; without one
+    # they follow the page h1 directly, so they must be h2 to avoid skipping a level.
+    card_tag = "h3" if heading else "h2"
     cards = ""
     for col in cols:
         icon_html = render_fa_icon(col.get("icon"), "feature-icon")
         title = col.get("title", "")
         doc_url = feature_doc_url(col, cfg)
-        title_html = f"<h3>{title}</h3>"
+        title_html = f"<{card_tag}>{title}</{card_tag}>"
         link_html = ""
         if doc_url:
             link_html = (
@@ -170,7 +174,6 @@ def render_features(section, cfg):
       {title_html}
       {inline_html(col.get("text", ""))}
     </div>\n'''
-    heading = section.get("heading", "")
     h = f'<h2 class="features-heading">{heading}</h2>' if heading else ""
     return f'''<section class="features">
   <div class="container">
@@ -200,11 +203,13 @@ def render_video(section, cfg):
     vid_id = ""
     if "vimeo.com" in url:
         vid_id = url.rstrip("/").split("/")[-1]
-        embed = f'https://player.vimeo.com/video/{vid_id}'
+        # dnt=1 stops Vimeo setting tracking cookies / loading analytics.
+        embed = f'https://player.vimeo.com/video/{vid_id}?dnt=1'
     elif "youtube.com" in url or "youtu.be" in url:
         m = re.search(r'(?:v=|youtu\.be/)([^&?]+)', url)
         vid_id = m.group(1) if m else ""
-        embed = f'https://www.youtube.com/embed/{vid_id}'
+        # youtube-nocookie defers cookies until the visitor plays the video.
+        embed = f'https://www.youtube-nocookie.com/embed/{vid_id}'
     else:
         embed = url
     return f'''<section class="video-section">
@@ -1220,8 +1225,9 @@ a:hover { color: var(--cm-teal); }
   font-size: 1.25rem;
   box-shadow: 0 0 0 8px var(--cm-teal-light);
 }
-.feature-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--cm-ink); font-weight: 600; }
-.feature-card:has(.feature-card-link):hover h3 { color: var(--cm-teal); }
+.feature-card h3, .feature-card h2 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--cm-ink); font-weight: 600; }
+.feature-card:has(.feature-card-link):hover h3,
+.feature-card:has(.feature-card-link):hover h2 { color: var(--cm-teal); }
 .feature-card p { font-size: 0.95rem; color: #555; }
 
 /* ---- Callout ---- */
@@ -1657,9 +1663,7 @@ def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="",
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="{desc}">
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon.ico" sizes="any">
-  <link rel="icon" href="/assets/favicon.png" type="image/png">
   <title>{title} | {site_name}</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -1821,9 +1825,7 @@ def redirect_template(title, redirect):
   <meta charset="utf-8">
   <meta http-equiv="refresh" content="0;url={redirect}">
   <meta name="robots" content="noindex">
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="icon" href="/assets/favicon.ico" sizes="any">
-  <link rel="icon" href="/assets/favicon.png" type="image/png">
   <link rel="canonical" href="{redirect}">
   <title>{title}</title>
   <script>window.location.replace({redirect!r});</script>
@@ -1832,6 +1834,43 @@ def redirect_template(title, redirect):
   <p>Redirecting to <a href="{redirect}">{redirect}</a>...</p>
 </body>
 </html>'''
+
+def site_url_for(base, path):
+    """Absolute canonical URL for a page path. Directory paths get a trailing slash."""
+    base = base.rstrip("/")
+    stripped = path.strip("/")
+    if not stripped:
+        return base + "/"
+    if "." in stripped.split("/")[-1]:
+        return f"{base}/{stripped}"
+    return f"{base}/{stripped}/"
+
+def build_sitemap_xml(pages, base):
+    """XML sitemap of indexable pages (skips redirects and the 404 page)."""
+    urls = []
+    for page in sorted(pages, key=lambda p: p["_path"]):
+        if page.get("redirect"):
+            continue
+        path = page["_path"]
+        if path == "/404.html":
+            continue
+        loc = html_lib.escape(site_url_for(base, path), quote=True)
+        date = str(page.get("date") or "").strip()
+        lastmod = f"\n    <lastmod>{date}</lastmod>" if re.fullmatch(r"\d{4}-\d{2}-\d{2}", date) else ""
+        urls.append(f"  <url>\n    <loc>{loc}</loc>{lastmod}\n  </url>")
+    return (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        + "\n".join(urls)
+        + "\n</urlset>\n"
+    )
+
+def build_robots_txt(base):
+    return (
+        "User-agent: *\n"
+        "Allow: /\n\n"
+        f"Sitemap: {base.rstrip('/')}/sitemap.xml\n"
+    )
 
 def redirect_rules_for(path, redirect):
     src = path.rstrip("/") or "/"
@@ -1934,6 +1973,11 @@ def build():
         redirects_path = output_dir / "_redirects"
         redirects_path.write_text("\n".join(redirect_rules) + "\n", encoding="utf-8")
         print("  _redirects written")
+
+    base_url = cfg.get("site_url", "https://causalmap.app")
+    (output_dir / "sitemap.xml").write_text(build_sitemap_xml(pages, base_url), encoding="utf-8")
+    (output_dir / "robots.txt").write_text(build_robots_txt(base_url), encoding="utf-8")
+    print("  sitemap.xml + robots.txt written")
 
     print(f"\nBuilt {len(pages)} pages to {output_dir.relative_to(SCRIPT_DIR)}/")
 

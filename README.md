@@ -162,3 +162,5 @@ Legacy URLs are kept as redirect stubs in `content/` using `redirect` in front m
 For Netlify, track the parent repo, not `dist/`. Netlify runs `python build.py` and publishes `dist/`, so the source files (`content/`, `build.py`, `config.yml`, `requirements.txt`, `netlify.toml`) stay versioned while generated output stays out of git.
 
 Netlify serves `dist/404.html` automatically for missing paths; this is generated from `content/404.md`.
+
+The build also emits `dist/robots.txt` and `dist/sitemap.xml` (all indexable pages, using `site_url` from `config.yml`; redirect stubs and the 404 page are excluded). Security response headers (CSP, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`) are set for every path in `netlify.toml`; update the CSP there if you add a new external script, font, or embed host.
