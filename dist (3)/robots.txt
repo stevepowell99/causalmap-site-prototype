@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://causalmap.app/sitemap.xml

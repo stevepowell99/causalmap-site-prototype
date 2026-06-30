@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How Causal Map classifies data, controls access, and secures the app.">
+  <link rel="icon" href="../assets/favicon.ico" sizes="any">
+  <title>Information Security Policy | Causal Map</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="cc6d6b30-1bf8-497f-b38a-7feae109d761"></script>
+  <style>:root {
+  --cm-ink: #1f1f36;
+  --cm-pink: #ff8fb8;
+  --cm-green: #00ffaf;
+  --cm-teal: #6dc4c8;
+  --cm-yellow: #f7ed73;
+  --cm-bg: #fcfcfc;
+  --cm-text: #222;
+  --cm-light: #f4f6f8;
+  --cm-border: #e2e6ea;
+  --radius: 8px;
+  --cm-green-light: rgba(0, 255, 175, 0.08);
+  --cm-teal-light: rgba(109, 196, 200, 0.1);
+  --cm-yellow-light: rgba(247, 237, 115, 0.75);
+  --cm-pink-light: rgba(255, 143, 184, 0.45);
+}
+
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 17px; scroll-behavior: smooth; }
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  color: var(--cm-text);
+  background: var(--cm-bg);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--cm-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--cm-teal);
+  text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+a:hover { color: var(--cm-teal); }
+
+.container { max-width: 1040px; margin: 0 auto; padding: 0 1.5rem; }
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---- Inline highlights (inset shadow = reliable marker on inline spans) ---- */
+.hl {
+  padding: 0 0.1em;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+/* Static markers only (no hl-reveal); cycling phrases use rules below */
+.hl-yellow:not(.hl-reveal) { box-shadow: inset 0 -0.42em 0 0 var(--cm-yellow-light); }
+.hl-pink:not(.hl-reveal) { box-shadow: inset 0 -0.42em 0 0 var(--cm-pink-light); }
+.hl-green:not(.hl-reveal) { box-shadow: inset 0 -0.42em 0 0 var(--cm-green-light); }
+/* Cycling marker: box-shadow fade (3s in, hold, 3s out via JS) */
+.hl.hl-reveal { transition: box-shadow 3s ease; }
+.hl.hl-reveal.hl-yellow { box-shadow: inset 0 -0.42em 0 0 rgba(240, 215, 107, 0); }
+.hl.hl-reveal.hl-pink { box-shadow: inset 0 -0.42em 0 0 rgba(255, 190, 200, 0); }
+.hl.hl-reveal.hl-green { box-shadow: inset 0 -0.42em 0 0 rgba(43, 169, 156, 0); }
+.hl.hl-reveal.hl-active.hl-yellow { box-shadow: inset 0 -0.42em 0 0 rgba(240, 215, 107, 0.85); }
+.hl.hl-reveal.hl-active.hl-pink { box-shadow: inset 0 -0.42em 0 0 rgba(255, 190, 200, 0.8); }
+.hl.hl-reveal.hl-active.hl-green { box-shadow: inset 0 -0.42em 0 0 rgba(43, 169, 156, 0.45); }
+.hero .hl.hl-reveal.hl-active.hl-yellow { box-shadow: inset 0 -0.42em 0 0 rgba(240, 215, 107, 0.9); }
+.hero .hl.hl-reveal.hl-active.hl-pink { box-shadow: inset 0 -0.42em 0 0 rgba(255, 190, 200, 0.85); }
+.hero .hl.hl-reveal.hl-active.hl-green { box-shadow: inset 0 -0.42em 0 0 rgba(140, 230, 215, 0.9); }
+.callout-card .hl.hl-reveal.hl-active.hl-green { box-shadow: inset 0 -0.42em 0 0 rgba(43, 169, 156, 0.5); }
+
+/* ---- Heading reveal ---- */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.scroll-reveal.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Section divider ---- */
+.section-divider {
+  height: 2px; border: none; margin: 0;
+  background: linear-gradient(90deg, var(--cm-green), var(--cm-teal));
+  opacity: 0.3;
+}
+
+/* ---- Navbar ---- */
+.navbar {
+  background: var(--cm-ink);
+  color: #fff;
+  position: sticky; top: 0; z-index: 100;
+  padding: 1.35rem 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.nav-inner { display: flex; align-items: center; gap: 1rem; flex-wrap: nowrap; }
+.nav-logo {
+  text-decoration: none; margin-right: auto; display: flex; align-items: center;
+}
+.nav-logo-img { height: 73px; width: auto; }
+.nav-links { display: flex; align-items: center; gap: 1rem; }
+.nav-links > a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.92rem; transition: color 0.15s; padding: 0.5rem 0; }
+.nav-links a:hover { color: #fff; }
+.nav-cta { margin-left: 0.25rem; }
+/* Hamburger toggle (hidden on desktop) */
+.nav-toggle {
+  display: none;
+  background: transparent; border: 0; cursor: pointer;
+  width: 2.5rem; height: 2.5rem; padding: 0;
+  flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+}
+.nav-toggle span {
+  display: block; width: 1.5rem; height: 2px; background: #fff; border-radius: 2px;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.site-search-form,
+.search-page-form {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.site-search-form {
+  flex: 0 1 15rem;
+  opacity: 0.55;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+.site-search-form:hover,
+.site-search-form:focus-within {
+  opacity: 1;
+}
+.search-input {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid var(--cm-border);
+  border-radius: 999px;
+  padding: 0.7rem 0.95rem;
+  font: inherit;
+  color: var(--cm-ink);
+  background: #fff;
+}
+.search-input:focus {
+  outline: 2px solid var(--cm-teal);
+  outline-offset: 1px;
+}
+.site-search-form .search-input {
+  border-color: rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.72);
+  padding: 0.56rem 0.85rem;
+  transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+}
+.site-search-form .search-input::placeholder {
+  color: rgba(255,255,255,0.74);
+}
+.site-search-form:hover .search-input,
+.site-search-form:focus-within .search-input {
+  border-color: rgba(255,255,255,0.34);
+  background: rgba(255,255,255,0.13);
+  color: #fff;
+}
+.search-submit {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.7rem 1rem;
+  background: var(--cm-green);
+  color: var(--cm-ink);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.search-submit:hover {
+  background: var(--cm-teal);
+}
+.site-search-form .search-submit {
+  width: 2.35rem;
+  min-width: 2.35rem;
+  padding: 0.56rem 0;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.72);
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: background 0.18s ease, color 0.18s ease, opacity 0.18s ease;
+}
+.site-search-form .search-input:not(:placeholder-shown) + .search-submit {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.site-search-form:hover .search-submit,
+.site-search-form:focus-within .search-submit {
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+}
+
+/* ---- Nav dropdown ---- */
+.nav-dropdown { position: relative; display: flex; align-items: center; }
+.nav-dropdown-trigger { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.92rem; transition: color 0.15s; cursor: pointer; padding: 0.5rem 0; }
+.nav-dropdown-trigger:hover { color: #fff; }
+.nav-dropdown-menu {
+  display: none; position: absolute; top: 100%; left: -0.75rem;
+  background: var(--cm-ink); border-radius: 0 0 var(--radius) var(--radius);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  min-width: 200px; padding: 0.5rem 0; z-index: 200;
+}
+.nav-dropdown:hover .nav-dropdown-menu { display: block; }
+.nav-dropdown-menu a {
+  display: block; padding: 0.5rem 1.25rem;
+  color: rgba(255,255,255,0.85); text-decoration: none; font-size: 0.9rem;
+  transition: background 0.12s, color 0.12s; white-space: nowrap;
+}
+.nav-dropdown-menu a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+
+/* ---- Accent stripe ---- */
+.accent-stripe {
+  height: 3px;
+  background: linear-gradient(90deg, var(--cm-green), var(--cm-teal), var(--cm-pink));
+}
+
+/* ---- Buttons ---- */
+.btn-cta {
+  display: inline-block;
+  background: var(--cm-pink);
+  color: var(--cm-ink);
+  padding: 0.6rem 1.6rem;
+  border-radius: 11px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+  border: none;
+}
+.btn-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(255,143,184,0.3); }
+.btn-secondary {
+  display: inline-block;
+  background: var(--cm-green);
+  color: var(--cm-ink);
+  padding: 0.6rem 1.6rem;
+  border-radius: 11px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+  border: none;
+}
+.btn-secondary:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(121,187,147,0.3); }
+
+/* ---- Hero ---- */
+.hero {
+  background: linear-gradient(135deg, var(--cm-ink) 0%, #2d2d52 100%);
+  background-image:
+    linear-gradient(135deg, var(--cm-ink) 0%, #2d2d52 100%),
+    linear-gradient(0deg, transparent 24%, rgba(121, 187, 147, 0.03) 25%, rgba(121, 187, 147, 0.03) 26%, transparent 27%, transparent 74%, rgba(121, 187, 147, 0.03) 75%, rgba(121, 187, 147, 0.03) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, rgba(121, 187, 147, 0.03) 25%, rgba(121, 187, 147, 0.03) 26%, transparent 27%, transparent 74%, rgba(121, 187, 147, 0.03) 75%, rgba(121, 187, 147, 0.03) 76%, transparent 77%, transparent);
+  background-size: 100% 100%, 50px 50px, 50px 50px;
+  color: #fff;
+  padding: 5rem 0 4.5rem;
+  text-align: center;
+}
+.hero h1 { font-size: 3.9rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.15; }
+.hero-sub { font-size: 1.15rem; opacity: 0.88; max-width: 600px; margin: 0 auto 2rem; }
+.hero-sub p { margin: 0; }
+
+/* ---- Hero Light ---- */
+.hero-light {
+  background: linear-gradient(135deg, rgba(121,187,147,0.04) 0%, rgba(144,195,198,0.04) 100%);
+  padding: 3.5rem 0 3rem;
+  border-bottom: 2px solid transparent;
+  border-image: linear-gradient(90deg, var(--cm-green), var(--cm-teal)) 1;
+}
+.hero-light--with-pills {
+  background: #fff;
+  border-image: none;
+  border-bottom: 1px solid var(--cm-border);
+  padding-bottom: 3.25rem;
+}
+.hero-light h1 { font-size: 2.86rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--cm-ink); }
+.hero-light .hero-sub { font-size: 1.05rem; color: #666; max-width: none; margin: 0; opacity: 1; }
+.hero-light .hero-sub p { margin: 0 0 0.5rem; }
+.hero-light .hero-sub p:last-child { margin-bottom: 0; }
+
+/* Stand follow-up pills (inside hero-light, white cards) */
+.hero-light-pills { margin-top: 2.25rem; }
+.stand-pills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  align-items: stretch;
+}
+.stand-pill {
+  background: #fff;
+  border: 1px solid var(--cm-border);
+  border-radius: 28px;
+  padding: 1.5rem 1.35rem 1.4rem;
+  box-shadow: 0 6px 24px rgba(31, 31, 54, 0.07);
+}
+.stand-pill-badge-wrap {
+  margin: 0 0 1rem;
+  line-height: 1.3;
+}
+.stand-pill-badge {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 0.4rem 1rem 0.42rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  background: var(--cm-light);
+  color: var(--cm-ink);
+  border: 1px solid var(--cm-border);
+}
+.stand-pill-intro { font-size: 0.95rem; color: #444; line-height: 1.55; margin-bottom: 0.85rem; }
+.stand-pill-intro p { margin: 0 0 0.5rem; }
+.stand-pill-intro p:last-child { margin-bottom: 0; }
+.stand-pill-intro a { color: var(--cm-ink); }
+.stand-pill-list {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+  font-size: 0.92rem;
+  color: #444;
+}
+.stand-pill-list li {
+  display: flex;
+  gap: 0.45rem;
+  align-items: flex-start;
+  margin-bottom: 0.45rem;
+}
+.stand-pill-check {
+  color: var(--cm-teal);
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.stand-pill-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin-top: 0.25rem;
+}
+.stand-pill-action {
+  display: block;
+  text-align: center;
+  padding: 0.55rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  border-radius: 999px;
+  border: 2px solid var(--cm-teal);
+  color: var(--cm-ink);
+  background: #fff;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.stand-pill-action:hover {
+  background: var(--cm-teal-light);
+  color: var(--cm-ink);
+  border-color: var(--cm-teal);
+}
+
+/* ---- Features grid ---- */
+.features { padding: 4rem 0; background: var(--cm-light); }
+.features + .features { padding-top: 2rem; }
+.features-heading {
+  margin: 0 0 2rem;
+  color: var(--cm-ink);
+  font-weight: 600;
+  font-size: 1.65rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--cm-green);
+  display: inline-block;
+}
+.features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2rem; }
+.feature-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--cm-border);
+  border-top: 3px solid var(--cm-green);
+  border-radius: var(--radius);
+  padding: 2rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.feature-card-link {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+}
+.feature-card-link:focus-visible {
+  outline: 2px solid var(--cm-teal);
+  outline-offset: 2px;
+}
+.feature-card:has(.feature-card-link) { cursor: pointer; }
+.feature-card:has(.feature-card-link) p a { position: relative; z-index: 2; }
+.feature-card:nth-child(2) { border-top-color: var(--cm-teal); }
+.feature-card:nth-child(3) { border-top-color: var(--cm-pink); }
+.feature-card:nth-child(4) { border-top-color: var(--cm-green); }
+.feature-card:nth-child(5) { border-top-color: var(--cm-teal); }
+.feature-card:nth-child(6) { border-top-color: var(--cm-pink); }
+.feature-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+.feature-icon {
+  display: inline-flex;
+  width: 3rem;
+  height: 3rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.1rem;
+  border-radius: 999px;
+  background: var(--cm-ink);
+  color: #fff;
+  font-size: 1.25rem;
+  box-shadow: 0 0 0 8px var(--cm-teal-light);
+}
+.feature-card h3, .feature-card h2 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--cm-ink); font-weight: 600; }
+.feature-card:has(.feature-card-link):hover h3,
+.feature-card:has(.feature-card-link):hover h2 { color: var(--cm-teal); }
+.feature-card p { font-size: 0.95rem; color: #555; }
+
+/* ---- Callout ---- */
+.callout-section { padding: 2.25rem 0; background: var(--cm-light); }
+.callout-card {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 1.35rem 1.55rem;
+  border: 1px solid rgba(43,169,156,0.25);
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 8px 28px rgba(31, 31, 54, 0.07);
+}
+.callout-icon {
+  display: inline-flex;
+  width: 3.4rem;
+  height: 3.4rem;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--cm-teal-light);
+  color: var(--cm-ink);
+  font-size: 1.4rem;
+}
+.callout-card h2 {
+  margin-bottom: 0.25rem;
+  color: var(--cm-ink);
+  font-size: 1.2rem;
+}
+.callout-card p { margin: 0; color: #555; }
+/* ---- Video ---- */
+.video-section { padding: 3.5rem 0; }
+.video-wrap {
+  position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+  border-radius: var(--radius); box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+}
+.video-wrap iframe {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+}
+
+/* ---- Two-col ---- */
+.two-col { padding: 4rem 0; }
+.two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+.two-col-grid > div {
+  padding: 1.5rem; border-radius: var(--radius);
+  background: var(--cm-light); border-left: 3px solid var(--cm-green);
+}
+.two-col-grid > div:nth-child(2) { border-left-color: var(--cm-teal); }
+.two-col h2 { font-size: 1.35rem; margin-bottom: 0.75rem; color: var(--cm-ink); font-weight: 600; }
+.two-col p, .two-col li { font-size: 0.95rem; }
+/* ---- Steps ---- */
+.steps { padding: 4rem 0; background: var(--cm-light); }
+.steps-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem;
+  position: relative;
+}
+.steps-grid::before {
+  content: ""; position: absolute; top: 1.8rem; left: 10%; right: 10%;
+  height: 2px; background: repeating-linear-gradient(90deg, var(--cm-green) 0, var(--cm-green) 8px, transparent 8px, transparent 16px);
+  z-index: 0;
+}
+.step-item { text-align: center; position: relative; z-index: 1; }
+.step-number {
+  font-size: 2.5rem; font-weight: 800; color: var(--cm-green);
+  margin-bottom: 0.5rem;
+  background: var(--cm-light); display: inline-block; padding: 0 0.5rem;
+}
+.step-item h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--cm-ink); font-weight: 600; }
+.step-item p { font-size: 0.9rem; color: #555; }
+
+/* ---- Trust strip ---- */
+.trust-strip {
+  padding: 2.5rem 0;
+  background: linear-gradient(135deg, rgba(121,187,147,0.06) 0%, rgba(144,195,198,0.06) 100%);
+  border-top: 1px solid var(--cm-border); border-bottom: 1px solid var(--cm-border);
+}
+.trust-strip p { font-size: 0.95rem; color: #555; }
+.trust-strip strong { color: var(--cm-ink); }
+
+/* ---- Logos ---- */
+.logos-section { padding: 3rem 0; text-align: center; }
+.logos-section h3 { font-size: 1rem; color: #666; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 600; }
+.logos-section img { max-width: 100%; }
+
+/* ---- Testimonials ---- */
+.testimonials { padding: 4rem 0; background: var(--cm-light); }
+.testimonials h2 { margin-bottom: 2rem; color: var(--cm-ink); font-weight: 600; }
+.testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+.testimonial-card {
+  background: #fff;
+  border: 1px solid var(--cm-border);
+  border-left: 4px solid var(--cm-teal);
+  border-radius: var(--radius);
+  padding: 2rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.testimonial-card:nth-child(2) { border-left-color: var(--cm-green); }
+.testimonial-card:nth-child(3) { border-left-color: var(--cm-pink); }
+.testimonial-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.06); }
+.testimonial-card blockquote {
+  font-size: 0.95rem; font-style: italic; color: #444;
+  margin: 0 0 1rem; line-height: 1.65;
+}
+.testimonial-card .testimonial-name { font-weight: 600; color: var(--cm-ink); font-size: 0.9rem; }
+
+/* ---- CTA banner ---- */
+.cta-banner {
+  background: linear-gradient(135deg, var(--cm-ink) 0%, #2d2d52 100%);
+  color: #fff;
+  padding: 2.5rem 0;
+  text-align: center;
+}
+.cta-banner .container { display: flex; align-items: center; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+.cta-banner span { font-size: 1.1rem; }
+
+/* ---- Team ---- */
+.team-section { padding: 4rem 0; }
+.team-section h2 { margin-bottom: 2.5rem; color: var(--cm-ink); font-weight: 600; padding-bottom: 0.4rem; border-bottom: 2px solid var(--cm-green); display: inline-block; }
+.team-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2.5rem; }
+.team-card { text-align: left; }
+.team-card img {
+  width: 160px; height: 160px; border-radius: 50%; object-fit: cover;
+  margin-bottom: 1rem; border: 3px solid var(--cm-border);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.team-card:hover img { border-color: var(--cm-green); box-shadow: 0 0 0 4px rgba(121,187,147,0.15); }
+.team-card h3 { font-size: 1.1rem; color: var(--cm-ink); margin-bottom: 0.25rem; }
+.team-card .team-role { font-size: 0.85rem; color: var(--cm-teal); font-weight: 600; margin-bottom: 0.5rem; }
+.team-card p { font-size: 0.9rem; color: #555; line-height: 1.55; }
+.team-link { font-size: 0.8rem; color: var(--cm-teal); text-decoration: none; font-weight: 400; }
+.team-link:hover { color: var(--cm-green); }
+
+/* ---- Search ---- */
+.search-section { padding: 3.5rem 0; }
+.search-shell {
+  max-width: 760px;
+}
+.search-shell h1 {
+  font-size: 2.3rem;
+  line-height: 1.15;
+  color: var(--cm-ink);
+  margin-bottom: 0.75rem;
+}
+.search-intro {
+  color: #555;
+  margin-bottom: 1.5rem;
+}
+.search-intro p { margin-bottom: 0; }
+.search-page-form {
+  margin-bottom: 1rem;
+}
+.search-status {
+  color: #555;
+  margin-bottom: 1.25rem;
+}
+.search-results {
+  display: grid;
+  gap: 1rem;
+}
+.search-result-card {
+  background: #fff;
+  border: 1px solid var(--cm-border);
+  border-left: 4px solid var(--cm-green);
+  border-radius: var(--radius);
+  padding: 1.2rem 1.25rem;
+}
+.search-result-card h2 {
+  font-size: 1.15rem;
+  margin-bottom: 0.35rem;
+}
+.search-result-card h2 a {
+  text-decoration: none;
+}
+.search-result-desc {
+  color: var(--cm-ink);
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+.search-result-snippet {
+  color: #555;
+  margin-bottom: 0;
+}
+.tag-year-heading {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--cm-ink);
+  margin: 2.5rem 0 1rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid var(--cm-green);
+  display: inline-block;
+}
+.tag-year-heading:first-child {
+  margin-top: 0;
+}
+
+/* ---- Prose ---- */
+.prose-section { padding: 3.5rem 0; }
+.prose-section h2 {
+  font-size: 1.4rem; margin: 2rem 0 0.75rem; color: var(--cm-ink); font-weight: 600;
+  padding-bottom: 0.4rem;
+  border-bottom: 2px solid var(--cm-green);
+  display: inline-block;
+}
+.prose-section h2 a,
+.prose-section h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+.prose-section h2 a:hover,
+.prose-section h3 a:hover { color: var(--cm-teal); }
+.prose-section h3 { font-size: 1.15rem; margin: 1.5rem 0 0.5rem; color: var(--cm-ink); font-weight: 600; }
+.prose-section p { margin-bottom: 1rem; }
+.prose-section ul, .prose-section ol { margin: 0 0 1rem 1.5rem; }
+.prose-section ol.ukes-programme-list > li { margin-bottom: 1.15rem; }
+.prose-section ol.ukes-programme-list > li:last-child { margin-bottom: 0; }
+.prose-section ol.ukes-programme-list p { margin-bottom: 0.5rem; }
+.prose-section ol.ukes-programme-list p:last-child { margin-bottom: 0; }
+.prose-section li { margin-bottom: 0.35rem; }
+.prose-section li::marker { color: var(--cm-teal); }
+.prose-section strong { color: var(--cm-ink); font-weight: 600; }
+
+/* Prose callout */
+.prose-section blockquote {
+  border-left: 4px solid var(--cm-teal);
+  background: var(--cm-teal-light);
+  padding: 1rem 1.25rem; margin: 1.5rem 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-size: 0.95rem;
+}
+.prose-section blockquote p { margin-bottom: 0; }
+
+/* Prose tables */
+.prose-section table {
+  width: 100%; border-collapse: collapse; margin: 1.5rem 0;
+  font-size: 0.92rem; border-radius: var(--radius); overflow: hidden;
+}
+.prose-section th, .prose-section td {
+  border: 1px solid var(--cm-border); padding: 0.6rem 0.8rem; text-align: left;
+}
+.prose-section th {
+  background: linear-gradient(135deg, rgba(121,187,147,0.12), rgba(144,195,198,0.12));
+  font-weight: 600; color: var(--cm-ink);
+}
+.prose-section tr:nth-child(even) td { background: #fafbfc; }
+.prose-section td:first-child { font-weight: 500; color: var(--cm-ink); }
+.prose-section td.check {
+  color: #0f6b4e;
+  font-weight: 800;
+  font-size: 1.2rem;
+  text-align: center;
+  text-shadow: 0 0 0.01px currentColor;
+}
+
+/* ---- Event post images ---- */
+.prose-section img { max-width: 100%; height: auto; border-radius: var(--radius); margin: 1.25rem 0; display: block; }
+.prose-section .img-row { display: flex; gap: 1rem; flex-wrap: wrap; margin: 1.25rem 0; }
+.prose-section .img-row img { flex: 1 1 240px; min-width: 0; margin: 0; object-fit: cover; }
+
+/* ---- Tags ---- */
+.tag-chips-section { padding: 0 0 3rem; }
+.tag-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.tag-chip {
+  display: inline-block; padding: 0.3rem 0.85rem; border-radius: 999px;
+  font-size: 0.8rem; font-weight: 600; text-decoration: none;
+  background: var(--cm-light); color: var(--cm-ink); border: 1px solid var(--cm-border);
+}
+.tag-chip:hover { background: var(--cm-teal-light); color: var(--cm-ink); }
+
+/* ---- Footer ---- */
+footer {
+  background: var(--cm-ink);
+  color: rgba(255,255,255,0.8);
+  padding: 2.5rem 0;
+  font-size: 0.88rem;
+  margin-top: 3rem;
+  border-top: 3px solid var(--cm-green);
+}
+.footer-inner { text-align: center; }
+.footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.footer-links a { color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.15s; }
+.footer-links a:hover { color: #fff; }
+.footer-social { display: flex; justify-content: center; gap: 1.25rem; margin-bottom: 1rem; }
+.footer-social a { color: var(--cm-pink); text-decoration: none; transition: opacity 0.15s; }
+.footer-social a:hover { opacity: 0.88; }
+.footer-legal { color: rgba(255,255,255,0.55); font-size: 0.78rem; max-width: 640px; margin: 0 auto 0.5rem; line-height: 1.5; }
+.footer-copy { color: rgba(255,255,255,0.5); font-size: 0.8rem; }
+
+/* ---- Responsive ---- */
+@media (max-width: 768px) {
+  html { font-size: 16px; }
+  .hero h1 { font-size: 2.4rem; }
+  .hero { padding: 3rem 0 2.5rem; }
+  .hero-light h1 { font-size: 2rem; }
+  .nav-logo-img { height: 57px; }
+  .nav-inner { flex-wrap: wrap; }
+  .two-col-grid { grid-template-columns: 1fr; }
+  .team-grid { grid-template-columns: 1fr; }
+  .nav-toggle { display: flex; order: 2; margin-left: auto; }
+  .nav-cta { order: 3; }
+  .nav-links {
+    display: none; order: 4; width: 100%; flex-basis: 100%;
+    flex-direction: column; align-items: stretch; gap: 0;
+    padding: 0.5rem 0 0.25rem;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links > a,
+  .nav-dropdown-trigger { padding: 0.75rem 0.25rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .nav-dropdown { display: block; }
+  .nav-dropdown-menu {
+    display: block; position: static; box-shadow: none; padding: 0 0 0.25rem 1rem;
+    background: transparent; border-radius: 0; min-width: 0;
+  }
+  .nav-dropdown-menu a { padding: 0.45rem 0.25rem; }
+  .site-search-form { order: 5; width: 100%; flex-basis: 100%; }
+  .search-page-form,
+  .site-search-form { flex-wrap: wrap; }
+  .search-page-form .search-submit { width: 100%; }
+  .site-search-form .search-submit { width: 2.35rem; }
+  .features { padding: 2.5rem 0; }
+  .steps-grid { grid-template-columns: 1fr; }
+  .stand-pills-grid { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .hl.hl-reveal { transition: none; }
+  .hl.hl-reveal.hl-active.hl-yellow { box-shadow: inset 0 -0.42em 0 0 rgba(240, 215, 107, 0.85); }
+  .hl.hl-reveal.hl-active.hl-pink { box-shadow: inset 0 -0.42em 0 0 rgba(255, 190, 200, 0.8); }
+  .hl.hl-reveal.hl-active.hl-green { box-shadow: inset 0 -0.42em 0 0 rgba(43, 169, 156, 0.45); }
+}
+
+/* ---- Print / Save as PDF link ---- */
+.print-link { margin: 0.25rem 0 2rem; }
+.print-link a {
+  display: inline-block;
+  padding: 0.35rem 0.9rem;
+  border: 1px solid var(--cm-teal);
+  border-radius: 999px;
+  color: var(--cm-ink) !important;
+  background: #fff;
+  font-size: 0.85rem;
+  text-decoration: none !important;
+}
+.print-link a:hover { background: var(--cm-teal); color: #fff !important; }
+
+/* ---- Print-only banner (shown only when printing) ---- */
+.print-banner { display: none; }
+
+/* ---- Print stylesheet ---- */
+@media print {
+  @page {
+    margin: 20mm 18mm 22mm;
+    @bottom-center { content: counter(page) " / " counter(pages); font-family: Georgia, serif; font-size: 9pt; color: #555; }
+    @bottom-left { content: "causalmap.app"; font-family: Georgia, serif; font-size: 9pt; color: #555; }
+  }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  html, body { background: #fff !important; color: #000 !important; }
+  body { font-family: Georgia, "Times New Roman", serif !important; font-size: 10.5pt !important; line-height: 1.5 !important; }
+
+  /* Hide all site chrome */
+  nav, .site-nav, .nav-inner, .nav-toggle, .site-search-form, .nav-logo, .nav-cta,
+  footer, .footer-inner, .footer-links, .footer-social, .footer-copy,
+  .accent-stripe, .print-link, .no-print,
+  .scroll-reveal, button.nav-toggle { display: none !important; }
+
+  /* Reveal the print banner */
+  .print-banner {
+    display: block !important;
+    border-bottom: 1.5pt solid #000;
+    padding-bottom: 6pt;
+    margin-bottom: 14pt;
+  }
+  .print-banner .brand { font-weight: 700; font-size: 13pt; color: #000; letter-spacing: 0.2pt; }
+  .print-banner .url { float: right; font-size: 9.5pt; color: #555; }
+
+  /* Layout reset */
+  main { display: block !important; }
+  .container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; width: 100% !important; }
+  section, .prose-section, .hero, .hero-light {
+    padding: 0 !important; margin: 0 0 0.5rem !important;
+    background: #fff !important; color: #000 !important; box-shadow: none !important;
+  }
+
+  /* Headings */
+  .prose-section h1, .prose-section h2 {
+    font-family: Georgia, serif !important;
+    font-size: 18pt !important;
+    font-weight: 700 !important;
+    border: 0 !important;
+    color: #000 !important;
+    padding: 0 0 4pt !important;
+    margin: 0 0 8pt !important;
+  }
+  .prose-section h2:not(:first-of-type) { margin-top: 18pt !important; padding-top: 4pt !important; border-top: 0.5pt solid #888 !important; }
+  .prose-section h3 { font-size: 12.5pt !important; font-weight: 700 !important; margin: 10pt 0 4pt !important; color: #000 !important; }
+  .prose-section h4 { font-size: 11pt !important; font-weight: 700 !important; font-style: italic; margin: 8pt 0 3pt !important; color: #000 !important; }
+  h1, h2, h3, h4 { page-break-after: avoid !important; break-after: avoid !important; }
+  h2 + p, h2 + ul, h3 + p, h3 + ul, h4 + p, h4 + ul { page-break-before: avoid !important; }
+
+  /* Body text */
+  p { margin: 0 0 6pt !important; orphans: 3; widows: 3; }
+  ul, ol { margin: 0 0 8pt 18pt !important; padding: 0 !important; }
+  li { margin-bottom: 2pt !important; page-break-inside: avoid !important; }
+  blockquote {
+    border-left: 2pt solid #000 !important; background: transparent !important;
+    padding: 2pt 0 2pt 10pt !important; margin: 8pt 0 !important;
+    font-style: italic; color: #000 !important;
+  }
+  blockquote p { margin: 0 !important; }
+
+  /* Tables */
+  table { width: 100% !important; border-collapse: collapse !important; margin: 8pt 0 !important; font-size: 9.5pt !important; page-break-inside: auto !important; }
+  th, td { border: 0.5pt solid #888 !important; padding: 4pt 6pt !important; text-align: left !important; vertical-align: top !important; background: #fff !important; color: #000 !important; }
+  th { background: #eee !important; font-weight: 700 !important; }
+  tr { page-break-inside: avoid !important; }
+
+  /* Highlights become bold plain text */
+  .hl, span[class*="hl-"] {
+    background: transparent !important; box-shadow: none !important;
+    color: #000 !important; font-weight: 700 !important; padding: 0 !important;
+  }
+
+  /* Links */
+  a, a:link, a:visited { color: #000 !important; text-decoration: underline !important; }
+  a[href^="http"]:not([href*="causalmap.app"])::after,
+  a[href^="https://www.notion"]::after { content: " (" attr(href) ")"; font-size: 0.82em; color: #555; word-break: break-all; }
+  a[href^="mailto:"]::after, a[href^="#"]::after, a[href^="/"]::after, a[href^="../"]::after { content: "" !important; }
+}
+</style>
+</head>
+<body>
+<nav class="navbar">
+  <div class="container nav-inner">
+    <a href="../index.html" class="nav-logo"><img class="nav-logo-img" src="../assets/logo-white.png" alt="Causal Map"></a>
+    <button class="nav-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav-links" id="nav-links">
+    <a href="../index.html">Home</a>
+    <div class="nav-dropdown">
+      <a href="../product/index.html" class="nav-dropdown-trigger">Product</a>
+      <div class="nav-dropdown-menu"><a href="../product/index.html">Causal Map app</a>
+<a href="../consultancy/index.html">Consultancy</a>
+<a href="../qualiainterviews/index.html">QualiaInterviews</a>
+</div>
+    </div>
+    <a href="../pricing/index.html">Pricing</a>
+    <div class="nav-dropdown">
+      <a href="../about/index.html" class="nav-dropdown-trigger">About</a>
+      <div class="nav-dropdown-menu"><a href="../about/index.html">About us</a>
+<a href="../causal-mapping/index.html">What is causal mapping?</a>
+</div>
+    </div>
+    <a href="../contact/index.html">Contact</a>
+    <a href="../resources/index.html">Resources</a>
+    </div>
+    <form class="site-search-form" action="../search/index.html" method="get" role="search">
+      <label class="sr-only" for="nav-search-input">Search the site</label>
+      <input
+        id="nav-search-input"
+        class="search-input"
+        type="search"
+        name="q"
+        placeholder="Search"
+        autocomplete="off"
+      >
+      <button type="submit" class="search-submit" aria-label="Submit search">&#8594;</button>
+    </form>
+    <a class="btn-cta nav-cta" href="https://app.causalmap.app/?utm_source=causalmap-site&utm_medium=referral&utm_campaign=corporate-site" target="_blank" rel="noopener noreferrer">Try it free</a>
+  </div>
+</nav>
+<div class="accent-stripe"></div>
+<main>
+<div class="print-banner"><span class="brand">Causal Map</span><span class="url">causalmap.app</span></div>
+<section class="prose-section">
+  <div class="container">
+    <h2>Information Security Policy</h2>
+<p class="print-link"><a href="#" onclick="window.print(); return false;">Print or save as PDF</a></p>
+
+<h3>1. Purpose</h3>
+<p>Causal Map Ltd restricts access to confidential and sensitive data to protect it from being lost or compromised, to avoid adverse impact on customers, penalties for non-compliance, and damage to our reputation. At the same time we ensure users can access data as required to work effectively.</p>
+<p>This policy cannot eliminate all malicious data theft. Its primary objective is to raise user awareness and avoid accidental loss, and it sets out requirements for data-breach prevention.</p>
+<h3>2. Scope</h3>
+<h4>Data classification</h4>
+<ul>
+<li><strong>Public:</strong> data that is not personal or sensitive, accessible by anyone.</li>
+<li><strong>Internal:</strong> data not intended for public disclosure but with low security requirements. For example, data in the Causal Map folder at Google Workspace.</li>
+<li><strong>Confidential:</strong> data that could create moderate risk if disclosed to an unauthorised user. For example, data in the Causal Map Management folder at Google Workspace, or data in the Public section at Notion.</li>
+<li><strong>Restricted:</strong> the highest level of sensitive data, which could put the company at severe risk if disclosed. In particular, client data including their data in the Causal Map app and associated files.</li>
+</ul>
+<p><strong>In scope.</strong> This policy applies to all customer data, personal data and other company data classified as sensitive. It applies to every server, database and IT system that handles such data, including any device regularly used for email, web access or other work-related tasks. Every user who interacts with company IT services is subject to this policy.</p>
+<p><strong>Out of scope.</strong> Information classified as Public is not subject to this policy. Other data can be excluded by company management based on specific business needs, for example where protecting the data is too costly or complex.</p>
+<h3>3. Policy for internal and contracted users</h3>
+<h4>3.1 Principles</h4>
+<p>Causal Map Ltd provides employees and contracted third parties (the &ldquo;users&rdquo;) with access to the information they need to carry out their responsibilities as effectively as possible.</p>
+<h4>3.2 General</h4>
+<ul>
+<li>Each user is identified by a unique user ID so that individuals can be held accountable for their actions.</li>
+<li>Shared identities are permitted only where suitable, such as training accounts or service accounts (for example, help@causalmap.app).</li>
+<li>Each user shall read this policy and the login and logoff guidelines, and confirm they understand the conditions of access.</li>
+<li>Records of user access may be used as evidence in security incident investigations.</li>
+<li>Access is granted on the principle of least privilege: each program and user is granted the fewest privileges necessary to complete their tasks.</li>
+</ul>
+<h4>3.3 Access control authorisation</h4>
+<p>Access to company IT resources and services is given through a unique user account based on an email address and complex password.</p>
+<h4>3.4 Network access</h4>
+<p>For Google Workspace, Notion, the Causal Map app and similar systems, employees and contractors are given network access in accordance with business access-control procedures and the least-privilege principle.</p>
+<h4>3.5 User responsibilities</h4>
+<ul>
+<li>Lock screens whenever leaving a desk to reduce the risk of unauthorised access.</li>
+<li>Keep the workplace clear of sensitive or confidential information when away.</li>
+<li>Keep passwords confidential and do not share them.</li>
+</ul>
+<h4>3.6 Application and information access</h4>
+<ul>
+<li>Staff and contractors are granted access to the data and applications required for their job roles.</li>
+<li>Access to sensitive data and systems is granted only if there is a business need and approval from higher management.</li>
+<li>Sensitive systems are physically or logically isolated to restrict access to authorised personnel only.</li>
+</ul>
+<h4>3.7 Access to confidential and restricted information</h4>
+<p>Access to data classified as Confidential or Restricted is limited to authorised persons whose job responsibilities require it, as determined by line management.</p>
+<h3>4. App security controls</h3>
+<h4>Data storage and security</h4>
+<ul>
+<li>Causal Map is a serverless application. The Postgres database, authentication, storage, realtime and Edge Functions are provided by Supabase, with the database pooler hosted in AWS eu-west-2 (London).</li>
+<li>Static web assets are hosted on Netlify (<code>app.causalmap.app</code>).</li>
+<li>The PDF processor service runs on Railway and does not store uploaded PDFs; files are extracted to text and discarded.</li>
+<li>Cloudflare CDN serves a PDF.js worker; no user data is stored at Cloudflare.</li>
+<li>Data is encrypted at rest and at the database layer, and in transit via TLS over HTTPS.</li>
+<li>Row-Level Security policies are enforced at Supabase.</li>
+<li>Daily backups of the database are made automatically.</li>
+</ul>
+<p>For the list of sub-processors that handle personal data, see <a href="../privacy-policy/index.html#sub-processors">Sub-processors</a> on the Privacy Policy page. For AI processing details, including the choice of EU, UK or US regions and what that means for GDPR, see <a href="../ai-compliance/index.html">AI Compliance</a>.</p>
+<h4>Data protection measures</h4>
+<ul>
+<li>All emails to and from clients containing personal data are encrypted at rest and in transit.</li>
+<li>Clients&rsquo; personal data is securely deleted when no longer needed.</li>
+<li>Access to clients&rsquo; personal data is restricted to authorised personnel only.</li>
+</ul>
+<h4>App authentication</h4>
+<p>Authentication is handled by Supabase.</p>
+<ul>
+<li>Users can authenticate with email and password, or through a Google account.</li>
+<li>Two-factor authentication is available.</li>
+<li>Strong passwords and regular password resets are recommended.</li>
+</ul>
+<h4>Role-based access</h4>
+<p>There are two levels of access: Admin and User.</p>
+<p><strong>Admin access:</strong></p>
+<ul>
+<li>Granted to three accounts at Supabase, controlled only by the domain admin.</li>
+<li>Admins can see metadata and significant events for all users.</li>
+<li>Using the AI, admins cannot view, edit or delete clients&rsquo; private data. They can do so programmatically but will not do that without the client&rsquo;s explicit permission.</li>
+</ul>
+<p><strong>User access:</strong></p>
+<ul>
+<li>Users on the corresponding plan can assign and revoke view, copy or edit rights for other users on projects to which they have the appropriate permissions.</li>
+<li>Users can view, copy or edit files to which they have the appropriate permission.</li>
+<li>Users can create new files over which they then have edit permission.</li>
+</ul>
+<h4>User activity monitoring and audit logs</h4>
+<ul>
+<li>Log on and log off are monitored via Supabase Auth.</li>
+<li>Highly significant events such as new user registration and file creation are logged in a system SQL database and emailed to the Data Protection Officer.</li>
+<li>Significant events such as log on, file load etc. are recorded in a system SQL database.</li>
+</ul>
+<h3>5. Reporting requirements</h3>
+<ul>
+<li>Daily incident reports are produced and handled by the IT Director in the event of an incident.</li>
+<li>High-priority incidents are immediately reported to the IT Director (Steve Powell).</li>
+</ul>
+<h3>6. Definitions</h3>
+<ul>
+<li><strong>Data owners</strong> are employees or contractors with primary responsibility for maintaining information that they own.</li>
+<li><strong>Users</strong> include everyone who has access to information resources: employees, trustees, contractors, consultants, temporary employees and volunteers.</li>
+<li><strong>Database:</strong> an organised collection of data, generally stored and accessed electronically from a computer system.</li>
+<li><strong>Encryption:</strong> the process of encoding information so that only authorised parties can access it.</li>
+<li><strong>Firewall:</strong> a technology used for isolating one network from another. Firewalls can be standalone systems or included in other devices, such as routers or servers.</li>
+<li><strong>Server:</strong> a computer program or device that provides functionality for other programs or devices, called clients.</li>
+</ul>
+<p>We reserve the right to change this policy at any given time, in which case we will notify users.</p>
+<h3>Related policies</h3>
+<ul>
+<li><a href="../privacy-policy/index.html">Privacy Policy</a></li>
+<li><a href="../ai-compliance/index.html">AI Compliance</a></li>
+<li><a href="../terms-and-conditions/index.html">Terms and Conditions</a> (including the <a href="../terms-and-conditions/index.html#sla">SLA</a>)</li>
+</ul>
+<h3>Contact</h3>
+<p>For security questions or to report a vulnerability, contact <a href="mailto:hello@causalmap.app">hello@causalmap.app</a>.</p>
+  </div>
+</section>
+</main>
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-links">
+      <a href="../terms-and-conditions/index.html">Terms</a>
+      <a href="../privacy-policy/index.html">Privacy</a>
+      <a href="../information-security/index.html">Information Security</a>
+      <a href="../ai-compliance/index.html">AI Compliance</a>
+      <a href="../ethical-principles/index.html">Ethical Principles</a>
+      <a href="https://forms.gle/JrK2AE6NTsGzUvWe8" target="_blank" rel="noopener noreferrer">Newsletter</a>
+    </div>
+    <div class="footer-social">
+      <a href="https://www.linkedin.com/company/causalmap" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a href="mailto:hello@causalmap.app">Email</a>
+      <a href="https://www.youtube.com/watch?v=YskPTmWfADw&list=PLSCKdSxlLlfGfcab5njcT57xzU0hOURc-" target="_blank" rel="noopener noreferrer">YouTube</a>
+      <a href="https://github.com/stevepowell99/" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+    <p class="footer-legal">Causal Map Ltd, registered in England and Wales, company no. 12926630. Registered office: 39 Apsley Road, Bath BA1 3LP, United Kingdom. VAT no. GB 399950030.</p>
+    <p class="footer-copy">This work is licensed under CC BY-NC 4.0</p>
+  </div>
+</footer>
+<script>
+(function () {
+  const toggle = document.querySelector(".nav-toggle");
+  const links = document.getElementById("nav-links");
+  if (toggle && links) {
+    toggle.addEventListener("click", () => {
+      const open = links.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
+})();
+(function () {
+  const headings = document.querySelectorAll("main h1, main h2, main h3");
+  if (!headings.length) return;
+
+  headings.forEach((heading) => heading.classList.add("scroll-reveal"));
+
+  if (!("IntersectionObserver" in window)) {
+    headings.forEach((heading) => heading.classList.add("in-view"));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in-view");
+      } else {
+        entry.target.classList.remove("in-view");
+      }
+    });
+  }, { threshold: 0.2, rootMargin: "0px 0px -12% 0px" });
+
+  headings.forEach((heading) => observer.observe(heading));
+})();
+function cycleHighlightGroup(root) {
+  const holdMs = 2500;
+  const fadeMs = 3000;
+  let timer = null;
+  let inView = false;
+  const cards = root.querySelectorAll(".feature-card");
+  const cardData = cards.length
+    ? Array.from(cards)
+        .map((card) => ({ phrases: Array.from(card.querySelectorAll(".hl-reveal")) }))
+        .filter((c) => c.phrases.length)
+    : [];
+  const phrases = cardData.length
+    ? cardData.flatMap((c) => c.phrases)
+    : Array.from(root.querySelectorAll(".hl-reveal"));
+  if (!phrases.length) return;
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+  function clearPhrases() {
+    phrases.forEach((p) => p.classList.remove("hl-active"));
+  }
+  function activeCount(total) {
+    const jitter = Math.random() < 0.5 ? 0 : (Math.random() < 0.5 ? -1 : 1);
+    return Math.max(1, Math.round(total / 3 + jitter));
+  }
+  function nextDelay() {
+    return holdMs + fadeMs * 2 + Math.floor(Math.random() * 3000);
+  }
+  function pick() {
+    if (cardData.length === 1 && phrases.length === 1) {
+      phrases[0].classList.add("hl-active");
+      return;
+    }
+    clearPhrases();
+    void root.offsetHeight;
+    if (cardData.length) {
+      const n = activeCount(cardData.length);
+      shuffle(cardData).slice(0, n).forEach((c) => {
+        const ps = c.phrases;
+        ps[Math.floor(Math.random() * ps.length)].classList.add("hl-active");
+      });
+    } else if (phrases.length === 1) {
+      phrases[0].classList.add("hl-active");
+    } else {
+      shuffle(phrases).slice(0, activeCount(phrases.length)).forEach((p) => p.classList.add("hl-active"));
+    }
+  }
+  function stop() {
+    if (timer) clearTimeout(timer);
+    timer = null;
+  }
+  function schedule() {
+    stop();
+    timer = setTimeout(function tick() {
+      pick();
+      timer = setTimeout(tick, nextDelay());
+    }, nextDelay());
+  }
+  function bump() {
+    stop();
+    pick();
+    schedule();
+  }
+  function onLeave() {
+    stop();
+    clearPhrases();
+  }
+
+  if (!("IntersectionObserver" in window)) {
+    bump();
+    return;
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        if (!inView) {
+          inView = true;
+          bump();
+        }
+      } else if (inView) {
+        inView = false;
+        onLeave();
+      }
+    });
+  }, { threshold: 0.2, rootMargin: "0px 0px -12% 0px" });
+  observer.observe(root);
+}
+function cycleHighlights() {
+  document.querySelectorAll("[data-hl-cycle]").forEach(cycleHighlightGroup);
+}
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", cycleHighlights);
+} else {
+  cycleHighlights();
+}
+</script>
+
+</body>
+</html>

@@ -32,6 +32,12 @@ You can book a call directly with Steve to discuss your project, ask questions, 
 
 **YouTube** — [Subscribe to our YouTube channel](https://www.youtube.com/watch?v=YskPTmWfADw&list=PLSCKdSxlLlfGfcab5njcT57xzU0hOURc-) for tutorials and walkthroughs.
 
+**WhatsApp** — Join our [WhatsApp support group](https://chat.whatsapp.com/KwWn0lfpHuR0qJKtkuGZUA) to ask questions and swap tips with other users.
+
+**Email newsletter** — News, case studies, app tips, and events from the Causal Map world: [sign up](https://forms.gle/JrK2AE6NTsGzUvWe8).
+
+**LinkedIn newsletter** — [Causal mapping, evaluation, AI](https://www.linkedin.com/newsletters/causal-mapping-evaluation-ai-7201488452201185280/): thought pieces from our work on causal mapping in evaluation, with a dash of AI.
+
 ---
 
 We usually reply to enquiries within 24 hours.

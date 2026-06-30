@@ -513,10 +513,23 @@ def render_tag_chips(tags):
             f'<div class="tag-chips">{chips}</div></div></section>')
 
 def render_tag_index(tag, member_pages):
-    """A listing page for one tag, reusing the search-result card styling."""
+    """A listing page for one tag, reusing the search-result card styling.
+
+    Cards are grouped under a heading per year. member_pages is expected to
+    already be sorted by date descending, so years come out newest-first and
+    each year's own cards stay in that same order.
+    """
     intro = "Talks, workshops, posters and webinars where we have presented Causal Map and causal mapping."
+    groups = []  # list of (year_label, cards_html)
+    current_year = None
     cards = ""
     for p in member_pages:
+        year = str(p.get("date") or "").split("-")[0] or "Undated"
+        if year != current_year:
+            if cards:
+                groups.append((current_year, cards))
+            current_year = year
+            cards = ""
         label = event_date_label(p.get("date"))
         desc = normalize_whitespace(p.get("description", ""))
         cards += (
@@ -526,13 +539,21 @@ def render_tag_index(tag, member_pages):
             + (f'<p class="search-result-snippet">{html_lib.escape(desc)}</p>' if desc else "")
             + "</article>"
         )
+    if cards:
+        groups.append((current_year, cards))
+
+    groups_html = "".join(
+        f'<h2 class="tag-year-heading">{html_lib.escape(year)}</h2>'
+        f'<div class="search-results">{cards}</div>'
+        for year, cards in groups
+    )
     return (
         '<section class="hero-light"><div class="container">'
         f'<h1>{html_lib.escape(tag_display(tag))}</h1>'
         f'<div class="hero-sub">{md(intro)}</div>'
         "</div></section>"
         '<section class="search-section"><div class="container">'
-        f'<div class="search-results">{cards}</div>'
+        f'{groups_html}'
         "</div></section>"
     )
 
@@ -1414,6 +1435,18 @@ a:hover { color: var(--cm-teal); }
 .search-result-snippet {
   color: #555;
   margin-bottom: 0;
+}
+.tag-year-heading {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--cm-ink);
+  margin: 2.5rem 0 1rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid var(--cm-green);
+  display: inline-block;
+}
+.tag-year-heading:first-child {
+  margin-top: 0;
 }
 
 /* ---- Prose ---- */

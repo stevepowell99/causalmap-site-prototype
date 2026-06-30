@@ -13,7 +13,7 @@ sections:
 
 ## App subscriptions
 
-You can access Causal Map for <span class="hl hl-green">free</span> by signing up in the app. No credit card required. The core functionality is free for everyone: unlimited projects, unlimited coding.
+You can access Causal Map for <span class="hl hl-green">free</span> by [signing up in the app](https://app.causalmap.app/). No credit card required. The core functionality is free for everyone: unlimited projects, unlimited coding.
 
 Choose your subscription directly from the Account tab in the app: [app.causalmap.app](https://app.causalmap.app/)
 
@@ -62,7 +62,7 @@ If you expect to use Causal Map for more than eight months in a year, the annual
 
 Free users get a fixed monthly allowance of AI credits at no cost. 
 Any paid subscription can upgrade for <span class="hl hl-pink">substantial additional credits</span> for all the AI features. 
-With the AI add-ons you get: [Simple AI Coding](https://garden.causalmap.app/simple-ai/), [AI Answers](https://garden.causalmap.app/answers-panel/), [Vignettes](https://garden.causalmap.app/howto-vignettes/) and [Soft Recode](https://garden.causalmap.app/filter-link-tab/#soft-recode-plus).
+With the AI add-ons you get: [Simple AI Coding](https://garden.causalmap.app/simple-ai/), [AI Answers](https://garden.causalmap.app/answers-panel/), [Vignettes](https://garden.causalmap.app/howto-vignettes/) and [Soft Recode](https://garden.causalmap.app/filter-link-tab/#soft-recode-plus). Add-ons can be purchased directly from the Account tab in the app — no separate checkout needed.
 
 ## Discounts
 

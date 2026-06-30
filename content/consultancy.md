@@ -36,6 +36,16 @@ Projects range from a single day to several weeks depending on data volume and c
 
 [Get a quote](/contact) — tell us about your data and questions, and we'll send a proposal.
 
+## Costs
+
+We believe in full transparency around costs, so you can make informed decisions about investing in causal insight for your organisation.
+
+A simple causal mapping project takes a <span class="hl hl-green">minimum of 2 days'</span> billable time, spread over a week or two — not including further iterations on the research design or extra reporting. Our standard consulting rate is £695 + VAT per day.
+
+These rates are negotiable for particularly interesting use cases and for clients from the Global South.
+
+[Email us](mailto:hello@causalmap.app) to talk through costs for your project.
+
 ## Why us?
 
 We built [Causal Map](/product). We have been developing the method and the software since 2019, and have worked on [causal mapping](/causal-mapping) projects with organisations including UNICEF, IFRC, Save the Children, and universities worldwide. Our methodology is transparent: you see exactly how we arrived at every finding. See [case studies](https://garden.causalmap.app/case-studies) for examples of our work.

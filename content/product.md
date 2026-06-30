@@ -52,6 +52,10 @@ sections:
       AI extracts causal links at scale; you review, edit, and interpret.
       With AI, Causal Map can find meaning in volumes of qualitative data
       that no other method can handle.
+
+
+      See [examples in the Garden case studies](https://garden.causalmap.app/case-studies/)
+      of projects using manual and AI coding.
     right_title: Beyond the app
     right_body: >
       **Consultancy** — Include us in your analytical team. We code your data
