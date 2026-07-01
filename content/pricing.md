@@ -66,7 +66,7 @@ With the AI add-ons you get: [Simple AI Coding](https://garden.causalmap.app/sim
 
 ## Discounts
 
-Individual students and researchers can get 50% off by using the code "QYMZU3MW" at checkout. Organisations in the Global South may also be eligible for a similar discount: [get in touch](mailto:hello@causalmap.app). For bulk purchases (e.g. educational institutions), please [contact us](mailto:hello@causalmap.app).
+Discounts may be available for students and researchers, for organisations in lower-income countries, and for bulk or educational purchases. [Ask us about discounts](mailto:hello@causalmap.app).
 
 ## More about subscriptions
 
