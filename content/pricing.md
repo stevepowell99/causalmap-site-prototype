@@ -58,11 +58,11 @@ Prices are per user, plus UK VAT (20%) where applicable.
 
 If you expect to use Causal Map for more than eight months in a year, the annual subscription is better value.
 
-## AI add-ons
+## AI features and credits
 
-Free users get a fixed monthly allowance of AI credits at no cost. 
-Any paid subscription can upgrade for <span class="hl hl-pink">substantial additional credits</span> for all the AI features. 
-With the AI add-ons you get: [Simple AI Coding](https://garden.causalmap.app/simple-ai/), [AI Answers](https://garden.causalmap.app/answers-panel/), [Vignettes](https://garden.causalmap.app/howto-vignettes/) and [Soft Recode](https://garden.causalmap.app/filter-link-tab/#soft-recode-plus). Add-ons can be purchased directly from the Account tab in the app — no separate checkout needed.
+Every plan, including Free, comes with a monthly allowance of AI credits, so anyone can use the AI features: [Simple AI Coding](https://garden.causalmap.app/simple-ai/), [AI Answers](https://garden.causalmap.app/answers-panel/), [Vignettes](https://garden.causalmap.app/howto-vignettes/) and [Soft Recode](https://garden.causalmap.app/filter-link-tab/#soft-recode-plus). You spend credits only when you run an AI feature, and the allowance refills each month.
+
+Free gives you a starter allowance at no cost. Each paid plan comes in two versions: a standard version, which keeps that same allowance, and an AI version, which gives <span class="hl hl-pink">substantially more credits</span> each month (see the "with AI" prices above). Choose the version you want when you subscribe from the Account tab in the app. No separate checkout needed.
 
 ## Discounts
 
