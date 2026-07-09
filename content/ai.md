@@ -18,9 +18,9 @@ sections:
       - title: Hands-on setup
         icon: fa-solid fa-screwdriver-wrench
         text: We set up the pieces with you. That can mean AI-assisted coding in [Causal Map](/product), AI-led interviews with [QualiaInterviews](https://qualiainterviews.com), or bespoke pipelines that classify, extract, and summarise across your documents and datasets, with <span class="hl hl-green">human review at every step</span>.
-      - title: Training and workshops
+      - title: Training
         icon: fa-solid fa-chalkboard-user
-        text: Practical sessions for your team. What current models can and cannot do, prompting for qualitative analysis, checking and correcting AI output, and how to report AI-assisted methods so that reviewers and commissioners can trust them.
+        text: We help your team build the confidence and skills to use AI well in research and evaluation, matched to your workflow and level of experience.
       - title: Governance and documentation
         icon: fa-solid fa-shield-halved
         text: Advice on data protection, provider and region choices, and what to write down. We publish our own <span class="hl hl-pink">[AI compliance](/ai-compliance) statement</span> and [ethical principles](/ethical-principles), and we can help you draft yours.
@@ -47,6 +47,6 @@ That experience cuts both ways: we know what AI does well in research and evalua
 
 ## Costs
 
-AI integration work is billed at the same daily rate as our [consultancy](/consultancy). A workflow review is typically a few days' work; larger builds and training programmes take longer. [Email us](mailto:hello@causalmap.app) to talk through your project.
+AI integration work is billed at the same daily rate as our [consultancy](/consultancy). A workflow review is typically a few days' work; larger builds take longer. [Email us](mailto:hello@causalmap.app) to talk through your project.
 
 Ready to discuss your workflow? [Email Steve](mailto:steve@causalmap.app) or [Gabriele](mailto:gabriele@causalmap.app), or [book a call](https://calendar.app.google/gGhrqvrwHCqUBE5b7).
