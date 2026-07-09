@@ -8,6 +8,8 @@ nav_children:
     path: /product
   - label: Consultancy
     path: /consultancy
+  - label: AI for research & evaluation
+    path: /ai
   - label: QualiaInterviews
     path: /qualiainterviews
 description: Online software for coding, analysing, and visualising causal narratives from qualitative data.

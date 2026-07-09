@@ -16,31 +16,33 @@ For large datasets (hundreds of interviews or documents), we use Causal Map's AI
 
 ## What we offer
 
-**Causal data analysis** — We [code](/causal-mapping) your interviews, transcripts, and reports using [Causal Map](/product). You get interactive maps, key findings, and supporting evidence trails.
+**Causal data analysis.** We [code](/causal-mapping) your interviews, transcripts, and reports using [Causal Map](/product). You get interactive maps, key findings, and supporting evidence trails.
 
-**Theory of change testing** — We map your intended impacts against what the evidence actually shows. Where does the [theory hold](https://garden.causalmap.app/testing-theory-of-change/)? Where does it break down?
+**Theory of change testing.** We map your intended impacts against what the evidence actually shows. Where does the [theory hold](https://garden.causalmap.app/testing-theory-of-change/)? Where does it break down?
 
-**Evidence synthesis** — We synthesise findings across multiple studies or data sources. We identify consensus and disagreement between sources, visually.
+**Evidence synthesis.** We synthesise findings across multiple studies or data sources. We identify consensus and disagreement between sources, visually.
+
+**AI in your research workflow.** Beyond causal mapping, we help teams work out where AI fits in their research and evaluation practice: scoping, setup, training, and governance. [Learn more](/ai).
 
 ## How it works
 
-**1. Scope** — We discuss your research questions, data, and timeline. Together we define the coding framework and analysis scope.
+**1. Scope.** We discuss your research questions, data, and timeline. Together we define the coding framework and analysis scope.
 
-**2. Code** — You send your documents (anonymised as needed). We code the causal links using Causal Map, with AI assistance where appropriate and human oversight throughout.
+**2. Code.** You send your documents (anonymised as needed). We code the causal links using Causal Map, with AI assistance where appropriate and human oversight throughout.
 
-**3. Analyse and report** — We deliver a visual report with interactive maps, findings, and recommendations. We present the results and support your interpretation.
+**3. Analyse and report.** We deliver a visual report with interactive maps, findings, and recommendations. We present the results and support your interpretation.
 
 ## Timeline
 
 Projects range from a single day to several weeks depending on data volume and complexity.
 
-[Get a quote](/contact) — tell us about your data and questions, and we'll send a proposal.
+[Get a quote](/contact): tell us about your data and questions, and we'll send a proposal.
 
 ## Costs
 
 We believe in full transparency around costs, so you can make informed decisions about investing in causal insight for your organisation.
 
-A simple causal mapping project takes a <span class="hl hl-green">minimum of 2 days'</span> billable time, spread over a week or two — not including further iterations on the research design or extra reporting. Our standard consulting rate is £695 + VAT per day.
+A simple causal mapping project takes a <span class="hl hl-green">minimum of 2 days'</span> billable time, spread over a week or two, excluding further iterations on the research design or extra reporting. Our standard consulting rate is £695 + VAT per day.
 
 These rates are negotiable for particularly interesting use cases and for clients from the Global South.
 

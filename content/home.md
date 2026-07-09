@@ -11,6 +11,8 @@ sections:
       Evaluators, researchers, NGOs, and universities use Causal Map
       to find out what works, why, and for whom, straight from what
       people tell them in interviews, reports, and surveys.
+      We also help teams [integrate AI](/ai) into their wider research
+      and evaluation workflows.
     cta_text: Try it free
     cta_url: https://app.causalmap.app/
   - type: features
@@ -41,6 +43,14 @@ sections:
       groups agree and disagree, and whether the evidence supports your
       theory of change. [Learn more](/consultancy) or
       [get a quote](/contact).
+  - type: callout
+    icon: fa-solid fa-wand-magic-sparkles
+    title: Bringing AI into your research practice?
+    text: >
+      We build AI research tools ourselves, and we help research and evaluation
+      teams <span class="hl hl-green">integrate AI into their own workflows</span>:
+      scoping where it helps, setting it up, training your team, and getting the
+      governance right. [Read about our AI services](/ai).
   - type: trust-strip
     heading: Trusted by organisations including
     organisations: UNICEF, World Food Programme, Save the Children, IFRC, Tearfund, Fairtrade, Diageo, and universities worldwide.
