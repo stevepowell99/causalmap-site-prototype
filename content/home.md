@@ -11,8 +11,6 @@ sections:
       Evaluators, researchers, NGOs, and universities use Causal Map
       to find out what works, why, and for whom, straight from what
       people tell them in interviews, reports, and surveys.
-      We also help teams [integrate AI](/ai) into their wider research
-      and evaluation workflows.
     cta_text: Try it free
     cta_url: https://app.causalmap.app/
   - type: features
