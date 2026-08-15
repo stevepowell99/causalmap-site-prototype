@@ -28,7 +28,7 @@ You can book a call directly with Steve to discuss your project, ask questions, 
 
 **Documentation** — Browse the [Causal Mapping Guide](https://garden.causalmap.app/) for tutorials, how-to articles, and concepts.
 
-**LinkedIn** — Follow <span class="hl hl-pink">[@causalmap](https://www.linkedin.com/company/causalmap/)</span> for updates, case studies, and research news.
+**LinkedIn** — Follow <span class="hl hl-pink">[@causalmap](https://www.linkedin.com/company/causalmap/)</span> for updates, case studies, and research news, and [Steve Powell](https://www.linkedin.com/in/stevepowell99/), who posts most days.
 
 **YouTube** — [Subscribe to our YouTube channel](https://www.youtube.com/watch?v=YskPTmWfADw&list=PLSCKdSxlLlfGfcab5njcT57xzU0hOURc-) for tutorials and walkthroughs.
 
@@ -36,7 +36,7 @@ You can book a call directly with Steve to discuss your project, ask questions, 
 
 **Email newsletter** — News, case studies, app tips, and events from the Causal Map world: [sign up](https://forms.gle/JrK2AE6NTsGzUvWe8).
 
-**LinkedIn newsletter** — [Causal mapping, evaluation, AI](https://www.linkedin.com/newsletters/causal-mapping-evaluation-ai-7201488452201185280/): thought pieces from our work on causal mapping in evaluation, with a dash of AI.
+**LinkedIn newsletters** — [Causal mapping, evaluation, AI](https://www.linkedin.com/newsletters/causal-mapping-evaluation-ai-7201488452201185280/): thought pieces from our work on causal mapping in evaluation, with a dash of AI. [Causal Map Highlights](https://www.linkedin.com/newsletters/causal-map-highlights-7424893889058361345/): stories built from narrative data with the app. Both weekly.
 
 ---
 

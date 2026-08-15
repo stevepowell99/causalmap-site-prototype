@@ -34,4 +34,6 @@ Watch tutorials and walkthroughs on our <span class="hl hl-pink">[YouTube channe
 
 Steve Powell writes two weekly newsletters on LinkedIn. [Causal mapping, evaluation, AI](https://www.linkedin.com/newsletters/causal-mapping-evaluation-ai-7201488452201185280/) covers the methods. <span class="hl hl-green">[Causal Map Highlights](https://www.linkedin.com/newsletters/causal-map-highlights-7424893889058361345/)</span> has stories built from narrative data with the app.
 
+You can also follow [Steve Powell](https://www.linkedin.com/in/stevepowell99/) and the [Causal Map company page](https://www.linkedin.com/company/causalmap/) on LinkedIn.
+
 New to causal mapping? Start with [What is causal mapping?](/causal-mapping) or [try the app](https://app.causalmap.app/). Have a case study or publication you'd like to share? [Get in touch](/contact).
