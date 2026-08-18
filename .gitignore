@@ -10,3 +10,6 @@ __pycache__/
 
 # Cursor/chat pasted reference images
 .images/
+
+# Drive conflict copies of the generated site output (never publish, never commit)
+dist (*)/
