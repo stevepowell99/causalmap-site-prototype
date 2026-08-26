@@ -9,8 +9,8 @@ sections:
 <!-- NOT CANONICAL for storage, security, backups or our controller/processor role.
      Master copy is README-unified.md in the qualia-edit-multi repo, published at
      manage.qualiainterviews.com/help#compliance. Change that first, then this.
-     Line 29 currently claims we are the controller for both products; that is wrong and
-     is tracked. See memory reference_controller_or_processor. -->
+     The controller/processor wording was corrected on 26 August 2026 and now matches the
+     master. See memory reference_controller_or_processor. -->
 
 
 ## Privacy Policy
@@ -31,9 +31,16 @@ Related policies: [Information Security Policy](/information-security), [AI Comp
 - **AI compliance:** We comply with UK AI Bill and GDPR requirements on automated decision-making. <span class="hl hl-pink">AI features are optional</span> and always subject to human review. **Full GDPR protection of AI processing depends on the client selecting an EU or UK region.** See [AI Compliance](/ai-compliance).
 - **Research participants:** If your data contains research participant information, you must obtain consent before uploading. We provide privacy-by-default settings for sensitive data.
 
-### Data controller
+### Data controller and data processor
 
-Causal Map Ltd acts as the data controller for both QualiaInterviews and the Causal Map app. Our Data Protection Officer is Steve Powell, contactable at [hello@causalmap.app](mailto:hello@causalmap.app).
+Which role we hold depends on the data, so there are two answers.
+
+- **Your account data**, meaning your name, work email address, usage and billing: Causal Map Ltd is the **data controller**. We decide why we hold it, which is to run, support and bill for the service.
+- **The research data you collect or upload** through QualiaInterviews or the Causal Map app: **you are the data controller** and Causal Map Ltd is the **data processor**. You decide what the research is for, who takes part and what they are asked. We process it on your instructions.
+
+Where we are engaged as consultants and design the research ourselves, we act as a data controller in our own right, or jointly with you. That is set out in the engagement contract rather than here.
+
+Our Data Protection Officer is Steve Powell, contactable at [hello@causalmap.app](mailto:hello@causalmap.app).
 
 ### Data collection and processing
 
