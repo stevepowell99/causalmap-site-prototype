@@ -6,6 +6,12 @@ sections:
   - type: prose
 ---
 
+<!-- NOT CANONICAL for the QualiaInterviews facts. Master copy is README-unified.md in the
+     qualia-edit-multi repo. Note this document covers the Causal Map app on Supabase, a
+     different backend from Qualia on Railway, so do not copy Qualia's numbers across.
+     The 'daily backups' line here has not been verified against Supabase. -->
+
+
 ## Information Security Policy
 
 <p class="print-link"><a href="#" onclick="window.print(); return false;">Print or save as PDF</a></p>

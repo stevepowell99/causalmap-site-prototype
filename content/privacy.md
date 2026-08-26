@@ -6,6 +6,13 @@ sections:
   - type: prose
 ---
 
+<!-- NOT CANONICAL for storage, security, backups or our controller/processor role.
+     Master copy is README-unified.md in the qualia-edit-multi repo, published at
+     manage.qualiainterviews.com/help#compliance. Change that first, then this.
+     Line 29 currently claims we are the controller for both products; that is wrong and
+     is tracked. See memory reference_controller_or_processor. -->
+
+
 ## Privacy Policy
 
 <p class="print-link"><a href="#" onclick="window.print(); return false;">Print or save as PDF</a></p>
