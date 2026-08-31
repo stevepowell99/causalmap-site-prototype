@@ -22,7 +22,7 @@ colors:
   text: "#222"
 
 analytics:
-  goatcounter: ""
+  goatcounter: "https://causalmap.goatcounter.com/count"
   # Shared Umami website with garden.causalmap.app (same root domain; free tier
   # allows one site). Separate the two in Umami reports by filtering on Hostname.
   umami_id: "cc6d6b30-1bf8-497f-b38a-7feae109d761"

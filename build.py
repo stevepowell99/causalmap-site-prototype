@@ -700,17 +700,29 @@ def build_search_script(search_index):
 </script>'''
 
 def build_analytics_html(cfg):
-    # Inject Umami only when a site ID is configured.
+    # Each tracker is injected only when its own key is configured, so a site
+    # can run either, both or neither.
     analytics = cfg.get("analytics", {}) or {}
-    umami_id = (analytics.get("umami_id") or "").strip()
-    if not umami_id:
-        return ""
+    tags = []
 
-    umami_script = (analytics.get("umami_script") or "https://cloud.umami.is/script.js").strip()
-    return (
-        f'<script defer src="{umami_script}" '
-        f'data-website-id="{umami_id}"></script>'
-    )
+    umami_id = (analytics.get("umami_id") or "").strip()
+    if umami_id:
+        umami_script = (analytics.get("umami_script") or "https://cloud.umami.is/script.js").strip()
+        tags.append(
+            f'<script defer src="{umami_script}" '
+            f'data-website-id="{umami_id}"></script>'
+        )
+
+    # GoatCounter is the one that records whether a hit was a bot, which Umami
+    # does not; the value is the full count URL from the GoatCounter snippet.
+    goatcounter = (analytics.get("goatcounter") or "").strip()
+    if goatcounter:
+        tags.append(
+            f'<script data-goatcounter="{goatcounter}" '
+            f'async src="//gc.zgo.at/count.js"></script>'
+        )
+
+    return "\n  ".join(tags)
 
 def render_sections(page, cfg):
     sections = page.get("sections", [])
