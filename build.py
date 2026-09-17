@@ -457,6 +457,43 @@ def tag_app_links(html, cfg):
 
     return re.sub(r'(href|src|action)="(https?://[^"]+)"', lambda m: f'{m.group(1)}="{add_utm(m.group(2))}"', html)
 
+def build_referrer_passthrough_script(cfg):
+    """Client-side: stamp app links with the host that referred THIS visitor to causalmap.app.
+
+    document.referrer read on app.causalmap.app only ever says "causalmap.app" (the direct
+    previous page), so the deeper origin, e.g. google.com or linkedin.com, is lost unless we pass
+    it along ourselves. Session-scoped so it survives clicking between our own pages but not a
+    return visit later; falls back silently (no ref_host param) if referrer is empty, same-site,
+    or unreadable.
+    """
+    from urllib.parse import urlsplit
+    app_host = urlsplit(cfg.get("app_url", "https://app.causalmap.app")).netloc.lower()
+    if not app_host:
+        return ""
+    return f'''<script>
+(function(){{
+  try {{
+    var KEY = "cm_ext_ref";
+    var ref = document.referrer || "";
+    var refHost = "";
+    try {{ refHost = ref ? new URL(ref).hostname : ""; }} catch (e) {{}}
+    if (refHost && refHost !== location.hostname && !sessionStorage.getItem(KEY)) {{
+      sessionStorage.setItem(KEY, refHost);
+    }}
+    var stored = sessionStorage.getItem(KEY) || "";
+    if (!stored) return;
+    document.querySelectorAll("a[href]").forEach(function(a) {{
+      try {{
+        var u = new URL(a.getAttribute("href"), location.href);
+        if (u.hostname !== "{app_host}" || u.searchParams.has("ref_host")) return;
+        u.searchParams.set("ref_host", stored);
+        a.setAttribute("href", u.toString());
+      }} catch (e) {{}}
+    }});
+  }} catch (e) {{}}
+}})();
+</script>'''
+
 def normalize_whitespace(text):
     return re.sub(r"\s+", " ", text).strip()
 
@@ -1703,6 +1740,7 @@ def page_template(title, nav_html, content_html, footer_html, cfg, meta_desc="",
     site_name = cfg.get("site_name", "Causal Map")
     desc = meta_desc or "Causal mapping software for qualitative research and evaluation"
     search_script = build_search_script(search_index) if search_index is not None else ""
+    referrer_script = build_referrer_passthrough_script(cfg)
     analytics_html = build_analytics_html(cfg)
     return f'''<!DOCTYPE html>
 <html lang="en">
@@ -1862,6 +1900,7 @@ if (document.readyState === "loading") {{
 }}
 </script>
 {search_script}
+{referrer_script}
 </body>
 </html>'''
 
