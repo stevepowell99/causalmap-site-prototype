@@ -32,7 +32,8 @@ def parse_page(filepath):
     return meta
 
 def md(text):
-    return markdown.markdown(text, extensions=["extra", "tables", "smarty"])
+    # toc gives each heading an id, so pages can link to their own sections
+    return markdown.markdown(text, extensions=["extra", "tables", "smarty", "toc"])
 
 _MD_LINK = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
 
@@ -893,7 +894,7 @@ def build_css(cfg):
 CSS_BODY = '''
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { font-size: 17px; scroll-behavior: smooth; }
+html { font-size: 17px; scroll-behavior: smooth; scroll-padding-top: 8rem; } /* keep anchor targets clear of the sticky navbar */
 body {
   font-family: "Inter", system-ui, -apple-system, sans-serif;
   color: var(--cm-text);
