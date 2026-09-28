@@ -1,0 +1,5 @@
+{"Comment":"guide.causalmap.app: bullet CNAME to CloudFront redirect (revert: swap back using guide-record-before.json)","Changes":[
+{"Action":"DELETE","ResourceRecordSet":{"Name":"guide.causalmap.app.","Type":"CNAME","TTL":300,"ResourceRecords":[{"Value":"causal-map-3-guide-bullet.pages.dev"}]}},
+{"Action":"CREATE","ResourceRecordSet":{"Name":"guide.causalmap.app.","Type":"A","AliasTarget":{"HostedZoneId":"Z2FDTNDATAQYW2","DNSName":"d358395kr9u7lo.cloudfront.net.","EvaluateTargetHealth":false}}},
+{"Action":"CREATE","ResourceRecordSet":{"Name":"guide.causalmap.app.","Type":"AAAA","AliasTarget":{"HostedZoneId":"Z2FDTNDATAQYW2","DNSName":"d358395kr9u7lo.cloudfront.net.","EvaluateTargetHealth":false}}}
+]}

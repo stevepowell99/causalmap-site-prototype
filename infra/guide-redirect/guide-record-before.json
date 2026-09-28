@@ -1,0 +1,12 @@
+[
+    {
+        "Name": "guide.causalmap.app.",
+        "Type": "CNAME",
+        "TTL": 300,
+        "ResourceRecords": [
+            {
+                "Value": "causal-map-3-guide-bullet.pages.dev"
+            }
+        ]
+    }
+]

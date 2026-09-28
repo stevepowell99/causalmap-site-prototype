@@ -1,0 +1,23 @@
+{
+  "CallerReference": "guide-causalmap-redirect-2026-09-28",
+  "Aliases": {"Quantity": 1, "Items": ["guide.causalmap.app"]},
+  "Comment": "guide.causalmap.app to garden.causalmap.app (301). Retired CM3 guide, still on bullet.so",
+  "Enabled": true,
+  "PriceClass": "PriceClass_100",
+  "HttpVersion": "http2and3",
+  "IsIPV6Enabled": true,
+  "Origins": {"Quantity": 1, "Items": [{
+    "Id": "garden",
+    "DomainName": "garden.causalmap.app",
+    "CustomOriginConfig": {"HTTPPort": 80, "HTTPSPort": 443, "OriginProtocolPolicy": "https-only", "OriginSslProtocols": {"Quantity": 1, "Items": ["TLSv1.2"]}}
+  }]},
+  "DefaultCacheBehavior": {
+    "TargetOriginId": "garden",
+    "ViewerProtocolPolicy": "redirect-to-https",
+    "AllowedMethods": {"Quantity": 2, "Items": ["GET", "HEAD"], "CachedMethods": {"Quantity": 2, "Items": ["GET", "HEAD"]}},
+    "CachePolicyId": "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
+    "Compress": true,
+    "FunctionAssociations": {"Quantity": 1, "Items": [{"EventType": "viewer-request", "FunctionARN": "arn:aws:cloudfront::740541606095:function/guide-causalmap-redirect"}]}
+  },
+  "ViewerCertificate": {"ACMCertificateArn": "arn:aws:acm:us-east-1:740541606095:certificate/213c34b2-3695-4038-8d53-66caf310d157", "SSLSupportMethod": "sni-only", "MinimumProtocolVersion": "TLSv1.2_2021"}
+}
