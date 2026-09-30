@@ -68,7 +68,7 @@ As data controllers, clients must ensure:
 
 <h3 id="sub-processors">Sub-processors</h3>
 
-We use the following sub-processors to operate Causal Map. They may handle personal data on our behalf, under contract. Technical security controls are described in the [Information Security Policy](/information-security); AI region choices and their GDPR implications are described in [AI Compliance](/ai-compliance).
+We use the following sub-processors to operate Causal Map. They may handle personal data on our behalf, under contract. Technical security controls are described in the [Information Security Policy](/information-security); AI region choices and their GDPR implications are described in [AI Compliance](/ai-compliance). QualiaInterviews runs on different infrastructure, and its sub-processors, hosting regions and security controls are in the Compliance section of the [QualiaInterviews help](https://manage.qualiainterviews.com/help#compliance) and on [qualiainterviews.com/privacy](https://qualiainterviews.com/privacy).
 
 | Service | Purpose | Location | Retention |
 |---|---|---|---|
