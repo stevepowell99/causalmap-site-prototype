@@ -77,6 +77,7 @@ We use the following sub-processors to operate Causal Map. They may handle perso
 | Google Cloud Functions | AI routing (`process_chunk`) | us-central1 (Iowa) | None; audit logs only |
 | Dashscope (Alibaba) | Optional AI inference (Qwen) | Singapore or US | None (in-memory) |
 | OpenAI | Optional AI inference (GPT-5) | OpenAI infrastructure | OpenAI policy |
+| Lyceum | AI inference for Rubicon, in testing (DeepSeek V4 Pro) | EU only: Paris (Scaleway) and Finland (OVHcloud) | Prompts and outputs not stored; metadata (timestamps, token counts, model IDs) kept 30 days |
 | Railway | PDF text extraction | Railway infrastructure | None; files discarded |
 | Netlify | Static webapp hosting | Netlify infrastructure | Static assets only |
 | Loops.so | Email marketing and welcome flow | Loops infrastructure | Loops policy |
