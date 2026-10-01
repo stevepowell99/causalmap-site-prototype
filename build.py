@@ -8,6 +8,8 @@ import os
 import sys
 import re
 import shutil
+import stat
+import tempfile
 import json
 import html as html_lib
 import yaml
@@ -1968,13 +1970,51 @@ def redirect_rules_for(path, redirect):
         f"{src}/ {redirect} 301",
     ]
 
+def remove_tree(path):
+    # Drive marks a folder read-only once it adds a desktop.ini, and that blocks rmdir.
+    for p in (path, *path.rglob("*")):
+        os.chmod(p, p.stat().st_mode | stat.S_IWRITE)
+    shutil.rmtree(path)
+
+def sync_tree(src, dst):
+    """Make dst match src, rewriting only files whose bytes differ.
+
+    dist/ sits in a Google Drive mirror. Deleting and recreating it while Drive is
+    still uploading the previous build orphans those files into the Drive root, so
+    dst itself is never removed. Returns (files written, entries removed)."""
+    written = removed = 0
+    for root, _dirs, files in os.walk(src):
+        rel = Path(root).relative_to(src)
+        (dst / rel).mkdir(parents=True, exist_ok=True)
+        for name in files:
+            s, d = Path(root) / name, dst / rel / name
+            if d.is_dir():
+                remove_tree(d)
+            if not d.is_file() or d.read_bytes() != s.read_bytes():
+                shutil.copy2(s, d)
+                written += 1
+    for root, dirs, files in os.walk(dst):
+        rel = Path(root).relative_to(dst)
+        for name in files:
+            # Drive for Desktop writes desktop.ini into every folder; leave it be.
+            if name != "desktop.ini" and not (src / rel / name).is_file():
+                (Path(root) / name).unlink()
+                removed += 1
+        for name in list(dirs):
+            if not (src / rel / name).is_dir():
+                remove_tree(Path(root) / name)
+                dirs.remove(name)
+                removed += 1
+    return written, removed
+
 def build():
     cfg = load_config()
     input_dir = SCRIPT_DIR / cfg.get("input_dir", "content")
-    output_dir = SCRIPT_DIR / cfg.get("output_dir", "dist")
+    final_dir = SCRIPT_DIR / cfg.get("output_dir", "dist")
 
-    if output_dir.exists():
-        shutil.rmtree(output_dir, ignore_errors=True)
+    # Build outside Drive, then sync into dist/ (see sync_tree).
+    output_dir = Path(tempfile.gettempdir()) / f"build-{SCRIPT_DIR.name}"
+    shutil.rmtree(output_dir, ignore_errors=True)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     pages = []
@@ -2048,7 +2088,7 @@ def build():
             out_file = out_dir / "index.html"
 
         out_file.write_text(html, encoding="utf-8")
-        print(f"  {path} -> {out_file.relative_to(SCRIPT_DIR)}")
+        print(f"  {path} -> {final_dir.name}/{out_file.relative_to(output_dir).as_posix()}")
 
     # Copy assets
     assets_src = input_dir / "assets"
@@ -2066,7 +2106,10 @@ def build():
     (output_dir / "robots.txt").write_text(build_robots_txt(base_url), encoding="utf-8")
     print("  sitemap.xml + robots.txt written")
 
-    print(f"\nBuilt {len(pages)} pages to {output_dir.relative_to(SCRIPT_DIR)}/")
+    written, removed = sync_tree(output_dir, final_dir)
+    shutil.rmtree(output_dir, ignore_errors=True)
+    print(f"\nBuilt {len(pages)} pages to {final_dir.relative_to(SCRIPT_DIR)}/ "
+          f"({written} files changed, {removed} removed)")
 
 if __name__ == "__main__":
     build()

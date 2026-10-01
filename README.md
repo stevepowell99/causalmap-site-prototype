@@ -120,6 +120,8 @@ pip install pyyaml markdown
 
 Output goes to `dist/`. Open `dist/index.html` in a browser to preview. `dist/` is generated output and is not tracked in git.
 
+The build renders into a temporary folder outside Google Drive, then copies into `dist/` only the files whose contents changed and deletes pages that no longer exist. It never deletes `dist/` itself: doing that while Drive is still uploading the previous build leaves orphaned pages in the root of the Drive.
+
 ## Live preview on Windows
 
 For a non-technical editor on Windows, the simplest option is to double-click `Start Preview.bat`.
