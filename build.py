@@ -322,6 +322,8 @@ def render_team(section, cfg):
         img = ""
         if m.get("image"):
             img = f'<img src="{m["image"]}" alt="{m.get("name","")}" loading="lazy">'
+            if m.get("image_link"):
+                img = f'<a href="{m["image_link"]}">{img}</a>'
         links = ""
         if m.get("linkedin"):
             links = f' <a href="{m["linkedin"]}" class="team-link">LinkedIn</a>'

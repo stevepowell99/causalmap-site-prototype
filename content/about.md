@@ -20,6 +20,7 @@ sections:
       - name: Steve Powell
         role: Co-founder and Director
         image: /assets/steve.jpg
+        image_link: https://pogol.net
         linkedin: https://www.linkedin.com/in/stevepowell99/
         bio: >
           Steve has led research and evaluation projects in many countries over 25 years.
