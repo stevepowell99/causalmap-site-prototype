@@ -1,6 +1,6 @@
 # causalmap-site-prototype
 
-Static site prototype for `causalmap.app`, replacing the previous Notion and bullet.io setup.
+Static site for `causalmap.app`, live on Netlify. The folder and repo names keep "prototype" from before launch.
 
 Read first:
 
