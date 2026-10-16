@@ -51,7 +51,7 @@ sections:
       governance right. [Read about our AI services](/ai).
   - type: trust-strip
     heading: Trusted by organisations including
-    organisations: UNICEF, World Food Programme, Save the Children, IFRC, Tearfund, TreeAid and universities worldwide.
+    organisations: UNICEF, World Food Programme, Save the Children, IFRC, Tearfund, Tree Aid and universities worldwide.
   - type: testimonials
     heading: What our users say
     items:
