@@ -854,6 +854,7 @@ def build_footer(cfg):
       <a href="https://www.youtube.com/watch?v=YskPTmWfADw&list=PLSCKdSxlLlfGfcab5njcT57xzU0hOURc-">YouTube</a>
       <a href="https://github.com/stevepowell99/">GitHub</a>
     </div>
+    <a class="footer-badge" href="https://swidn.org.uk"><img src="/assets/swidn-member.png" alt="SWIDN member" width="96" height="36"></a>
     <p class="footer-legal">Causal Map Ltd, registered in England and Wales, company no. 12926630. Registered office: 39 Apsley Road, Bath BA1 3LP, United Kingdom. VAT no. GB 399950030.</p>
     <p class="footer-copy">This work is licensed under CC BY-NC 4.0</p>
   </div>
@@ -1592,6 +1593,9 @@ footer {
 .footer-social { display: flex; justify-content: center; gap: 1.25rem; margin-bottom: 1rem; }
 .footer-social a { color: var(--cm-pink); text-decoration: none; transition: opacity 0.15s; }
 .footer-social a:hover { opacity: 0.88; }
+.footer-badge { display: inline-block; margin-bottom: 1rem; opacity: 0.75; transition: opacity 0.15s; }
+.footer-badge:hover { opacity: 1; }
+.footer-badge img { display: block; height: 36px; width: auto; border-radius: 3px; }
 .footer-legal { color: rgba(255,255,255,0.55); font-size: 0.78rem; max-width: 640px; margin: 0 auto 0.5rem; line-height: 1.5; }
 .footer-copy { color: rgba(255,255,255,0.5); font-size: 0.8rem; }
 
