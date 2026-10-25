@@ -132,7 +132,7 @@ That will:
 - install Python 3 with `winget` if needed
 - install `requirements.txt` (sitegen) and `livereload`
 - run `preview.py`
-- open a local preview at `http://127.0.0.1:5500`
+- open a local preview at `http://127.0.0.1:5550`
 - rebuild automatically when files in `content/`, `build.py`, or `config.yml` change
 
 Keep the black terminal window open while editing. Closing it stops the preview server.
