@@ -1,10 +1,10 @@
 @echo off
 cd /d "%~dp0"
 
-REM Install required Python packages if needed.
-py -c "import yaml, markdown, livereload" 1>nul 2>nul
+REM Install the pinned generator (sitegen), its dependencies and livereload.
+py -m pip install -q -r requirements.txt livereload
 if errorlevel 1 (
-    py -m pip install pyyaml markdown livereload
+    echo Could not install requirements.txt; previewing with whatever sitegen is already installed.
 )
 
 REM Start the live preview server.

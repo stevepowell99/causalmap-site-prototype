@@ -5,12 +5,20 @@ help_url: https://garden.causalmap.app
 input_dir: content
 output_dir: dist
 
+# Navbar logo (white version for the dark navbar), and the meta description for pages without one.
+logo_path: "/assets/logo-white.png"
+default_description: "Causal mapping software for qualitative research and evaluation"
+
 # UTM params appended to every link to app_url at build time (acquisition attribution).
 # Set utm_source empty to disable. Links that already carry utm_source are left untouched.
 app_utm:
   utm_source: causalmap-site
   utm_medium: referral
   utm_campaign: corporate-site
+
+# Stamp app links with the host that referred the visitor here (as ref_host), since
+# the app itself only ever sees causalmap.app as the referrer.
+app_ref_host: true
 
 colors:
   accent_primary: "#00ffaf"

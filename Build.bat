@@ -8,10 +8,10 @@ if errorlevel 1 (
     exit /b 1
 )
 
-REM Install required Python packages if needed.
-"%PYTHON_EXE%" %PYTHON_ARGS% -c "import yaml, markdown" 1>nul 2>nul
+REM Install the pinned generator (sitegen) and its dependencies from requirements.txt.
+"%PYTHON_EXE%" %PYTHON_ARGS% -m pip install -q -r requirements.txt
 if errorlevel 1 (
-    "%PYTHON_EXE%" %PYTHON_ARGS% -m pip install pyyaml markdown
+    echo Could not install requirements.txt; building with whatever sitegen is already installed.
 )
 
 REM One-off build into dist/.

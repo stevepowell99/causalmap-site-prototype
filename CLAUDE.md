@@ -25,7 +25,7 @@ Ledger: `_role.md`.
 
 ## Workflow
 
-- `build.py` is the custom static site generator.
+- The generator is sitegen ([stevepowell99/sitegen](https://github.com/stevepowell99/sitegen), public; on Steve's machine `C:\dev\sitegen`), shared with qualiainterviews.com and pinned in `requirements.txt`. `build.py` holds only this site's footer, tag pages and CSS values. Change shared behaviour in sitegen, release a new tag, then bump the pin here, per sitegen's README.
 - Content lives in `content/`.
 - Generated output goes to `dist/`.
 - Keep README updates concise when setup, structure, behaviour, workflows or dependencies change.

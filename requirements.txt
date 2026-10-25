@@ -1,2 +1,1 @@
-PyYAML
-Markdown
+sitegen @ git+https://github.com/stevepowell99/sitegen@v0.1.0

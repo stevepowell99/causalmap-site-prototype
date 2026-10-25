@@ -6,14 +6,15 @@ Static site for **causalmap.app**, live on Netlify. The folder and repo names ke
 
 A Python script (`build.py`) reads markdown files from `content/` (including nested folders such as `content/events/`, excluding `content/assets/`), renders them to HTML, and writes the output to `dist/`. Each markdown file uses YAML front matter to define the page path, navigation order, and layout sections. The prose body (below the second `---`) is rendered as standard markdown.
 
-There is no external static site generator. Everything is in `build.py`: section renderers, CSS, navigation builder, and the build loop.
+The generator is [sitegen](https://github.com/stevepowell99/sitegen), our own package, shared with qualiainterviews.com and pinned by version tag in `requirements.txt`. It holds the section renderers, navigation, the shared CSS and the build loop. `build.py` holds only what is particular to this site: the footer, the tag pages, and this site's values and extra blocks for the shared stylesheet. Shared behaviour is changed in sitegen. This site takes a new sitegen version when the tag in `requirements.txt` is bumped; sitegen's README covers the hooks and how to release.
 
 ## Structure
 
 ```
 causalmap-site-prototype/
-  build.py        Site generator (single script, ~650 lines)
-  config.yml      Brand colours, input/output dirs
+  build.py        This site's part of the build (footer, tag pages, CSS values); runs sitegen
+  requirements.txt  The sitegen version pin
+  config.yml      Brand colours, logo, input/output dirs, UTM and analytics settings
   content/        Markdown source files + assets/
     home.md         Homepage (path: /)
     product.md      Causal Map app page, with dropdown nav to Consultancy and QualiaInterviews
@@ -104,7 +105,7 @@ Umami is configured in `config.yml` under `analytics`. Set `umami_id` to your Um
 
 ## Building
 
-On Windows, double-click `Build.bat` for a one-off build (auto-installs Python 3 with `winget` if needed, then `pyyaml` and `markdown`).
+On Windows, double-click `Build.bat` for a one-off build (auto-installs Python 3 with `winget` if needed, then `requirements.txt`).
 
 From a shell:
 
@@ -112,10 +113,10 @@ From a shell:
 python build.py
 ```
 
-Requires Python 3 with `pyyaml` and `markdown`:
+Requires Python 3.8 or later, git, and the packages in `requirements.txt` (sitegen, which brings PyYAML and Markdown):
 
 ```bash
-pip install pyyaml markdown
+pip install -r requirements.txt
 ```
 
 Output goes to `dist/`. Open `dist/index.html` in a browser to preview. `dist/` is generated output and is not tracked in git.
@@ -129,7 +130,7 @@ For a non-technical editor on Windows, the simplest option is to double-click `S
 That will:
 
 - install Python 3 with `winget` if needed
-- install `pyyaml`, `markdown`, and `livereload` if needed
+- install `requirements.txt` (sitegen) and `livereload`
 - run `preview.py`
 - open a local preview at `http://127.0.0.1:5500`
 - rebuild automatically when files in `content/`, `build.py`, or `config.yml` change
@@ -138,7 +139,7 @@ Keep the black terminal window open while editing. Closing it stops the preview 
 
 ## Navigation
 
-Top-level nav items are defined by `nav_order` in front matter. Dropdown menus use `nav_children`. The nav bar shows the logo (from `content/assets/logo-white.png`), top-level items, and a sitewide search form that submits to `/search`.
+Top-level nav items are defined by `nav_order` in front matter. Dropdown menus use `nav_children`. The nav bar shows the logo (`logo_path` in `config.yml`, pointing at `content/assets/logo-white.png`), top-level items, and a sitewide search form that submits to `/search`.
 
 ## Links and cross-references
 
@@ -163,6 +164,6 @@ Legacy URLs are kept as redirect stubs in `content/` using `redirect` in front m
 
 For Netlify, track the parent repo, not `dist/`. Netlify runs `python build.py` and publishes `dist/`, so the source files (`content/`, `build.py`, `config.yml`, `requirements.txt`, `netlify.toml`) stay versioned while generated output stays out of git.
 
-Netlify serves `dist/404.html` automatically for missing paths; this is generated from `content/404.md`.
+Netlify serves `dist/404.html` automatically for missing paths; this is generated from `content/404.md`. Its links stay root-absolute because Netlify serves it at whatever URL was missing.
 
 The build also emits `dist/robots.txt` and `dist/sitemap.xml` (all indexable pages, using `site_url` from `config.yml`; redirect stubs and the 404 page are excluded). Security response headers (CSP, `X-Frame-Options`, `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`) are set for every path in `netlify.toml`; update the CSP there if you add a new external script, font, or embed host.
