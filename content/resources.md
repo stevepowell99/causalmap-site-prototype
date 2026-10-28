@@ -3,6 +3,11 @@ title: Resources
 path: /resources
 nav_order: 6
 nav_label: Resources
+nav_children:
+  - label: Resources
+    path: /resources
+  - label: Events
+    path: /events/tags/academic-presentations
 description: Case studies, publications, and learning materials.
 sections:
   - type: hero-light
