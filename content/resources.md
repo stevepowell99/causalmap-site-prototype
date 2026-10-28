@@ -6,8 +6,18 @@ nav_label: Resources
 nav_children:
   - label: Resources
     path: /resources
+  - label: The Guide
+    path: https://garden.causalmap.app/
+  - label: Case studies
+    path: https://garden.causalmap.app/case-studies
+  - label: Bibliography
+    path: https://garden.causalmap.app/bibliography
   - label: Events
     path: /events/tags/academic-presentations
+  - label: Videos
+    path: https://youtube.com/playlist?list=PLSCKdSxlLlfGfcab5njcT57xzU0hOURc-&si=jX6S7fu43kBzHnRc
+  - label: Newsletters
+    path: https://www.linkedin.com/newsletters/causal-mapping-evaluation-ai-7201488452201185280/
 description: Case studies, publications, and learning materials.
 sections:
   - type: hero-light
