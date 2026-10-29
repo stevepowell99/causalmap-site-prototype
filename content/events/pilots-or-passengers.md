@@ -17,7 +17,7 @@ It is for evaluators, technical or not, who want AI to follow an explicit evalua
 
 ## Scope
 
-- **In:** applications and methods that let a user answer at least the desk-based, text-analysis part of most of the questions you would see in a typical evaluation's terms of reference.
+- **In:** general apps and toolkits that let a user answer at least the desk-based, text-analysis part of most of the questions you would see in a typical evaluation's terms of reference.
 - **Not our focus here:** of course it matters who takes part, and who owns the data and the processes, but that is not what this group is about.
 
 ## Starting points
