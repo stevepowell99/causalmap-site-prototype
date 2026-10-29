@@ -13,27 +13,27 @@ sections:
 
 An informal chat at the European Evaluation Society conference in Lille, on Thursday 29 October 2026, from about 16:30 at the café tables near Room 0.2.
 
-It is for evaluators, technical or not, who want AI to follow an explicit evaluation method, in steps that somebody else could check or rerun, so that evaluators stay the pilots.
+Are you impressed but concerned by the ability of frontier LLMs, given interviews or other documents, to answer arbitrary evaluation questions? Are you interested in exploring how we can force LLMs to make their workflows and evaluative reasoning more explit, transparent and checkable, so that evaluators stay the pilots, not passengers?
 
 ## Scope
 
 - **In:** general apps and toolkits that let a user answer at least the desk-based, text-analysis part of most of the questions you would see in a typical evaluation's terms of reference.
-- **Not our focus here:** of course it matters who takes part, and who owns the data and the processes, but that is not what this group is about.
+- **Not our focus here:** of course it matters who owns and participates in the evaluation data and processes, but that is not what this group is about.
 
 ## Starting points
 
-- **Why now:** a frontier model can already answer the desk-based part of most evaluation questions in minutes, about as well as a competent evaluator, and the models get better every month ([more](https://garden.causalmap.app/rubicon/)).
-- **Agreeing the method with commissioners:** reconstructibility as an option, or even pre-registration, with the workflow fixed in advance in full, half-way or not at all ([more](https://garden.causalmap.app/open-format/#pre-registering-the-workflow-or-not-or-half-way)).
-- **A reconstructible zip file** handed over with the report, holding the sources, the workflow, what every step produced and the rubrics, so that somebody else can rebuild the analysis ([more](https://garden.causalmap.app/open-format/#the-bundle)).
+- **Why now:** a frontier model can already answer the desk-based part of most evaluation questions in minutes, about as accurately as a competent evaluator, and the models get better every month ([more](https://garden.causalmap.app/rubicon/)).
+- **A reconstructible zip file** an application could produce a zip file which is handed over with the report, holding the sources, the workflow, what every step produced and the rubrics, so that somebody else can rebuild the analysis ([more](https://garden.causalmap.app/open-format/#the-bundle)).
 - **Can the logic of evaluative reasoning be built from a few pieces?** Choose documents, mark passages, group them into themes, count, judge against a rubric, write ([more](https://garden.causalmap.app/open-format/#the-format)).
+- **Agreeing the method with commissioners:** optional reconstructibility or even pre-registration, with the workflow fixed in advance in full, half-way or not at all ([more](https://garden.causalmap.app/open-format/#pre-registering-the-workflow-or-not-or-half-way)).
 
 ## Join in
 
 This is not a formal group with membership. We have in mind a burst of about six months, after which we will see whether it is worth carrying on.
 
 - **A webinar or meetup roughly once a month**, online, with a show-and-tell from one or two people each time.
-- **If you are interested, write to Steve Powell at [steve@pogol.net](mailto:steve@pogol.net?subject=Pilots%20or%20passengers)** to be invited. You do not need Slack or any particular software.
-- **The hands-on work happens in the MERL Tech Slack.** Its channels come with membership of the [MERL Tech Community of Practice](https://merltech.org/cop/), which is free.
+- **If you are interested, write to Steve Powell at [steve@pogol.net](mailto:steve@pogol.net?subject=Pilots%20or%20passengers)** to be invited.
+- **The hands-on work could happen in the MERL Tech Slack and/or its github.** Its Slack channels come with membership of the [MERL Tech Community of Practice](https://merltech.org/cop/), which is free.
 
 ## Reading and tools
 
