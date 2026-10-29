@@ -13,7 +13,7 @@ sections:
 
 An informal chat at the European Evaluation Society conference in Lille, on Thursday 29 October 2026, from about 16:30 at the café tables near Room 0.2.
 
-Are you impressed but concerned by the ability of frontier LLMs, given interviews or other documents, to answer arbitrary evaluation questions? Are you interested in exploring how we can force LLMs to make their workflows and evaluative reasoning more explit, transparent and checkable, so that evaluators stay the pilots, not passengers?
+Are you impressed but concerned by the ability of frontier LLMs, given interviews or other documents, to answer arbitrary evaluation questions? Are you interested in exploring how we can force LLMs to make their workflows and evaluative reasoning more explicit, transparent and checkable, so that evaluators stay the pilots, not passengers?
 
 ## Scope
 
@@ -23,9 +23,8 @@ Are you impressed but concerned by the ability of frontier LLMs, given interview
 ## Starting points
 
 - **Why now:** a frontier model can already answer the desk-based part of most evaluation questions in minutes, about as accurately as a competent evaluator, and the models get better every month ([more](https://garden.causalmap.app/rubicon/)).
-- **A reconstructible zip file** an application could produce a zip file which is handed over with the report, holding the sources, the workflow, what every step produced and the rubrics, so that somebody else can rebuild the analysis ([more](https://garden.causalmap.app/open-format/#the-bundle)).
-- **Can the logic of evaluative reasoning be built from a few pieces?** Choose documents, mark passages, group them into themes, count, judge against a rubric, write ([more](https://garden.causalmap.app/open-format/#the-format)).
-- **Agreeing the method with commissioners:** optional reconstructibility or even pre-registration, with the workflow fixed in advance in full, half-way or not at all ([more](https://garden.causalmap.app/open-format/#pre-registering-the-workflow-or-not-or-half-way)).
+- **Can the logic of evaluative reasoning be built from a few pieces?** Such as: Choose documents, mark passages, group them into themes, count, judge against a rubric, write the narrative ([more](https://garden.causalmap.app/open-format/#the-format))?
+- **Should an LLM-powered evaluation analysis be required to be in some sense replicable** ([more](https://garden.causalmap.app/open-format/#the-bundle))? What do we think about pre-registration of qualitative analysis designs ([more](https://garden.causalmap.app/open-format/#pre-registering-the-workflow-or-not-or-half-way))?
 
 ## Join in
 
