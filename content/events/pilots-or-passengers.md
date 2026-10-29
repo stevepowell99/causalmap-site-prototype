@@ -7,7 +7,7 @@ sections:
   - type: prose
 ---
 
-<p style="text-align:center"><img src="/assets/events/pilots-or-passengers-qr.svg" alt="QR code linking to this page" width="280" height="280" style="max-width:80%;height:auto"><br>causalmap.app/events/pilots-or-passengers</p>
+<p style="text-align:center"><img src="/assets/events/pilots-or-passengers-qr.svg" alt="QR code linking to this page" width="280" height="280" style="display:block;margin:0 auto;max-width:80%;height:auto"><br>causalmap.app/events/pilots-or-passengers</p>
 
 # EES Lille: pilots or passengers?
 
