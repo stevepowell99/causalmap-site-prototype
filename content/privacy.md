@@ -27,7 +27,7 @@ Related policies: [Information Security Policy](/information-security), [AI Comp
 
 - **<span class="hl hl-green">Your data belongs to you.</span>** We do not sell or share your data with third parties.
 - **We use <span class="hl hl-yellow">industry-standard security</span>**, including encryption at rest and in transit. See the [Information Security Policy](/information-security) for detail.
-- **You can export or delete your data at any time** from your account.
+- **In the Causal Map app you can export or delete your data at any time** from your account. In Qualia Social, whoever owns a session can delete it at any time, with everything people wrote and added in it.
 - **AI compliance:** We comply with UK AI Bill and GDPR requirements on automated decision-making. <span class="hl hl-pink">AI features are optional</span> and always subject to human review. **Full GDPR protection of AI processing depends on the client selecting an EU or UK region.** See [AI Compliance](/ai-compliance).
 - **Research participants:** If your data contains research participant information, you must obtain consent before uploading. We provide privacy-by-default settings for sensitive data.
 
@@ -36,7 +36,7 @@ Related policies: [Information Security Policy](/information-security), [AI Comp
 Which role we hold depends on the data, so there are two answers.
 
 - **Your account data**, meaning your name, work email address, usage and billing: Causal Map Ltd is the **data controller**. We decide why we hold it, which is to run, support and bill for the service.
-- **The research data you collect or upload** through QualiaInterviews or the Causal Map app: **you are the data controller** and Causal Map Ltd is the **data processor**. You decide what the research is for, who takes part and what they are asked. We process it on your instructions.
+- **The research data you collect or upload** through QualiaInterviews, Qualia Social or the Causal Map app: **you are the data controller** and Causal Map Ltd is the **data processor**. You decide what the research is for, who takes part and what they are asked. We process it on your instructions.
 
 Where we are engaged as consultants and design the research ourselves, we act as a data controller in our own right, or jointly with you. That is set out in the engagement contract rather than here.
 
@@ -68,7 +68,7 @@ As data controllers, clients must ensure:
 
 <h3 id="sub-processors">Sub-processors</h3>
 
-We use the following sub-processors to operate Causal Map. They may handle personal data on our behalf, under contract. Technical security controls are described in the [Information Security Policy](/information-security); AI region choices and their GDPR implications are described in [AI Compliance](/ai-compliance). QualiaInterviews runs on different infrastructure, and its sub-processors, hosting regions and security controls are in the Compliance section of the [QualiaInterviews help](https://manage.qualiainterviews.com/help#compliance) and on [qualiainterviews.com/privacy](https://qualiainterviews.com/privacy).
+We use the following sub-processors to operate Causal Map. They may handle personal data on our behalf, under contract. Technical security controls are described in the [Information Security Policy](/information-security); AI region choices and their GDPR implications are described in [AI Compliance](/ai-compliance). QualiaInterviews runs on different infrastructure, and its sub-processors, hosting regions and security controls are in the Compliance section of the [QualiaInterviews help](https://manage.qualiainterviews.com/help#compliance) and on [qualiainterviews.com/privacy](https://qualiainterviews.com/privacy). Qualia Social also runs on infrastructure of its own, listed [below the table](#qualia-social).
 
 | Service | Purpose | Location | Retention |
 |---|---|---|---|
@@ -83,6 +83,18 @@ We use the following sub-processors to operate Causal Map. They may handle perso
 | Loops.so | Email marketing and welcome flow | Loops infrastructure | Loops policy |
 | Lemon Squeezy | Subscriptions, checkout, customer portal | Lemon Squeezy infrastructure | Lemon Squeezy policy |
 | Slack | Admin support notifications via webhook | Slack infrastructure | Slack policy |
+
+<h4 id="qualia-social">Qualia Social</h4>
+
+Qualia Social is our app for group sessions, in which people join from their own devices with a code. Someone taking part gives a name of their choosing and does not need an account; the person running the session signs in with Google or with a link sent by email. What people write and add in a session, and the files uploaded to it, are stored and processed in the EU. Someone taking part can delete a message they wrote, and whoever owns a session can delete the whole session, with its uploaded files.
+
+| Service | Purpose | Location | Retention |
+|---|---|---|---|
+| Supabase | Auth, Postgres, Storage, Realtime, Edge Functions | AWS eu-central-1 (Frankfurt) | Held until the session's owner deletes it, or on request |
+| Google Vertex AI | AI inference (Gemini) | EU multi-region | Google Cloud terms for Vertex AI |
+| Google Workspace | Sending sign-in links by email | Google infrastructure | Google Workspace terms |
+| Netlify | Static webapp hosting | Netlify infrastructure | Static assets only |
+| GoatCounter | Counts of page visits | GoatCounter infrastructure | GoatCounter policy |
 
 ### Data retention and deletion
 
