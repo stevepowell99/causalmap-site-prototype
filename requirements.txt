@@ -1,1 +1,1 @@
-sitegen @ git+https://github.com/stevepowell99/sitegen@v0.1.0
+sitegen @ git+https://github.com/stevepowell99/sitegen@v0.1.1
