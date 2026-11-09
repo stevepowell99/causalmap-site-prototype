@@ -49,4 +49,4 @@ That experience cuts both ways: we know what AI does well in research and evalua
 
 AI integration work is billed at the same daily rate as our [consultancy](/consultancy). A workflow review is typically a few days' work; larger builds take longer. [Email us](mailto:hello@causalmap.app) to talk through your project.
 
-Ready to discuss your workflow? [Email Steve](mailto:steve@causalmap.app) or [Gabriele](mailto:gabriele@causalmap.app), or [book a call](https://calendar.app.google/gGhrqvrwHCqUBE5b7).
+Ready to discuss your workflow? [Email Steve](mailto:steve@causalmap.app) or [Gabriele](mailto:gabriele@causalmap.app), or [book a call](https://calendar.google.com/calendar/appointments/schedules/AcZssZ2t8RD0q1v0IA4ZmUmrYVvxDopyvEpzrSGMcqwD5M13pVAfdh5OOXefEiYJ_xrnrC5oNI2a4VOz).

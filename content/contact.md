@@ -22,7 +22,7 @@ sections:
 
 You can book a call directly with Steve to discuss your project, ask questions, or <span class="hl hl-green">book a demo</span>.
 
-[Book a call](https://calendar.app.google/gGhrqvrwHCqUBE5b7)
+[Book a call](https://calendar.google.com/calendar/appointments/schedules/AcZssZ2t8RD0q1v0IA4ZmUmrYVvxDopyvEpzrSGMcqwD5M13pVAfdh5OOXefEiYJ_xrnrC5oNI2a4VOz)
 
 ## Other ways to connect
 

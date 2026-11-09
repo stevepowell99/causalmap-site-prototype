@@ -52,4 +52,4 @@ These rates are negotiable for particularly interesting use cases and for client
 
 We built [Causal Map](/product). We have been developing the method and the software since 2019, and have worked on [causal mapping](/causal-mapping) projects with organisations including UNICEF, IFRC, Save the Children, and universities worldwide. Our methodology is transparent: you see exactly how we arrived at every finding. See [case studies](https://garden.causalmap.app/case-studies) for examples of our work.
 
-Ready to discuss your project? [Email Steve](mailto:steve@causalmap.app) or [Gabriele](mailto:gabriele@causalmap.app), or [book a call](https://calendar.app.google/gGhrqvrwHCqUBE5b7).
+Ready to discuss your project? [Email Steve](mailto:steve@causalmap.app) or [Gabriele](mailto:gabriele@causalmap.app), or [book a call](https://calendar.google.com/calendar/appointments/schedules/AcZssZ2t8RD0q1v0IA4ZmUmrYVvxDopyvEpzrSGMcqwD5M13pVAfdh5OOXefEiYJ_xrnrC5oNI2a4VOz).
