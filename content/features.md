@@ -94,6 +94,10 @@ sections:
         icon: fa-solid fa-message
         help_anchor: simple-ai-auto-code
         text: Add an <span class="hl hl-green hl-reveal">extra prompt</span> to individual sources when different documents need different framing.
+      - title: Code Like Me
+        icon: fa-solid fa-user-pen
+        help_anchor: ai-coding-mapcat
+        text: Code a few sources by hand, and MapCat <span class="hl hl-yellow hl-reveal">learns how you code</span>, tries its rules on one of your coded sources, then codes the rest the same way once you confirm. <em>Pro or Team with AI.</em>
   - type: features
     heading: Filter and analyse
     columns:
@@ -159,6 +163,10 @@ sections:
         icon: fa-solid fa-comment-dots
         help_anchor: answers-panel
         text: Ask plain-language questions of your project. <span class="hl hl-green hl-reveal">Answers grounded</span> in your sources, links and factors.
+      - title: From Claude or ChatGPT
+        icon: fa-solid fa-plug
+        help_anchor: mcp-server
+        text: Connect Causal Map to <span class="hl hl-pink hl-reveal">your own AI chat app</span> and ask about your projects there, with counts, maps and quotes from Causal Map. Read-only. <em>Every plan, free included.</em>
       - title: Share projects
         icon: fa-solid fa-share-nodes
         help_anchor: sharing-and-permissions

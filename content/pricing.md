@@ -22,7 +22,7 @@ Choose your subscription directly from the Account tab in the app: [app.causalma
 
 **Private** (from £18/month): Keep your projects private. Email support.
 
-**Pro** (from £38/month): Everything in Private, plus [versioning](https://garden.causalmap.app/versioning/), [bookmarks and reports](https://garden.causalmap.app/bookmarks-reports/), and a dedicated [statistics panel](https://garden.causalmap.app/pivot-panel/).
+**Pro** (from £38/month): Everything in Private, plus [versioning](https://garden.causalmap.app/versioning/), [bookmarks and reports](https://garden.causalmap.app/bookmarks-reports/), and a dedicated [statistics panel](https://garden.causalmap.app/pivot-panel/). The AI version adds [Code Like Me](https://garden.causalmap.app/ai-coding-mapcat/), with MapCat on Claude Opus.
 
 **Team** (from £78/month per seat): Everything in Pro, plus [sharing between team members](https://garden.causalmap.app/sharing-and-permissions/), [live collaboration](https://garden.causalmap.app/live-collaboration/), [logs of all edits](https://garden.causalmap.app/logs-panel/), and two-factor authentication. [Contact us](mailto:hello@causalmap.app) for team discounts.
 
@@ -34,11 +34,13 @@ Choose your subscription directly from the Account tab in the app: [app.causalma
 | Projects you can edit | Unlimited | Unlimited | Unlimited | Unlimited |
 | Links per project | Unlimited | Unlimited | Unlimited | Unlimited |
 | Online guides and tutorials | Yes | Yes | Yes | Yes |
+| [Read your projects from Claude, ChatGPT and other AI chat apps](https://garden.causalmap.app/mcp-server/) | Yes | Yes | Yes | Yes |
 | Email support |  | Yes | Yes | Yes |
 | Private projects |  | Yes | Yes | Yes |
 | [Versioning](https://garden.causalmap.app/versioning/) |  |  | Yes | Yes |
 | [Bookmarks and reports](https://garden.causalmap.app/bookmarks-reports/) |  |  | Yes | Yes |
 | [Statistics panel](https://garden.causalmap.app/pivot-panel/) |  |  | Yes | Yes |
+| [Code Like Me](https://garden.causalmap.app/ai-coding-mapcat/), with MapCat on Claude Opus (AI version) |  |  | Yes | Yes |
 | [Team sharing](https://garden.causalmap.app/sharing-and-permissions/) |  |  |  | Yes |
 | Two-factor authentication |  |  |  | Yes |
 | [Action logs](https://garden.causalmap.app/logs-panel/) |  |  |  | Yes |
