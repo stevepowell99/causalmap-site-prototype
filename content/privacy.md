@@ -102,7 +102,7 @@ The Rubicon plugin runs in the evaluator's own Claude, on their own Claude plan.
 
 - the plugin's version, and the model family (Opus, Fable, Sonnet, Haiku or other);
 - what was handed over: a report, a revision or a combined report;
-- a code worked out from the run's ID, the same for the run's report and each of its revisions, so that they can be counted as one run;
+- a random code that the run keeps among its own files, the same for the run's report and each of its revisions, so that they can be counted as one run; it appears in no report, Word copy or zip the evaluator shares, so a row cannot be matched to a report;
 - the number of documents, in bands (1, 2-5, 6-10, 11-25, 26-50, 51-100, 101-250, over 250);
 - about how many words the documents hold, in bands (under 5,000, 5,000-20,000, 20,000-50,000, 50,000-150,000, 150,000-500,000, over 500,000);
 - the number of questions, and whether they were taken one by itself, together, one at a time, or after a shared reading;
