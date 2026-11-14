@@ -98,18 +98,21 @@ Qualia Workshops is our app for workshops, in which people join from their own d
 
 <h4 id="rubicon-plugin">The Rubicon plugin for Claude</h4>
 
-The Rubicon plugin runs in the evaluator's own Claude, on their own Claude plan. Their documents, questions and answers go to Anthropic under the terms of that plan, and never to Causal Map. The plugin comes in two versions. `rubicon-private` sends us nothing. `rubicon` sends us one request in a conversation, after a report is handed over; Claude says first what it is about to send, and the evaluator can deny it. The request carries only:
+The Rubicon plugin runs in the evaluator's own Claude, on their own Claude plan. Their documents, questions and answers go to Anthropic under the terms of that plan, and never to Causal Map. The plugin comes in two versions. `rubicon-private` sends us nothing. `rubicon` sends us one request in a conversation, after a report is handed over; Claude says first what it is about to send, and the evaluator can deny it. The request carries only these values, each worked out by fixed rules from the run's own files:
 
-- the plugin's version;
+- the plugin's version, and the model family (Opus, Fable, Sonnet, Haiku or other);
 - what was handed over: a report, a revision or a combined report;
+- a code worked out from the run's ID, the same for the run's report and each of its revisions, so that they can be counted as one run;
 - the number of documents, in bands (1, 2-5, 6-10, 11-25, 26-50, 51-100, 101-250, over 250);
 - about how many words the documents hold, in bands (under 5,000, 5,000-20,000, 20,000-50,000, 50,000-150,000, 150,000-500,000, over 500,000);
-- the number of questions, in bands (1, 2, 3, 4, 5-9, over 9);
-- the model family (Opus, Fable, Sonnet, Haiku or other);
-- whether the report was made;
-- the number of revisions, in bands (0, 1, 2, 3-5, over 5).
+- the number of questions, and whether they were taken one by itself, together, one at a time, or after a shared reading;
+- the number of steps of each kind in the run's workflow (sampling, coding, grouping, profiling, tabulating, judging, claims and writing);
+- the number of passages coded, in bands (0, 1-10, 11-50, 51-200, 201-1,000, 1,001-5,000, over 5,000);
+- the second reading: none, a check of the coding, or a second coding;
+- the minutes from the run's first agreement to the hand-over, in bands (under 10, 10-30, 30-60, 60-120, 120-240, 240-480, over 480);
+- the share of the answer's sentences found tied to the coded passages, in bands (under 50%, 50-79%, 80-89%, 90-99%, 100%).
 
-It never carries a question, a document or folder name, a passage, a code or label, or anything about the person or their computer. We add one to that day's total for that combination of values, and keep only these daily totals, which cannot be linked to anyone; a request holding any other value is not counted. The service that counts runs on Supabase, listed above, whose request log records each request, including the IP address it came from, and keeps it for 7 days on our plan.
+It never carries a question, a document or folder name, a passage, a code or label, the time of day, or anything about the person or their computer. The request goes to a small relay we run on Google Cloud Run in Belgium (europe-west1), which reads only these values and passes them on to our database as one row, with the date; a request holding any other value adds nothing. Google Cloud is set to store no log of the relay's requests, so the IP address a request comes from is not kept, and our database, on Supabase, listed above, sees only Google's address: the person's IP address never reaches Causal Map.
 
 ### Data retention and deletion
 
