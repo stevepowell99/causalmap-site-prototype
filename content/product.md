@@ -12,6 +12,8 @@ nav_children:
     path: /ai
   - label: QualiaInterviews
     path: /qualiainterviews
+  - label: Rubicon
+    path: /rubicon
 description: Online software for coding, analysing, and visualising causal narratives from qualitative data.
 sections:
   - type: hero-light
@@ -66,6 +68,10 @@ sections:
 
       **QualiaInterviews** — Conduct AI-powered qualitative interviews, then
       import directly into Causal Map. [qualiainterviews.com](https://qualiainterviews.com).
+
+
+      **Rubicon**: a free, open-source plugin for Claude with which evaluators answer their
+      questions from a folder of documents, following a workflow they agree first. [rubicon.causalmap.app](https://rubicon.causalmap.app).
 
 
       **The Guide** — Comprehensive documentation on [causal mapping](/causal-mapping) concepts,
