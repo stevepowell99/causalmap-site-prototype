@@ -96,6 +96,21 @@ Qualia Workshops is our app for workshops, in which people join from their own d
 | Netlify | Static webapp hosting | Netlify infrastructure | Static assets only |
 | GoatCounter | Counts of page visits | GoatCounter infrastructure | GoatCounter policy |
 
+<h4 id="rubicon-plugin">The Rubicon plugin for Claude</h4>
+
+The Rubicon plugin runs in the evaluator's own Claude, on their own Claude plan. Their documents, questions and answers go to Anthropic under the terms of that plan, and never to Causal Map. The plugin comes in two versions. `rubicon-private` sends us nothing. `rubicon` sends us one request in a conversation, after a report is handed over; Claude says first what it is about to send, and the evaluator can deny it. The request carries only:
+
+- the plugin's version;
+- what was handed over: a report, a revision or a combined report;
+- the number of documents, in bands (1, 2-5, 6-10, 11-25, 26-50, 51-100, 101-250, over 250);
+- about how many words the documents hold, in bands (under 5,000, 5,000-20,000, 20,000-50,000, 50,000-150,000, 150,000-500,000, over 500,000);
+- the number of questions, in bands (1, 2, 3, 4, 5-9, over 9);
+- the model family (Opus, Fable, Sonnet, Haiku or other);
+- whether the report was made;
+- the number of revisions, in bands (0, 1, 2, 3-5, over 5).
+
+It never carries a question, a document or folder name, a passage, a code or label, or anything about the person or their computer. We add one to that day's total for that combination of values, and keep only these daily totals, which cannot be linked to anyone; a request holding any other value is not counted. The service that counts runs on Supabase, listed above, whose request log records each request, including the IP address it came from, and keeps it for 7 days on our plan.
+
 ### Data retention and deletion
 
 - Personal data is not kept longer than necessary.
