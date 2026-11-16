@@ -1,5 +1,8 @@
 # Update the Lyceum sub-processor row once Justus replies
 
-The sub-processor table in `content/privacy.md` lists Lyceum (Rubicon's EU host for DeepSeek V4 Pro), and it is live on causalmap.app.
+The sub-processor table in `content/privacy.md` lists Lyceum (Rubicon's EU host for DeepSeek V4.1 Flash and GLM 5.3 Flash), and it is live on causalmap.app.
 
 The row follows Lyceum's DPA, which is weaker than Justus Amen's email of 30 September 2026: processing is "primarily" in the EU/EEA, and prompts may be kept for abuse detection or security. Lyceum is revising its DPA to settle those points; the conversation is tracked in `rubicon/Lyceum DPA answers before real transcripts go through it xkWAITING xpCLAUDE.md` in the causal-map-extension repo. Lyceum's TOMs (16 October 2026) name Finland and "USA - only specified models" and do not name Paris, so the Location cell's "Paris (Scaleway)" may already be wrong. When the revised DPA arrives, adjust the Location and Retention cells to match. Detail: hub memory `reference-ai-models`, Lyceum bullets.
+
+- 2026-11-02 (weekly review, from both mailboxes): nothing from Marius von Kleist since 16 October, so chase once. Separately, Lyceum retires DeepSeek V4 Pro on 19 November (Jonathan Soemer, 29 October); see the cm4 task 'Lyceum retires DeepSeek V4 Pro on 19 November, move the open-weights default'.
+- 2026-11-16 (cm4 session): Rubicon's adjudicator moved to DeepSeek V4.1 Flash on Lyceum; the row's Purpose cell now names V4.1 Flash and GLM 5.3 Flash (the second coder, also on Lyceum). Location and Retention still wait for the revised DPA, which Marius von Kleist was nudged for in a hello@ draft the same day. Lyceum's inference page of 16 November says serverless models run in Paris and Finland; Marius wrote on 9 November that the new DPA will put location in the EU only.
