@@ -1,20 +1,24 @@
 ---
 title: Information Security Policy
 path: /information-security
-description: How Causal Map classifies data, controls access, and secures the app.
+description: How Causal Map classifies data, controls access, secures the app, handles incidents and keeps its services running.
 sections:
   - type: prose
 ---
 
-<!-- NOT CANONICAL for the QualiaInterviews facts. Master copy is README-unified.md in the
-     qualia-edit-multi repo. Note this document covers the Causal Map app on Supabase, a
-     different backend from Qualia on Railway, so do not copy Qualia's numbers across.
+<!-- Canonical for the company-wide policy: users, passwords, training, access reviews, incident
+     management, continuity and disaster recovery. NOT CANONICAL for the QualiaInterviews facts:
+     master copy is README-unified.md in the qualia-edit-multi repo, whose Data Breach Notification
+     section links to #incidents here. "App security controls" covers the Causal Map app on Supabase,
+     a different backend from Qualia on Railway, so do not copy Qualia's numbers across.
      The 'daily backups' line here has not been verified against Supabase. -->
 
 
 ## Information Security Policy
 
 <p class="print-link"><a href="#" onclick="window.print(); return false;">Print or save as PDF</a></p>
+
+Last reviewed: 17 November 2026.
 
 ### 1. Purpose
 
@@ -28,7 +32,7 @@ This policy cannot eliminate all malicious data theft. Its primary objective is 
 
 - **Public:** data that is not personal or sensitive, accessible by anyone.
 - **Internal:** data not intended for public disclosure but with low security requirements. For example, data in the Causal Map folder at Google Workspace.
-- **Confidential:** data that could create moderate risk if disclosed to an unauthorised user. For example, data in the Causal Map Management folder at Google Workspace, or data in the Public section at Notion.
+- **Confidential:** data that could create moderate risk if disclosed to an unauthorised user. For example, data in the Causal Map Management folder at Google Workspace.
 - **Restricted:** the highest level of sensitive data, which could put the company at severe risk if disclosed. In particular, client data including their data in the Causal Map app and associated files.
 
 **In scope.** This policy applies to all customer data, personal data and other company data classified as sensitive. It applies to every server, database and IT system that handles such data, including any device regularly used for email, web access or other work-related tasks. Every user who interacts with company IT services is subject to this policy.
@@ -45,7 +49,7 @@ Causal Map Ltd provides employees and contracted third parties (the "users") wit
 
 - Each user is identified by a unique user ID so that individuals can be held accountable for their actions.
 - Shared identities are permitted only where suitable, such as training accounts or service accounts (for example, help@causalmap.app).
-- Each user shall read this policy and the login and logoff guidelines, and confirm they understand the conditions of access.
+- Each user shall read this policy and confirm they understand the conditions of access.
 - Records of user access may be used as evidence in security incident investigations.
 - Access is granted on the principle of least privilege: each program and user is granted the fewest privileges necessary to complete their tasks.
 
@@ -55,7 +59,7 @@ Access to company IT resources and services is given through a unique user accou
 
 #### 3.4 Network access
 
-For Google Workspace, Notion, the Causal Map app and similar systems, employees and contractors are given network access in accordance with business access-control procedures and the least-privilege principle.
+For Google Workspace, the Causal Map app, QualiaInterviews and similar systems, employees and contractors are given network access in accordance with business access-control procedures and the least-privilege principle.
 
 #### 3.5 User responsibilities
 
@@ -72,6 +76,20 @@ For Google Workspace, Notion, the Causal Map app and similar systems, employees 
 #### 3.7 Access to confidential and restricted information
 
 Access to data classified as Confidential or Restricted is limited to authorised persons whose job responsibilities require it, as determined by line management.
+
+<h4 id="passwords">3.8 Passwords</h4>
+
+- Every account has its own password, used for no other service, and long enough that it cannot be guessed.
+- Passwords are kept in a password manager or in the company's encrypted key store, and never in code.
+- Two-step verification is switched on for every company account that offers it and that holds customer data or gives access to production systems.
+
+<h4 id="training">3.9 Training</h4>
+
+Everyone given access to customer data, whether staff or contractor, reads this policy and the compliance documentation for the products they work on before access is granted, and again whenever either changes materially. Contractors who work on our code sign a non-disclosure agreement first.
+
+<h4 id="access-reviews">3.10 Access reviews</h4>
+
+Access to production systems and customer data (hosting and database accounts, cloud consoles, and the administrator accounts in each app) is limited to the directors and the named contractors who need it. The directors review that list each October, at the company's year end, and whenever someone joins or leaves, and remove a person's access when their work for us ends.
 
 ### 4. App security controls
 
@@ -123,12 +141,26 @@ There are two levels of access: Admin and User.
 - Highly significant events such as new user registration and file creation are logged in a system SQL database and emailed to the Data Protection Officer.
 - Significant events such as log on, file load etc. are recorded in a system SQL database.
 
-### 5. Reporting requirements
+<h3 id="incidents">5. Incident management</h3>
 
-- Daily incident reports are produced and handled by the IT Director in the event of an incident.
-- High-priority incidents are immediately reported to the IT Director (Steve Powell).
+An incident is any event that puts the confidentiality, integrity or availability of customer data or of our services at risk: a security breach or suspected breach, loss of data, or a significant outage. Steve Powell, director, is responsible for handling incidents. Report a suspected incident or vulnerability to [hello@causalmap.app](mailto:hello@causalmap.app).
 
-### 6. Definitions
+- **Contain.** Stop the cause, for example by revoking credentials, rotating keys or taking a service offline.
+- **Assess.** Establish what happened, which data and which customers are affected, and whether personal data is involved.
+- **Notify.** Where personal data we process for a customer is affected, we tell that customer without undue delay, and within any time their data processing agreement sets, so they can meet their own duty to notify the Information Commissioner's Office (ICO). Where we are the controller, we notify the ICO within 72 hours where the law requires it, and tell the people affected where the risk to them is high. A notification says what happened, the kinds and rough numbers of people and records affected, the likely consequences, what we have done or will do about it, and who to contact.
+- **Recover and record.** Restore the service and the data, then record the incident, its cause and what we changed to stop it happening again.
+
+For outages of the Causal Map app, the restoration target and status updates are set out in the [SLA](/terms-and-conditions#sla).
+
+<h3 id="continuity">6. Business continuity and disaster recovery</h3>
+
+- **Hosting.** The products run on managed platforms (Supabase, Railway, Netlify and Google Cloud), which provide the hardware, its redundancy and infrastructure patching. No product depends on a company office or on any one person's computer.
+- **Backups.** Databases are backed up automatically and encrypted at rest. The schedules are in each product's documentation: the [QualiaInterviews compliance documentation](https://manage.qualiainterviews.com/help#compliance) and, for the Causal Map app, the [SLA](/terms-and-conditions#sla).
+- **Rebuilding.** The code for every product is held in Git on GitHub, with its build and deployment configuration and the name and source of every secret it needs (never the value), so each product can be rebuilt from its accounts on a new machine.
+- **Secrets.** Credentials and recovery codes are kept in an encrypted key store, never in code or in documents that other services can read.
+- **People.** A written continuity plan sets out how the other director would keep the company and its services running if Steve Powell were unavailable: access to the company's accounts, payments, customers, suppliers and code. It is reviewed each October and whenever a service is added or cancelled.
+
+### 7. Definitions
 
 - **Data owners** are employees or contractors with primary responsibility for maintaining information that they own.
 - **Users** include everyone who has access to information resources: employees, trustees, contractors, consultants, temporary employees and volunteers.
