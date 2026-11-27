@@ -1,9 +1,7 @@
 # Bring the sub-processor table up to date
 
-`content/privacy.md` and `content/ai-compliance.md` lag what the products now use, as found on 1 October 2026:
+`content/privacy.md`'s sub-processor table, for Rubicon only. The Causal Map app's rows (Cloud Functions in two regions, Claude on Vertex) were corrected from the code on 27 November 2026.
 
-- The Google Cloud Functions row says us-central1 only. Both `start_run` and `process_chunk` now run in us-central1 and europe-west1, and EU-tier projects use the European one (causal-map-extension `CLAUDE.md`, "Deploying ai-run-executor").
-- Rubicon's other model providers are missing: Scaleway (Paris), TensorX, and Anthropic. Check `rubicon/rubicon/coordinator/open_weights.py` and Ruby's deployment for what actually receives project text before listing them.
-- Claude on Vertex (EU-resident Haiku 4.5, Sonnet 4.6 and Sonnet 5) is not mentioned under Vertex AI.
+- Rubicon's other model providers are not listed: Scaleway (Paris) and TensorX (Dublin, Helsinki, Paris), beside Lyceum. `rubicon/rubicon/coordinator/open_weights.py` reads their keys from the local `rubicon/.env`; whether hosted Ruby, now parked, ever sends them project text is not settled from the code. List them only once something real goes through them.
 
 Verify each against the code and the provider's own terms before writing it; a push publishes.
