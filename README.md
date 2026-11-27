@@ -95,6 +95,10 @@ Any page can carry a `tags` list in its front matter (and an optional `date`). T
 
 Tag pages are generated, not authored: there is no markdown file for them. They are excluded from the top nav and reachable through the chips or a direct link. The event write-ups in `content/events/` (conference talks, workshops, webinars) use this with `tags: [academic-presentations]`. Their images live in `content/assets/events/`.
 
+## Facts from the Causal Map app
+
+Facts about the app that the compliance pages state (AI regions, where each runs, Cloud Functions, storage, which AI regions offer which providers) are filled in at build time from the app's own `webapp/public-facts.json` in causal-map-extension, which is generated there from the code and checked on every push. A page marks each place with an HTML comment such as `<!-- cm4:ai-region-table -->`; `build.py` lists the markers it knows. The build reads the file from `cm4_facts_url` in `config.yml` (the live app), or from a local copy named by the `CM4_FACTS_FILE` environment variable. A marker the build cannot fill stops it, and Netlify keeps the last good deploy. Sentences around the filled cells are written by hand: when the app's code moves a fact, its test names the pages to reread.
+
 ## Brand colours
 
 Brand colours are defined in `config.yml` and exposed in the generated CSS as the `:root` variables `--cm-ink`, `--cm-pink`, `--cm-green`, `--cm-teal`, `--cm-bg`, and `--cm-text`.

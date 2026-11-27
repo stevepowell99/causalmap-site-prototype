@@ -13,3 +13,6 @@ __pycache__/
 
 # Drive conflict copies of the generated site output (never publish, never commit)
 dist (*)/
+
+# Scratch work and held patches
+_tmp/

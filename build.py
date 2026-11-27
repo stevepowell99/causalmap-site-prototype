@@ -3,11 +3,15 @@
 
 sitegen, pinned in requirements.txt, does the work. This file holds only what is
 particular to this site: its footer, the tag chips and tag listing pages used by
-the event write-ups, and the CSS values and blocks no other site uses.
+the event write-ups, the facts about the Causal Map app filled in from the app's
+own code, and the CSS values and blocks no other site uses.
 """
 
 import html as html_lib
+import json
+import os
 import re
+import urllib.request
 from pathlib import Path
 
 import sitegen
@@ -126,6 +130,150 @@ def add_tag_pages(pages, cfg):
         })
 
 
+# ---- Facts about the Causal Map app, from the app's own code ----
+#
+# A page marks where a fact goes with an HTML comment such as <!-- cm4:ai-region-table -->. The facts come
+# from webapp/public-facts.json in causal-map-extension, generated there from the code and checked on every
+# push, and served at cfg["cm4_facts_url"]. CM4_FACTS_FILE (a local path) reads a checkout's copy instead,
+# for a build before the app is deployed. A marker that cannot be filled stops the build, so a page never
+# goes out with a fact missing; Netlify then keeps the last good deploy.
+
+CM4_MARKER = re.compile(r"<!--\s*cm4:([A-Za-z0-9:-]+)\s*-->")
+
+
+def load_cm4_facts(cfg):
+    local = os.environ.get("CM4_FACTS_FILE")
+    if local:
+        try:
+            return json.loads(Path(local).read_text(encoding="utf-8")), local
+        except (OSError, ValueError) as e:
+            raise SystemExit(f"cm4 facts: cannot read CM4_FACTS_FILE {local} ({e})")
+    url = cfg.get("cm4_facts_url")
+    if not url:
+        raise SystemExit("cm4 facts: a page has a cm4: marker but config.yml has no cm4_facts_url")
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "causalmap-site-build"})
+        with urllib.request.urlopen(req, timeout=30) as r:
+            return json.loads(r.read().decode("utf-8")), url
+    except Exception as e:  # noqa: BLE001 - any failure to read the facts stops the build
+        raise SystemExit(f"cm4 facts: cannot read {url} ({e}). The app serves it from main; "
+                         "set CM4_FACTS_FILE to a checkout's webapp/public-facts.json to build without it.")
+
+
+def _region_name(region):
+    """'Europe (EU + EEA + UK)' -> 'Europe', for prose."""
+    return region["label"].split(" (")[0]
+
+
+def _and_list(items):
+    items = list(items)
+    return items[0] if len(items) == 1 else ", ".join(items[:-1]) + " and " + items[-1]
+
+
+def _one_territory(locations, what):
+    territories = {l["territory"] for l in locations}
+    if len(territories) != 1:
+        raise SystemExit(f"cm4 facts: {what} spans {sorted(territories)}; say so on the page before building")
+    return territories.pop()
+
+
+def _vertex_locations(region):
+    """Gemini's and Claude's locations, multi-regions first, without repeats."""
+    seen, out = set(), []
+    for l in region["vertex_locations"]["gemini"] + region["vertex_locations"]["claude"]:
+        if l["code"] not in seen:
+            seen.add(l["code"])
+            out.append(l)
+    return sorted(out, key=lambda l: (len(l["code"]) > 2, l["code"]))
+
+
+def _by_regions(facts, describe):
+    """One clause per distinct description, naming the AI regions it holds for."""
+    groups = {}
+    for r in facts["ai_regions"]:
+        groups.setdefault(describe(r), []).append(_region_name(r))
+    clauses = [f"{text} for projects whose AI region is {' or '.join(names)}" for text, names in groups.items()]
+    return "; ".join(clauses)
+
+
+def _where_models_run(region):
+    vertex = [f["family"] for f in region["model_families"] if f["host"] == "Google Vertex AI"]
+    locs = region["vertex_locations"]
+    territory = _one_territory(_vertex_locations(region), f"Vertex AI for {region['id']}")
+    parts = []
+    if vertex:
+        detail = "; ".join(
+            f"{fam} in {_and_list(l['label'] for l in locs[fam.lower()])}" for fam in vertex if fam.lower() in locs)
+        parts.append(f"Google Vertex AI in {territory} locations: {detail}")
+    for f in region["model_families"]:
+        if f["host"] != "Google Vertex AI":
+            parts.append(f"{f['family']} on {f['host']}")
+    return "; ".join(parts)
+
+
+def render_ai_region_table(facts):
+    esc = html_lib.escape
+    rows = []
+    for r in facts["ai_regions"]:
+        name = esc(r["label"]) + (", the default" if r.get("default") else "")
+        models = esc(_and_list(f"{f['family']} ({f['provider']})" for f in r["model_families"]))
+        rows.append(f"<tr><td>{name}</td><td>{models}</td><td>{esc(_where_models_run(r))}</td>"
+                    f"<td>{esc(r['cloud_functions']['label'])}</td></tr>")
+    return ("<table>\n<thead>\n<tr><th>AI Processing Region</th><th>Models</th><th>Where the models run</th>"
+            "<th>Google Cloud Functions that pass on AI requests</th></tr>\n</thead>\n<tbody>\n"
+            + "\n".join(rows) + "\n</tbody>\n</table>")
+
+
+def _regions_offering(facts, provider):
+    names = [_region_name(r) for r in facts["ai_regions"]
+             if any(f["provider"] == provider for f in r["model_families"])]
+    if not names:
+        raise SystemExit(f"cm4 facts: no AI region offers {provider}; remove its row before building")
+    if len(names) == len(facts["ai_regions"]):
+        return "every AI region"
+    return f"{' and '.join(names)} AI region{'s' if len(names) > 1 else ''} only"
+
+
+def _supabase_location(facts):
+    if facts["edge_functions_pinned_to_a_region"]:
+        raise SystemExit("cm4 facts: Edge Functions are now pinned to a region; say which in build.py "
+                         "and on the AI Compliance page before building")
+    return f"{facts['storage']['region']['label']}; Edge Functions run in the Supabase region nearest the user"
+
+
+def render_cm4_fact(key, facts):
+    esc = html_lib.escape
+    if key == "ai-region-table":
+        return render_ai_region_table(facts)
+    if key == "vertex-location":
+        return esc(_by_regions(facts, lambda r: (
+            f"{_one_territory(_vertex_locations(r), r['id'])} locations, "
+            f"{_and_list(l['label'] for l in _vertex_locations(r))},")))
+    if key == "cloud-functions-location":
+        return esc(_by_regions(facts, lambda r: r["cloud_functions"]["label"]))
+    if key == "supabase-location":
+        return esc(_supabase_location(facts))
+    if key.startswith("ai-regions-offering:"):
+        return esc(_regions_offering(facts, key.split(":", 1)[1]))
+    raise SystemExit(f"cm4 facts: unknown marker cm4:{key}")
+
+
+def fill_cm4_facts(pages, cfg):
+    """Replace every cm4: marker in the rendered pages; read the facts only if some page has one."""
+    marked = [p for p in pages if CM4_MARKER.search(p.get("_content_html") or "")]
+    if not marked:
+        return
+    facts, source = load_cm4_facts(cfg)
+    for page in marked:
+        page["_content_html"] = CM4_MARKER.sub(lambda m: render_cm4_fact(m.group(1), facts), page["_content_html"])
+    print(f"  cm4 facts from {source} filled on {', '.join(p['_path'] for p in marked)}")
+
+
+def extend_pages(pages, cfg):
+    fill_cm4_facts(pages, cfg)
+    add_tag_pages(pages, cfg)
+
+
 # ---- Footer ----
 
 def footer(cfg):
@@ -233,7 +381,7 @@ CSS = {
 
 
 def build():
-    sitegen.build(ROOT, footer=footer, css=CSS, extend_pages=add_tag_pages)
+    sitegen.build(ROOT, footer=footer, css=CSS, extend_pages=extend_pages)
 
 
 if __name__ == "__main__":

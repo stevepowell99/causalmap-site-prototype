@@ -1,6 +1,9 @@
 site_name: Causal Map
 site_url: https://causalmap.app
 app_url: https://app.causalmap.app
+# Facts about the app (AI regions, Cloud Functions, storage, plans) that the build fills into pages
+# marked <!-- cm4:... -->; generated from the app's code (causal-map-extension, webapp/public-facts.json).
+cm4_facts_url: https://app.causalmap.app/public-facts.json
 help_url: https://garden.causalmap.app
 input_dir: content
 output_dir: dist
