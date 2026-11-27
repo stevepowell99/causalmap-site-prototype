@@ -70,7 +70,7 @@ You agree to indemnify, defend, and hold harmless the Company from any claims, d
 
 ### 9. Term and termination
 
-This agreement is effective when you create an account and continues until terminated. We may terminate or suspend your account if you breach this agreement or use the Service illegally. You may delete your account at any time.
+This agreement is effective when you create an account and continues until terminated. We may terminate or suspend your account if you breach this agreement or use the Service illegally. You may ask us to delete your account at any time by writing to [hello@causalmap.app](mailto:hello@causalmap.app).
 
 ### 10. Changes to this agreement
 
@@ -130,8 +130,8 @@ We perform maintenance during off-peak hours, typically 00:00 to 06:00 UTC on we
 
 ### Data backup
 
-- Your data is <span class="hl hl-pink">backed up every 10 minutes</span> and retained for at least 30 days.
-- Pro and Team customers can restore data in the app.
+- The database is <span class="hl hl-pink">backed up daily</span>, and each backup is kept for 7 days.
+- While a project is being edited, the app also saves a snapshot of it every 10 minutes. Snapshots are kept for at least 30 days, and Pro and Team customers can restore them in the app.
 
 ### Incident response
 

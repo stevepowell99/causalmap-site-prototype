@@ -26,7 +26,6 @@ We believe causal mapping should be accessible to researchers and evaluators eve
 We are committed to ethical labour practices and human rights. We:
 
 - Ensure all suppliers meet international labour standards (no forced labour, child labour, or exploitation).
-- Conduct regular audits of our supply chain.
 - Do not work with organisations or countries under sanctions where prohibited by law.
 - Support research on social and economic rights through discounted or free access to Causal Map.
 
@@ -38,7 +37,6 @@ We use AI features to assist users, but never as a replacement for <span class="
 - Make all AI features optional — users can code entirely manually if they prefer.
 - Mark the links that AI coding creates, so that users can review, edit or delete them.
 - Do not use AI to make decisions for users.
-- Regularly audit AI features for bias and errors.
 - Comply with the UK AI Bill and GDPR requirements on automated decision-making.
 
 ### 4. Evidence provenance
@@ -80,8 +78,7 @@ We protect the <span class="hl hl-green">personal data and research data</span> 
 - Comply with GDPR, UK Data Protection Act 2018, and other applicable data protection laws.
 - Allow you to download your projects and delete them at any time, and delete your account on request.
 - Minimise personal data collection; we do not require names, institutions, or other PII unless you choose to provide it.
-- Conduct regular security audits and penetration tests.
-- Have a responsible disclosure policy for security vulnerabilities.
+- Ask anyone who finds a security vulnerability to report it to [hello@causalmap.app](mailto:hello@causalmap.app).
 
 ---
 
