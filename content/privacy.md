@@ -126,7 +126,7 @@ It never carries a question, a document or folder name, a passage, a code or lab
 
 #### Anonymity
 
-At Causal Map we work with anonymous data. It can be hard for clients to ensure data is free from personally identifying information, especially with large volumes of text such as interview transcripts. For this case we provide an offline AI tool that runs locally without internet access and removes such information before text is uploaded. See [AI Compliance](/ai-compliance) for detail.
+At Causal Map we work with anonymous data. It can be hard for clients to ensure data is free from personally identifying information, especially with large volumes of text such as interview transcripts. We recommend removing it before upload with an anonymisation tool that runs offline on your own computer, so the original text goes nowhere, and having a person check the result.
 
 ### International data transfers
 

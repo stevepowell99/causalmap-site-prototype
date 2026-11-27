@@ -50,7 +50,7 @@ Project data is stored in London (Supabase, AWS eu-west-2), whichever AI region 
 
 > **GDPR and data residency.** Full GDPR protection for AI processing needs the project's AI Processing Region to be Europe. With United States or Global, AI processing takes place outside the UK and EU (with Global, possibly in Singapore too) and falls outside the territorial protections of UK GDPR, though contractual safeguards still apply. Choose your region with this in mind.
 
-- Clients are asked not to upload data containing personally identifying information. Where this is hard to guarantee, see the offline anonymisation tool described in the [Privacy Policy](/privacy-policy).
+- Clients are asked not to upload data containing personally identifying information. Where this is hard to guarantee, remove it before upload with an anonymisation tool that runs offline on your own computer, and have a person check the result.
 - Causal Map Ltd adheres to established qualitative research protocols to limit the AI's freedom in making evaluative judgments, aiming for transparency and accuracy in the AI's interpretation of causal claims.
 - Ethical considerations include attention to the types of data processed and ensuring the AI's analysis reflects respondent views without systematic bias or undue influence.
 
