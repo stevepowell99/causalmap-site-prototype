@@ -70,7 +70,7 @@ You agree to indemnify, defend, and hold harmless the Company from any claims, d
 
 ### 9. Term and termination
 
-This agreement is effective when you create an account and continues until terminated. We may terminate or suspend your account if you breach this agreement or use the Service illegally. You may ask us to delete your account at any time by writing to [hello@causalmap.app](mailto:hello@causalmap.app).
+This agreement is effective when you create an account and continues until terminated. We may terminate or suspend your account if you breach this agreement or use the Service illegally. You may delete your account yourself under **Account → Delete my account** in the app, or ask us to delete it by writing to [hello@causalmap.app](mailto:hello@causalmap.app). While a paid plan is still current, the app will not delete the account: cancel the plan's renewal and delete the account once the plan has ended, or write to us.
 
 ### 10. Changes to this agreement
 

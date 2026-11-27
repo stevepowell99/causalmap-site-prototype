@@ -32,7 +32,7 @@ Related policies: [Information Security Policy](/information-security), [AI Comp
 
 - **<span class="hl hl-green">Your data belongs to you.</span>** We do not sell or share your data with third parties.
 - **We use <span class="hl hl-yellow">industry-standard security</span>**, including encryption at rest and in transit. See the [Information Security Policy](/information-security) for detail.
-- **In the Causal Map app you can download a project and delete the projects you own at any time**, and we delete your account on request. In Qualia Workshops, whoever owns a workshop can delete it at any time, with everything people wrote and added in it.
+- **In the Causal Map app you can download a project and delete the projects you own at any time, and delete your own account** under Account → Delete my account, once any paid plan has ended. In Qualia Workshops, whoever owns a workshop can delete it at any time, with everything people wrote and added in it.
 - **AI compliance:** We comply with UK AI Bill and GDPR requirements on automated decision-making. <span class="hl hl-pink">AI features are optional</span>, and each user can switch them off. **Full GDPR protection of AI processing needs the project's AI Processing Region to be Europe.** See [AI Compliance](/ai-compliance).
 - **Research participants:** If your data contains research participant information, you must obtain consent before uploading. We provide privacy-by-default settings for sensitive data.
 
@@ -123,6 +123,7 @@ It never carries a question, a document or folder name, a passage, a code or lab
 
 - Personal data is not kept longer than necessary.
 - Data can be erased on request.
+- In the Causal Map app, deleting your account removes your sign-in and profile, the projects you own with their saved snapshots, your AI logs, any Rubicon runs we host for you, and your contact in Loops. Projects you only collaborate on stay with their owners, and the bookmarks and decks you made in them pass to the owner. Our daily database backups hold the deleted data for about 7 days until they are replaced, and the payment provider keeps its own records of any purchase.
 - Causal Map Ltd will not usually collect, store, host or process personal data of its clients' research subjects. Where this is necessary, it will occur only for the specific purpose(s) informed to data subjects. Data will be pseudonymised at the point of data collection using a unique identifier that is not connected to the subject's real-world identity, using techniques such as coding or hashing (Article 89, GDPR). All information that enables the reversal of pseudonymisation, and thereby re-identification, will only be held for a limited period, after which all data will be fully anonymised by destruction of all key lists.
 
 #### Anonymity

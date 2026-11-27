@@ -76,7 +76,7 @@ We protect the <span class="hl hl-green">personal data and research data</span> 
 - Encrypt all data at rest and in transit using industry-standard security.
 - Do not sell, share, or use your data for any purpose except providing the Service.
 - Comply with GDPR, UK Data Protection Act 2018, and other applicable data protection laws.
-- Allow you to download your projects and delete them at any time, and delete your account on request.
+- Allow you to download your projects and delete them at any time, and to delete your account yourself in the app.
 - Minimise personal data collection; we do not require names, institutions, or other PII unless you choose to provide it.
 - Ask anyone who finds a security vulnerability to report it to [hello@causalmap.app](mailto:hello@causalmap.app).
 
