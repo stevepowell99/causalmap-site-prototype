@@ -10,7 +10,11 @@ sections:
      Master copy is README-unified.md in the qualia-edit-multi repo, published at
      manage.qualiainterviews.com/help#compliance. Change that first, then this.
      The controller/processor wording was corrected on 26 August 2026 and now matches the
-     master. See memory reference_controller_or_processor. -->
+     master. See memory reference_controller_or_processor.
+     The Causal Map app's rows (AI regions, providers, Edge Functions) come from the
+     causal-map-extension code, never from a Qualia document: webapp/js/config.js and
+     coding-run-plan.js for regions, webapp/env-config.js for the Cloud Functions. -->
+
 
 
 ## Privacy Policy
@@ -27,8 +31,8 @@ Related policies: [Information Security Policy](/information-security), [AI Comp
 
 - **<span class="hl hl-green">Your data belongs to you.</span>** We do not sell or share your data with third parties.
 - **We use <span class="hl hl-yellow">industry-standard security</span>**, including encryption at rest and in transit. See the [Information Security Policy](/information-security) for detail.
-- **In the Causal Map app you can export or delete your data at any time** from your account. In Qualia Workshops, whoever owns a workshop can delete it at any time, with everything people wrote and added in it.
-- **AI compliance:** We comply with UK AI Bill and GDPR requirements on automated decision-making. <span class="hl hl-pink">AI features are optional</span> and always subject to human review. **Full GDPR protection of AI processing depends on the client selecting an EU or UK region.** See [AI Compliance](/ai-compliance).
+- **In the Causal Map app you can download a project and delete the projects you own at any time**, and we delete your account on request. In Qualia Workshops, whoever owns a workshop can delete it at any time, with everything people wrote and added in it.
+- **AI compliance:** We comply with UK AI Bill and GDPR requirements on automated decision-making. <span class="hl hl-pink">AI features are optional</span>, and each user can switch them off. **Full GDPR protection of AI processing needs the project's AI Processing Region to be Europe.** See [AI Compliance](/ai-compliance).
 - **Research participants:** If your data contains research participant information, you must obtain consent before uploading. We provide privacy-by-default settings for sensitive data.
 
 ### Data controller and data processor
@@ -72,11 +76,11 @@ We use the following sub-processors to operate Causal Map. They may handle perso
 
 | Service | Purpose | Location | Retention |
 |---|---|---|---|
-| Supabase | Auth, Postgres, Storage, Realtime, Edge Functions | AWS eu-west-2 (London) | Held until user deletes |
-| Google Vertex AI | AI inference (Gemini) | europe-west1, europe-west2 or us-east5 | None; up to 24 h in-memory |
-| Google Cloud Functions | AI routing (`process_chunk`) | us-central1 (Iowa) | None; audit logs only |
-| Dashscope (Alibaba) | Optional AI inference (Qwen) | Singapore or US | None (in-memory) |
-| OpenAI | Optional AI inference (GPT-5) | OpenAI infrastructure | OpenAI policy |
+| Supabase | Auth, Postgres, Storage, Realtime, Edge Functions | AWS eu-west-2 (London); Edge Functions run in the Supabase region nearest the user | Held until user deletes |
+| Google Vertex AI | AI inference (Gemini; Anthropic's Claude models on Vertex AI) | EU locations (the EU multi-region and europe-west1, Belgium) for projects whose AI region is Europe; US locations otherwise | None; up to 24 h in-memory |
+| Google Cloud Functions | AI routing (`start_run`, `process_chunk`) | europe-west1 (Belgium) for projects whose AI region is Europe; us-central1 (Iowa) otherwise | None; audit logs only |
+| Dashscope (Alibaba) | Optional AI inference (Qwen), Global AI region only | Singapore or US | None (in-memory) |
+| OpenAI | Optional AI inference (GPT), Global AI region only | OpenAI infrastructure | OpenAI policy |
 | Lyceum | AI inference for Rubicon, in testing (DeepSeek V4.1 Flash, GLM 5.3 Flash) | EU: Paris (Scaleway) and Finland (OVHcloud) | Prompts and outputs deleted after each request, except where needed for abuse detection or security; metadata (timestamps, token counts, model IDs) kept 30 days |
 | Railway | PDF text extraction | Railway infrastructure | None; files discarded |
 | Netlify | Static webapp hosting | Netlify infrastructure | Static assets only |

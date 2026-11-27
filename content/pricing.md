@@ -24,7 +24,7 @@ Choose your subscription directly from the Account tab in the app: [app.causalma
 
 **Pro** (from £38/month): Everything in Private, plus [versioning](https://garden.causalmap.app/versioning/), [bookmarks and reports](https://garden.causalmap.app/bookmarks-reports/), and a dedicated [statistics panel](https://garden.causalmap.app/pivot-panel/). The AI version adds [Code Like Me](https://garden.causalmap.app/ai-coding-mapcat/), with MapCat on Claude Opus.
 
-**Team** (from £78/month per seat): Everything in Pro, plus [sharing between team members](https://garden.causalmap.app/sharing-and-permissions/), [live collaboration](https://garden.causalmap.app/live-collaboration/), [logs of all edits](https://garden.causalmap.app/logs-panel/), and two-factor authentication. [Contact us](mailto:hello@causalmap.app) for team discounts.
+**Team** (from £78/month per seat): Everything in Pro, plus [sharing between team members](https://garden.causalmap.app/sharing-and-permissions/), [live collaboration](https://garden.causalmap.app/live-collaboration/), [logs of all edits](https://garden.causalmap.app/logs-panel/), and [AI Answers](https://garden.causalmap.app/answers-panel/). [Contact us](mailto:hello@causalmap.app) for team discounts.
 
 ## Features by tier
 
@@ -34,6 +34,7 @@ Choose your subscription directly from the Account tab in the app: [app.causalma
 | Projects you can edit | Unlimited | Unlimited | Unlimited | Unlimited |
 | Links per project | Unlimited | Unlimited | Unlimited | Unlimited |
 | Online guides and tutorials | Yes | Yes | Yes | Yes |
+| Two-factor authentication | Yes | Yes | Yes | Yes |
 | [Read your projects from Claude, ChatGPT and other AI chat apps](https://garden.causalmap.app/mcp-server/) | Yes | Yes | Yes | Yes |
 | Email support |  | Yes | Yes | Yes |
 | Private projects |  | Yes | Yes | Yes |
@@ -42,7 +43,7 @@ Choose your subscription directly from the Account tab in the app: [app.causalma
 | [Statistics panel](https://garden.causalmap.app/pivot-panel/) |  |  | Yes | Yes |
 | [Code Like Me](https://garden.causalmap.app/ai-coding-mapcat/), with MapCat on Claude Opus (AI version) |  |  | Yes | Yes |
 | [Team sharing](https://garden.causalmap.app/sharing-and-permissions/) |  |  |  | Yes |
-| Two-factor authentication |  |  |  | Yes |
+| [AI Answers](https://garden.causalmap.app/answers-panel/) |  |  |  | Yes |
 | [Action logs](https://garden.causalmap.app/logs-panel/) |  |  |  | Yes |
 | [Live collaboration](https://garden.causalmap.app/live-collaboration/) |  |  |  | Yes |
 | 4 x 30-min live support sessions/year |  |  |  | Yes |
@@ -62,7 +63,7 @@ If you expect to use Causal Map for more than eight months in a year, the annual
 
 ## AI features and credits
 
-Every plan, including Free, comes with a monthly allowance of AI credits, so anyone can use the AI features: [Simple AI Coding](https://garden.causalmap.app/simple-ai/), [AI Answers](https://garden.causalmap.app/answers-panel/), [Vignettes](https://garden.causalmap.app/howto-vignettes/) and [Soft Recode](https://garden.causalmap.app/filter-link-tab/#soft-recode-plus). You spend credits only when you run an AI feature, and the allowance refills each month.
+Every plan, including Free, comes with a monthly allowance of AI credits, so anyone who switches AI on in Account settings can use [Simple AI Coding](https://garden.causalmap.app/simple-ai/), [Vignettes](https://garden.causalmap.app/howto-vignettes/) and [Soft Recode](https://garden.causalmap.app/filter-link-tab/#soft-recode-plus), and on Team plans [AI Answers](https://garden.causalmap.app/answers-panel/). You spend credits only when you run an AI feature, and the allowance refills each month.
 
 Free gives you a starter allowance at no cost. Each paid plan comes in two versions: a standard version, which keeps that same allowance, and an AI version, which gives <span class="hl hl-pink">substantially more credits</span> each month (see the "with AI" prices above). Choose the version you want when you subscribe from the Account tab in the app. No separate checkout needed.
 

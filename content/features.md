@@ -9,7 +9,7 @@ sections:
   - type: callout
     icon: fa-solid fa-user-check
     title: Human first, AI next
-    text: Start by hand on a small sample to build your understanding. Then turn on <span class="hl hl-green hl-reveal">AI coding</span> to scale to hundreds of documents, with human review and edit at every step. AI features need a separate subscription.
+    text: Start by hand on a small sample to build your understanding. Then turn on <span class="hl hl-green hl-reveal">AI coding</span> to scale to hundreds of documents, and review and edit what it codes. Every plan comes with monthly AI credits; the AI versions of the paid plans give more.
   - type: features
     heading: Getting started
     columns:
@@ -162,7 +162,7 @@ sections:
       - title: AI answers
         icon: fa-solid fa-comment-dots
         help_anchor: answers-panel
-        text: Ask plain-language questions of your project. <span class="hl hl-green hl-reveal">Answers grounded</span> in your sources, links and factors.
+        text: Ask plain-language questions of your project. <span class="hl hl-green hl-reveal">Answers grounded</span> in your sources, links and factors. <em>Requires Team subscription.</em>
       - title: From Claude or ChatGPT
         icon: fa-solid fa-plug
         help_anchor: mcp-server
@@ -182,7 +182,7 @@ sections:
       - title: Two-factor authentication
         icon: fa-solid fa-shield-halved
         help_anchor: account-panel
-        text: Optional <span class="hl hl-pink hl-reveal">2FA</span> per account. Admins can enforce it organisation-wide.
+        text: Optional <span class="hl hl-pink hl-reveal">2FA</span> for any account, switched on in Account settings. <em>Every plan, free included.</em>
   - type: prose
 ---
 

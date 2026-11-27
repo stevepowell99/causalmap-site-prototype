@@ -11,14 +11,15 @@ sections:
      master copy is README-unified.md in the qualia-edit-multi repo, whose Data Breach Notification
      section links to #incidents here. "App security controls" covers the Causal Map app on Supabase,
      a different backend from Qualia on Railway, so do not copy Qualia's numbers across.
-     The 'daily backups' line here has not been verified against Supabase. -->
+     Its Causal Map facts come from the causal-map-extension code: daily backups and the London
+     region were read from the Supabase Management API on 27 November 2026. -->
 
 
 ## Information Security Policy
 
 <p class="print-link"><a href="#" onclick="window.print(); return false;">Print or save as PDF</a></p>
 
-Last reviewed: 17 November 2026.
+Last reviewed: 27 November 2026.
 
 ### 1. Purpose
 
@@ -95,7 +96,7 @@ Access to production systems and customer data (hosting and database accounts, c
 
 #### Data storage and security
 
-- Causal Map is a serverless application. The Postgres database, authentication, storage, realtime and Edge Functions are provided by Supabase, with the database pooler hosted in AWS eu-west-2 (London).
+- Causal Map is a serverless application. The Postgres database, authentication, storage, realtime and Edge Functions are provided by Supabase, hosted in AWS eu-west-2 (London). Supabase runs the Edge Functions in its region nearest the user.
 - Static web assets are hosted on Netlify (`app.causalmap.app`).
 - The PDF processor service runs on Railway and does not store uploaded PDFs; files are extracted to text and discarded.
 - Cloudflare CDN serves a PDF.js worker; no user data is stored at Cloudflare.
@@ -103,7 +104,7 @@ Access to production systems and customer data (hosting and database accounts, c
 - Row-Level Security policies are enforced at Supabase.
 - Daily backups of the database are made automatically.
 
-For the list of sub-processors that handle personal data, see [Sub-processors](/privacy-policy#sub-processors) on the Privacy Policy page. For AI processing details, including the choice of EU, UK or US regions and what that means for GDPR, see [AI Compliance](/ai-compliance).
+For the list of sub-processors that handle personal data, see [Sub-processors](/privacy-policy#sub-processors) on the Privacy Policy page. For AI processing details, including each project's choice of AI Processing Region (Europe, United States or Global) and what that means for GDPR, see [AI Compliance](/ai-compliance).
 
 #### Data protection measures
 
@@ -137,9 +138,9 @@ There are two levels of access: Admin and User.
 
 #### User activity monitoring and audit logs
 
-- Log on and log off are monitored via Supabase Auth.
-- Highly significant events such as new user registration and file creation are logged in a system SQL database and emailed to the Data Protection Officer.
-- Significant events such as log on, file load etc. are recorded in a system SQL database.
+- Sign-in is handled by Supabase Auth, which keeps its own logs.
+- New registrations, sign-ins, new projects and AI coding runs are emailed to the company's administrators.
+- Actions such as opening, creating, importing into and exporting a project are recorded in our database, and every AI request is recorded with its prompt and response (see [AI Compliance](/ai-compliance)).
 
 <h3 id="incidents">5. Incident management</h3>
 

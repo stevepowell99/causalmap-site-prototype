@@ -36,8 +36,8 @@ We use AI features to assist users, but never as a replacement for <span class="
 
 - Are transparent about how AI works and where it is used in Causal Map.
 - Make all AI features optional — users can code entirely manually if they prefer.
-- Always require human review and approval of AI suggestions before they are saved.
-- Do not use AI to make decisions for users; it suggests only.
+- Mark the links that AI coding creates, so that users can review, edit or delete them.
+- Do not use AI to make decisions for users.
 - Regularly audit AI features for bias and errors.
 - Comply with the UK AI Bill and GDPR requirements on automated decision-making.
 
@@ -78,7 +78,7 @@ We protect the <span class="hl hl-green">personal data and research data</span> 
 - Encrypt all data at rest and in transit using industry-standard security.
 - Do not sell, share, or use your data for any purpose except providing the Service.
 - Comply with GDPR, UK Data Protection Act 2018, and other applicable data protection laws.
-- Allow you to download, export, or delete your data at any time.
+- Allow you to download your projects and delete them at any time, and delete your account on request.
 - Minimise personal data collection; we do not require names, institutions, or other PII unless you choose to provide it.
 - Conduct regular security audits and penetration tests.
 - Have a responsible disclosure policy for security vulnerabilities.
