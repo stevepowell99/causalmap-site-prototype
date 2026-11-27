@@ -6,10 +6,11 @@ sections:
   - type: prose
 ---
 
-<!-- Facts about the Causal Map app come from the causal-map-extension code (branch dev), never
-     from a Qualia document: regions and models in webapp/js/config.js and coding-run-plan.js,
-     Cloud Functions in webapp/env-config.js, credits in webapp/js/capabilities.js and the
-     get_user_ai_credits_status migration, AI logging in the ai_logs table. Checked 27 November 2026. -->
+<!-- Facts about the Causal Map app come from the causal-map-extension code, never from a Qualia
+     document. The region table is filled at build time from the app's webapp/public-facts.json
+     (build.py, cm4: markers); the sentences around it repeat the same facts by hand, and that
+     repo's tests/public-facts.test.mjs names this page when the code moves one. AI logging:
+     the ai_logs table. Checked 27 November 2026. -->
 
 ## AI Compliance (Data Protection and Privacy)
 
@@ -27,11 +28,7 @@ Every plan, Free included, comes with a monthly allowance of AI credits, and the
 
 Project data is stored in London (Supabase, AWS eu-west-2), whichever AI region a project uses. Each project has an **AI Processing Region**, set under Project → Edit project; new projects are set to Europe. The region decides which models the app offers and where they run.
 
-| AI Processing Region | Models | Where the models run | Google Cloud Functions that pass on AI requests |
-|---|---|---|---|
-| Europe (EU, EEA and UK) | Gemini (Google) and Claude (Anthropic), both served by Google Vertex AI | Google Vertex AI in EU locations: the EU multi-region and europe-west1 (Belgium) | europe-west1 (Belgium) |
-| United States | Gemini and Claude, served by Google Vertex AI | Google Vertex AI in US locations | us-central1 (Iowa) |
-| Global | As United States, plus GPT (OpenAI) and Qwen (Alibaba) for AI coding | As United States; GPT on OpenAI's infrastructure; Qwen on Alibaba Cloud's DashScope, in Singapore or the US | us-central1 (Iowa) |
+<!-- cm4:ai-region-table -->
 
 - For a Europe or United States project, the app offers only the models that run in that territory, and refuses any request that would be processed elsewhere: in the browser, and again on our server for AI coding runs.
 - For a Europe project, AI processing takes place in the EU. The app does not offer AI processing in the UK itself.

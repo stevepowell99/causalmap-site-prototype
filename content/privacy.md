@@ -11,9 +11,10 @@ sections:
      manage.qualiainterviews.com/help#compliance. Change that first, then this.
      The controller/processor wording was corrected on 26 August 2026 and now matches the
      master. See memory reference_controller_or_processor.
-     The Causal Map app's rows (AI regions, providers, Edge Functions) come from the
-     causal-map-extension code, never from a Qualia document: webapp/js/config.js and
-     coding-run-plan.js for regions, webapp/env-config.js for the Cloud Functions. -->
+     The Causal Map app's AI cells (Supabase, Vertex AI and Cloud Functions locations, which AI
+     regions offer DashScope and OpenAI) are filled at build time from the app's
+     webapp/public-facts.json in causal-map-extension (build.py, cm4: markers), never typed
+     here or taken from a Qualia document. -->
 
 
 
@@ -76,11 +77,11 @@ We use the following sub-processors to operate Causal Map. They may handle perso
 
 | Service | Purpose | Location | Retention |
 |---|---|---|---|
-| Supabase | Auth, Postgres, Storage, Realtime, Edge Functions | AWS eu-west-2 (London); Edge Functions run in the Supabase region nearest the user | Held until user deletes |
-| Google Vertex AI | AI inference (Gemini; Anthropic's Claude models on Vertex AI) | EU locations (the EU multi-region and europe-west1, Belgium) for projects whose AI region is Europe; US locations otherwise | None; up to 24 h in-memory |
-| Google Cloud Functions | AI routing (`start_run`, `process_chunk`) | europe-west1 (Belgium) for projects whose AI region is Europe; us-central1 (Iowa) otherwise | None; audit logs only |
-| Dashscope (Alibaba) | Optional AI inference (Qwen), Global AI region only | Singapore or US | None (in-memory) |
-| OpenAI | Optional AI inference (GPT), Global AI region only | OpenAI infrastructure | OpenAI policy |
+| Supabase | Auth, Postgres, Storage, Realtime, Edge Functions | <!-- cm4:supabase-location --> | Held until user deletes |
+| Google Vertex AI | AI inference (Gemini; Anthropic's Claude models on Vertex AI) | <!-- cm4:vertex-location --> | None; up to 24 h in-memory |
+| Google Cloud Functions | AI routing (`start_run`, `process_chunk`) | <!-- cm4:cloud-functions-location --> | None; audit logs only |
+| Dashscope (Alibaba) | Optional AI inference (Qwen), <!-- cm4:ai-regions-offering:Alibaba --> | Singapore or US | None (in-memory) |
+| OpenAI | Optional AI inference (GPT), <!-- cm4:ai-regions-offering:OpenAI --> | OpenAI infrastructure | OpenAI policy |
 | Lyceum | AI inference for Rubicon, in testing (DeepSeek V4.1 Flash, GLM 5.3 Flash) | EU: Paris (Scaleway) and Finland (OVHcloud) | Prompts and outputs deleted after each request, except where needed for abuse detection or security; metadata (timestamps, token counts, model IDs) kept 30 days |
 | Railway | PDF text extraction | Railway infrastructure | None; files discarded |
 | Netlify | Static webapp hosting | Netlify infrastructure | Static assets only |
