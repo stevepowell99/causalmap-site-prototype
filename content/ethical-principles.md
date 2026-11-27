@@ -37,7 +37,7 @@ We use AI features to assist users, but never as a replacement for <span class="
 - Make all AI features optional — users can code entirely manually if they prefer.
 - Mark the links that AI coding creates, so that users can review, edit or delete them.
 - Do not use AI to make decisions for users.
-- Comply with the UK AI Bill and GDPR requirements on automated decision-making.
+- Comply with the requirements of UK GDPR and the Data Protection Act 2018 on automated decision-making.
 
 ### 4. Evidence provenance
 
